@@ -12,6 +12,7 @@ Pixiv Toolkit Next（Chrome/Firefox 拡張機能）のフォーク。upstream: `
 - ビルド: `yarn build`（Chrome）/ `yarn build:firefox`（Firefox）
 - テスト: `npx jest`（`package.json` に `test` script は無い。`jest.config.json` + `test/*.spec.js`）
 - 上流取り込み後: `git fetch upstream` → `git merge upstream/main` してからビルド＋テスト
+- テストの外部 API 呼出し: 可（決定: `docs/ai/decisions/2026-11-02-tests-may-call-external-api.md`）
 
 ## Development
 

@@ -12,7 +12,5 @@ This document tracks rate limits for external APIs and data sources used by the 
 
 ## Test Script Guidelines
 
-- Services with rate limits **must** be mocked in unit tests
-- Use `unittest.mock` (Python) or equivalent for mocking
-- Only public, unauthenticated endpoints may be called in tests
+- テストでの外部 API 呼出し可否はプロジェクトの決定（`docs/ai/decisions/2026-11-02-tests-may-call-external-api.md`）に従う
 - Rate limit testing should be done in separate scripts, not collected by the test runner
