@@ -34,10 +34,6 @@
     <div class="ptk__download-added-notice" v-show="showNotice">
       {{ this.noticeMessage }}
     </div>
-    <ptk-button v-if="!isUndetermined && browserItems.showPixivOmina"
-      class="ptk__pixiv-omina__btn"
-      @click="passToPixivOmina"
-    >Pixiv Omina</ptk-button>
     <ptk-button style="font-size:10px;padding:1px 20px;">
       <p style="margin:0;padding:0;">Legacy</p>
       <p style="margin:0;padding:0;">Mode</p>
@@ -363,13 +359,13 @@ export default {
       };
     },
 
-    async download({ ugoiraConvertType, selectedIndexes } = {}) {
+    async download({ ugoiraConvertType, selectedIndexes, saveMode } = {}) {
       try {
-        await this.downloadManager.addTask(this.resource, { ugoiraConvertType, selectedIndexes });
+        await this.downloadManager.addTask(this.resource, { ugoiraConvertType, selectedIndexes, saveMode });
       } catch (error) {
         if (error instanceof DownloadTaskExistsError) {
           if (window.confirm(this.tl('_the_resource_is_already_in_download_manager'))) {
-            this.downloadManager.addTask(this.resource, { ugoiraConvertType, selectedIndexes }, { redownload: true })
+            this.downloadManager.addTask(this.resource, { ugoiraConvertType, selectedIndexes, saveMode }, { redownload: true })
           }
         } else {
           throw error;
@@ -381,18 +377,14 @@ export default {
       this.selectedIndexes = selectedIndexes;
     },
 
-    pageSelectorDownloadHandler({ selectedPageIndexes }) {
-      this.download({ selectedIndexes: selectedPageIndexes });
+    pageSelectorDownloadHandler({ selectedPageIndexes, saveMode }) {
+      this.download({ selectedIndexes: selectedPageIndexes, saveMode });
     },
 
     disableGuide() {
       browser.storage.local.set({
         guideShowed: true
       });
-    },
-
-    passToPixivOmina() {
-      window.location.assign(`pixiv-omina://create-download?url=${encodeURIComponent(window.location.href)}`);
     },
 
     test() {
@@ -407,10 +399,6 @@ export default {
 </script>
 
 <style lang="scss">
-.ptk__pixiv-omina__btn {
-  margin-left: 5px;
-}
-
 .ptk__downloaded-dot {
   background: green;
   display: inline-block;

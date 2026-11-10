@@ -43,10 +43,6 @@
     <div class="ptk__download-added-notice" v-show="showNotice">
       {{ this.noticeMessage }}
     </div>
-    <ptk-button v-if="browserItems.showPixivOmina"
-      class="ptk__pixiv-omina__btn"
-      @click="passToPixivOmina"
-    >Pixiv Omina</ptk-button>
   </control-panel>
 </template>
 
@@ -422,18 +418,14 @@ export default {
       this.selectedIndexes = selectedIndexes;
     },
 
-    pageSelectorDownloadHandler() {
-      this.download();
+    pageSelectorDownloadHandler({ saveMode }) {
+      this.download({ saveMode });
     },
 
     disableGuide() {
       browser.storage.local.set({
         guideShowed: true
       });
-    },
-
-    passToPixivOmina() {
-      window.location.assign(`pixiv-omina://create-download?url=${encodeURIComponent(window.location.href)}`);
     },
 
     test() {
@@ -448,10 +440,6 @@ export default {
 </script>
 
 <style lang="scss">
-.ptk__pixiv-omina__btn {
-  margin-left: 5px;
-}
-
 .ptk__downloaded-dot {
   background: green;
   display: inline-block;

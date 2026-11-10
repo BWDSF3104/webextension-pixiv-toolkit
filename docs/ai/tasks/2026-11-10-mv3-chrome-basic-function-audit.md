@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: 画面操作実測完了: Download成功、handler toggle可、Pixiv Omina scheme handler失敗、Legacy click no state change。UI label化とPixiv Omina表示ブロック削除の実装開始指示待ち
+**Next Action**: UI表示の実装開始指示待ち: (1) P*/Legacy label表示化 (2) Pixiv Omina block削除+showPixivOmina default false (3) Select & DL dialogのzip button→A/B button（saveMode透過）。最小差分は decision 2026-11-10-select-and-dl-button-ab-in-selection-dialog.md に記録
 
 ## 意図 / 背景
 
@@ -63,6 +63,9 @@
 - `git fetch upstream` + `git diff --stat upstream/master...HEAD`: 29 files changed（コード差分なし・docs / .gitignore / package.json のみ）
 - 実行時確認（Chrome への読み込み）: 未実施（Playwright が拡張を読み込めない）
 - 画面操作実測: Drive保存 `I:\マイドライブ\kilo\2026-11-10-mv3-chrome-basic-function-audit\ui-button-self-operation-confirmation-2026-11-10.txt`。before/after画像も同じフォルダ。browser tool pageはlast open pageのため閉じられず、記録時点でopenのまま。
+- 実装（2026-11-10 実装開始指示）: `PageSelector.vue` dialog footer の `Download` → `downloadSelectedPages('folder')` / `downloadSelectedPages('perImage')` の2 button（ラベルは既存 `_download_to_folder` / `_download_per_image` 流用、ロケール追加なし）、`downloadSelectedPages(saveMode)` の emit に `saveMode` 追加。`App.vue` / `AppLegacy.vue` の `pageSelectorDownloadHandler` が `saveMode` を受け取り、AppLegacy は `download()` → `ContentPageDownloadManager.addTask` options へ透過（addTask は options 丸ごと adapter へ渡すため追加配線なし）。Pixiv Omina: `App.vue` / `AppLegacy.vue` の button 表示ブロック・`passToPixivOmina`・`.ptk__pixiv-omina__btn` style を削除、`src/config/default.js` の `showPixivOmina` → false。
+- `yarn test`（2026-11-10 実装後）: 2 suites / 11 tests passed（Time 5.1s、既存spec維持）。dialog経由の saveMode 透過はunit対象外（引数受け渡しのみ・新規分岐なし）→ 画面実測は未実施。
+- `yarn build`（chrome, 2026-11-10 実装後）: 成功（exit=0、WARNING は既存の asset size limit のみ、Time 7.5s / 6.2s）。
 
 ## 改修方針（実装開始指示後に着手）
 
@@ -123,6 +126,7 @@
 - ラベルは labelと分かる見た目にする。現状 buttonと同じ見た目で区別できない `P*` guide labelと `Legacy` labelを label表示へ変更する。
 - `Pixiv Omina` は不要。拡張UIから非表示にする。`AppLegacy.vue` と `App.vue` の button表示ブロックを削除する方針。
 - decision file: `docs/ai/decisions/2026-11-10-ui-label-distinction-and-pixiv-omina-hidden.md`
+- Select & DL（選択画面 dialog）は zip 追従ではなく、選択画面内にボタンA/Bの2パターンを置く（A=フォルダ展開 / B=画像別保存）。ラベルは既存 `_download_to_folder` / `_download_per_image` を流用。decision file: `docs/ai/decisions/2026-11-10-select-and-dl-button-ab-in-selection-dialog.md`
 
 #### 画面操作実測（2026-11-10）
 

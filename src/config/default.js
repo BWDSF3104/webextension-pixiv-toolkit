@@ -200,7 +200,7 @@ export default Object.assign({}, {
      * @since 5.5.1
      */
     showReloadInPopup: false,
-    showPixivOmina: true,
+    showPixivOmina: false,
 
     /**
      * @since 5.5.3
