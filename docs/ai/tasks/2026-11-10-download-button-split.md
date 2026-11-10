@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: 検討中: 2ボタンの意味（フォルダ展開=saveMode1+work folder / 画像別保存=saveMode1+work folderなし）の確定と実装開始指示待ち
+**Next Action**: 残件(段階3): IllustAdapter/Mangaのoptions構築でsaveMode透過なし(IllustAdapter.js:51-65)→承認範囲外の配線追加が必要でユーザー裁定待ち(推奨: adapter側でsaveMode透過+spec更新)。裁定待ちの未コミット変更を保持(手順2f逸脱として記録)。裁定後に画面確認再実測が必要(現実測は両ボタンzip=followで不合格)。テスト/ビルドは通過済み
 
 ## 意図 / 背景
 
@@ -38,6 +38,13 @@
 - 2ボタンの意味・クリック単位の override・Ugoira スコープ外：すべて推奨案どおり承認。
 - decision: `docs/ai/decisions/2026-11-10-download-button-split-design.md`
 
+### 実行結果（2026-11-10 子委譲）
+
+- 承認設計どおり実装: `MultipleDownloadTaskOptions.saveMode`（undefined=follow）、`shouldZipFile()` / `dontCreateWorkFolder()` 冒頭の override 判定、`App.vue` 非ugoiraボタン2分割（`download({ saveMode: 'folder' })` / `download({ saveMode: 'perImage' })`）、en/zh_CN ロケール（`_download_to_folder` / `_download_per_image`）、新規jest spec。
+- **実コードとの食い違い（実施せず、持ち帰り）**: 委譲文の前提「配線（DownloadAdapter→タスクoptions）は既存のoptions透過を利用する」は実コードで成立しない。`IllustAdapter.createIllustDownloadTask`（`src/options_page/modules/DownloadAdapters/Pixiv/IllustAdapter.js:51-65`）がタスクoptionsを新規objectとして構築し `options.selectedIndexes` しか透過せず、`saveMode` が失われる（manga側 `createMangaDownloadTask` も同じ）。unit spec通過（override判定は正しい）に対し、実測では両ボタンとも設定follow（ZIP保存）。配線1行の追加は承認範囲外ファイルの変更になるため段階3として持ち帰った（parent裁定待ち）。
+- 画面確認で `downloadMode=2`（新モード=App.vue）が必要。委譲プロファイルの実設定は `downloadMode=1`（legacy）であり、確認のため一時変更し、確認後に元の値1へ復元（段階1、根拠: UIApplication.js:83 のrender条件）。
+- 試行回数: 1（不合格原因分析完了。修正は承認範囲外のため実施せず未解決）。
+
 ### 未確定（ユーザー確認 needed）
 
 - 2ボタンの正確な意味: 「フォルダ展開」=work folder+画像ファイル保存、「画像別保存」=work folderなしで画像ごとに直接保存という解釈（推奨）。もう一方の解釈: 画像ごとに Chrome ダウンロード項目として1件ずつ出す（folder モードでは現状 already 画像ごとに saveFile=1 download item）。
@@ -53,7 +60,16 @@
 
 ## Verification
 
-（記入）
+- `yarn test`（2026-11-10）: 2 suites passed / 11 tests passed（新規 `test/MultiplePagesDownloadTask.spec.js` 4 tests: override 'folder'=follow無視で no-zip+work folder / override 'perImage'=no-zip+no work folder / 未指定=zip follow / 未指定=folder mode dontCreateWorkFolder=2 follow。既存 pathjoin spec 7 tests 通過。Time 2.14s）。
+- `yarn build`（chrome, 2026-11-10）: 成功（webpack 4.46.0、15.84s、警告は既存のasset size limitのみ）。
+- `jest.config.json` 変更理由: specがテスト対象の `@/` alias importを持つため、`moduleNameMapper`（`^@/(.*)$` → `<rootDir>/src/$1`）が必要（既存test setupにalias解決なし。spec実行に必要な最小plumbing。既存spec結果に影響なし）。
+- 画面確認（Chrome MCP、Playwright読み替え）: **不合格**。対象 artwork `151753981`（Illust type 0・2 page、ranking実測で選定。manga型は `onItemFinish` の `type !== 'PIXIV_MANGA'` 分岐でボタンBの意味が現れないためtype 0）。window size viewport 932x871（outer 945x1020・dpr 2）、同一取得方法・同一被写体範囲。before/after（ボタンA/Bそれぞれの操作前→click→操作後）4枚 + 確認txt を `I:\マイドライブ\kilo\2026-11-10-download-button-split\` へ保存（local copyは `kilo-safe-remove` でゴミ箱）:
+  - `artwork-151753981-buttonA-before-20261110.png` / `artwork-151753981-buttonA-after-20261110.png`
+  - `artwork-151753981-buttonB-before-20261110.png` / `artwork-151753981-buttonB-after-20261110.png`
+  - `button-split-confirmation-2026-11-10.txt`
+- 実測保存結果（chrome.downloads search '151753981'）: `D:\Downloads_Desktop\151753981_隊員Oさん.zip` と `D:\Downloads_Desktop\151753981_隊員Oさん (1).zip`（state complete）— 両ボタンともZIP=設定follow（downloadSaveMode=0・globalZipMultipleImages=1）。合格条件（work folder内ファイル単位/直下ファイル単位）を満たさない。不合格原因は `IllustAdapter` でのoptions構築（`saveMode`透過なし、IllustAdapter.js:51-65）。
+- ブラウザ: chrome-devtools MCP既存ブラウザ使用（プロファイル`ぶるめ`）。開いたpageはdownload manager tab（page 2）をclose_pageで閉じた。page 1（artwork）は「最後に開いているpageは閉じ不可」のため残し（ブラウザプロセスそのものはMCPに終了操作なし、残存処理は親）。確認用一時変更 `downloadMode` は 2→1（元の値）へ復元済み。
+- コミット: 未実施（画面確認不合格＝未解決のため保留。作業ツリーは変更を残して継続、parent裁定待ち）。
 
 ## 完了時 Memory Bank 操作
 

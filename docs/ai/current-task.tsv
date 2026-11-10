@@ -1,3 +1,3 @@
 task_file	status	next_action
 docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	画面操作実測完了: Download成功、handler toggle可、Pixiv Omina scheme handler失敗、Legacy click no state change。UI label化とPixiv Omina表示ブロック削除の実装開始指示待ち
-docs/ai/tasks/2026-11-10-download-button-split.md	進行中	検討中: 2ボタンの意味（フォルダ展開=saveMode1+work folder / 画像別保存=saveMode1+work folderなし）の確定と実装開始指示待ち
+docs/ai/tasks/2026-11-10-download-button-split.md	進行中	残件(段階3): IllustAdapter/Mangaのoptions構築でsaveMode透過なし(IllustAdapter.js:51-65)→承認範囲外の配線追加が必要でユーザー裁定待ち(推奨: adapter側でsaveMode透過+spec更新)。裁定待ちの未コミット変更を保持(手順2f逸脱として記録)。裁定後に画面確認再実測が必要(現実測は両ボタンzip=followで不合格)。テスト/ビルドは通過済み
