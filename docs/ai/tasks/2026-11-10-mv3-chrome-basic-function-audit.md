@@ -72,6 +72,16 @@
 5. `WebRequestService` を削除し DNR で代替（CORS 系は responseHeaders ルール）
 6. 未宣言 permission（`webRequest`・`notifications`）と未使用モジュール（ScriptInjector・Notification）の整理
 
+## 実行時確認（自動化）
+
+- `--load-extension` はこの Chrome ビルドで無視される。最小構成の MV3 拡張（`docs/ai/tmp/testext/`）でも service worker ターゲットが出なかった → 本プロジェクトの manifest 起因ではない。
+- 読み込み工程だけ自動化できない。専用プロファイルで一度 Load unpacked すれば、以降は `docs/ai/tmp/mv3_probe.js` で無人的に次を確認できる:
+  - service worker での API 可用性（`onDeterminingFilename` / `tabs.executeScript` / `scripting` / `webRequest` / `notifications`）
+  - `getEnabledRulesets()`（rule 2 が拒否されているか）と `getMatchedRules()`（rule 1 が画像リクエストに-hit するか）
+  - content script が `#__ptk-app` を作ったか、起動時の例外
+- 使い方: `chrome.exe --remote-debugging-port=9336 <プロファイル>` → `node docs/ai/tmp/mv3_probe.js 9336 [確認したいURL]`
+- 完全自動化（読み込み含む）は Chrome 企業ポリシー `ExtensionSettings`（`installation_mode: load` + `load_path`）での登録のみ。レジストリ書き込みなのでユーザー承認が必要。
+
 ## 完了時 Memory Bank 操作
 
 - [ ] `current-task.tsv` の参照行を削除
