@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: 症状の特定（ユーザー）→ 改修範囲確定。実装開始指示後に着手
+**Next Action**: DevTools MCPで自動実行確認完了（options/popup load、content script UI false、DNR rule1 image match、rule2 no match、login/download未実施）→ download実測・改修方針確定
 
 ## 意図 / 背景
 
@@ -93,6 +93,17 @@
 - `--experimentalIncludeAllPages` を入れた理由: service worker / extension page を対象に入れてコンソールと評価を見ため。これがないと page コンテキストしか見えない。
 - 実行計画（再起動後）: `list_extensions` → `install_extension`（`dist/chrome`）→ pixiv へ移動（そのプロファイルで一度ログイン）→ `#__ptk-app` の有無とコンソールの例外 → ダウンロード実行 → `getMatchedRules` / ルール2の登録エラー確認。
 - 補完: service worker 内の `typeof chrome.webRequest` 等は `docs/ai/tmp/mv3_probe.js`（CDP）で見る。MCP が pipe で起動したインスタンスには接続できないため、これは別途 `--remote-debugging-port` で起動した Chrome 用のスクリプトとして残す。
+
+#### 実行結果（2026-11-10, Chrome DevTools MCP）
+
+- `dist/chrome` を DevTools MCP の `install_extension` で読み込めた（extension id `nccfhdinjmbjnlgnmmgglmenmaacgagf`）。service worker `background/background.js` が起動し、`chrome.declarativeNetRequest` / `chrome.storage` / `chrome.downloads` / `chrome.runtime` は object。`chrome.webRequest` は undefined。`chrome.downloads.onDeterminingFilename` listener は object として確認できた。
+- `chrome.storage.local.get(null)` は成功。`self.oninstall` は service worker の install listener（`function`）で、`onBooted()` は SW install 時だけ走るという既存の設計確認は保つ。listener の同期登録、cache/port 喪失、ファイル名実測は未実施。
+- `https://www.pixiv.net/` では content script の `Invalid page. url: https://www.pixiv.net/`（`src/content_scripts/modules/PageFilter.js:37`）がコンソールに出た。これは homepage が UI の対象 URL でないため。
+- `https://www.pixiv.net/artworks/113960211` で `#__ptk-app` は false。同 content script world の console に `Uncaught ReferenceError: Handlebars is not defined`。`dist/chrome/lib/js-epub-maker/js-epub-maker.js:1371` 付近が load 時に `Handlebars.registerHelper(...)` を使うため、content script 列に `lib/handlebars-latest.js` が無い現時点で UI 生成前に落ちる。
+- options page (`chrome-extension://nccfhdinjmbjnlgnmmgglmenmaacgagf/options_page/index.html`) と popup (`chrome-extension://nccfhdinjmbjnlgnmmgglmenmaacgagf/popup_page/index.html`) は読み込み成功。options page は `Vue` function、`#app` true、console error なし。ただし `FFmpeg` は undefined。`dist/chrome/options_page/index.html` が `lib/ffmpeg/ffmpeg.min.js` を script として読み込まないため、`UgoiraDownloadTask.js` の global `FFmpeg` 参照で Ugoira 変換が失敗する可能性が高い（未 download 実測）。
+- DNR: `ruleset_1` enabled。`testMatchOutcome({url:"https://i.pximg.net/img-master/img/2023/12/05/00/27/25/113960211_p0_master1200.jpg", type:"image", initiator:"https://www.pixiv.net"})` で rule 1 matched。これは `net_request_rules_1.json` が `resourceType`（不正なキー）を使っているため、有効な `resourceTypes` が省略されて full match になっている。実際の image request の request header は `referer: https://www.pixiv.net`（DNR の set 値と同じ）で、現状は image へ効いている。`rule 2` は `testMatchOutcome({url:"https://www.fanbox.cc/", type:"main_frame", initiator:"https://www.pixiv.net"})` で `matchedRules: []`。`initiatorDomains: ["options_page/downloads.html"]` の不正値は runtime でも match しない。
+- `getMatchedRules()` は filter 属性が `minTimeStamp` / `tabId` only（公式 docs）で resourceType 別 filter は不可。本タスクでは `testMatchOutcome` を使う。
+- content script isolated world の CSP/`blob:` worker 可否は MCP の `evaluate_script` が main world で走るため実行時確認できていない。options page で `new Function` / blob worker test が通ったことは、isolated content script の CSP 判定ではない。
 
 ## 完了時 Memory Bank 操作
 
