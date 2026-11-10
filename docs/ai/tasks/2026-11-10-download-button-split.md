@@ -84,7 +84,7 @@
 - 訂正: 05:19の報告で「直下ファイルが現在存在しない」としたのはlistingのフィルタ（artwork id名 filterで直下p0/p1を捕捉できず）の誤り。試行2のファイル（`p0.jpg`・`p1.jpg`・`p0.png`）は削除されておらず、現在も直下に残存（14:07・14:09）。work folder内のp0/p1も残存。
 - 保存（Drive）: `recheck-151753981-buttonB-collapsed-before-20261110.png`（畳んだ状態・操作前）、`recheck-151753981-panel-expanded-after-20261110.png`（展開後）、`recheck-151753981-buttonB-after-20261110.png`（click後）、`recheck-confirmation-2026-11-10.txt`。local copyは `kilo-safe-remove` でゴミ箱。window size 932x871・dpr 2同一条件。
 - downloadMode=2（App.vue表示のため一時変更）→ 確認後1（元の値）へ復元済み。
-- ブラウザ: page 1（artwork）は最後に開いているpageのためclose_page不可（MCP制限）。識別条件一致のchrome.exe残存57件を親が終了（4件は終了時点で既に消滅）、終了後残存0確認。
+- ブラウザ: page 1（artwork）は最後に開いているpageのためclose_page不可（MCP制限）。識別条件一致のchrome.exeを5回の巡回（延べ76件、うち41件は親プロセス終了で既に消滅）で終了し、残存0確認。
 - decision: `docs/ai/decisions/2026-11-10-collapsed-state-button-operation.md`。
 
 ### 試行2（2026-11-10 05:03 委譲、裁定反映）: **合格**
