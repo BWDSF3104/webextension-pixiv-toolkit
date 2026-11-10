@@ -1,13 +1,16 @@
 # Backlog
 
+フォーク固有の実装作業は未開始。以下は確認済みの事実から出した候補で、実装はユーザー指示後に着手する。
+
 ## P0 (Critical)
 
-- [ ] [Critical task description]
+- なし
 
 ## P1 (High Priority)
 
-- [ ] [High priority task description]
+- [ ] `package.json` に `test` script を追加（現在の検証コマンドは `npx jest` 頼み）
 
 ## P2 (Normal Priority)
 
-- [ ] [Normal priority task description]
+- [ ] テストが `test/pathjoin.spec.js` 1本のみ。Parser・Net・Db に追加
+- [ ] `docs/help.md` の ffmpeg カスタムコマンドに、上流 readme で「mp4」と書かれながら実際の出力例が webm になっている行の誤りがある

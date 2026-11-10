@@ -1,11 +1,3 @@
 # Known Issues Archive
 
-Resolved issues are archived here. Active issues live in `known-issues.md`.
-
----
-
-## [Resolved Issue Title]
-- **Discovered**: YYYY-MM-DD
-- **Resolved**: YYYY-MM-DD
-- **Description**: [問題の説明]
-- **Resolution**: [解決方法]
+アーカイブはフォルダで判定する: 解決済みは `known-issues/archive/` へ `mv`（1回のみ）。このファイルには過去のエントリを持たない（現在なし）。

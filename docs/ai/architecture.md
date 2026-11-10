@@ -2,36 +2,42 @@
 
 ## System Overview
 
-Manifest V3 の Chrome/Firefox 拡張。ダウンロード処理は content script ではなく独立した options page（ダウンロードマネージャ）で実行する（上流 v6.0.0 の breaking change）。content script はページ解析結果をポート経由でマネージャへ送る。
+Manifest V3 の Chrome/Firefox 拡張（`package.json` v6.4.2）。ダウンロード処理は content script ではなく独立した options page（ダウンロードマネージャ）で実行する（上流 v6.0.0 の breaking change）。content script は解析結果をポート経由でマネージャへ送る。
 
 ## Components
 
-### content_scripts
-- **Purpose**: pixiv / comic / fanbox ページに注入し、操作パネルと解析を実行
-- **Location**: `src/content_scripts/`（components / modules / styles）
-- **Dependencies**: `src/modules/Parser`, `src/modules/PageResource`
+| 要素 | 場所 | 内容 |
+|---|---|---|
+| content script | `src/content_scripts/`（components / modules / styles） | pixiv・Pixiv Comic・Fanbox への注入と操作パネル。解析は `src/modules/Parser/{Pixiv,PixivComic,Fanbox}` |
+| background | `src/background/`（modules / services / updates） | service worker。拡張イベント・更新 |
+| options page | `src/options_page/`（components / router / services / mixins） | ダウンロードマネージャ UI。Vue 2.6 + Vuetify 1 + vue-router 3 |
+| popup page | `src/popup_page/` | ポップアップ UI。Vue 2 |
+| core | `src/core/browser` | chrome / firefox の拡張 API 差異の吸収 |
+| modules | `src/modules/` | Browser・Db・Extension・Manager・Net・PageResource・Parser・Ports・Util・Workers。ほかに Event・Queue（`processors` による同時数制御、既定 1）・Logger・GlobalSettings・I18n・Locales・TrackedError・ScheduledTask |
 
-### background (service worker)
-- **Purpose**: 拡張イベント処理・更新・サービス
-- **Location**: `src/background/`（modules / services / updates）
+ロケールは `src/statics/_locales/`（en / zh_CN）。
 
-### options page（ダウンロードマネージャ）
-- **Purpose**: ダウンロード・履歴・設定の UI。Vue 3 + router
-- **Location**: `src/options_page/`（components / router / services / mixins）
+## Storage
 
-### core / modules
-- **Purpose**: ブラウザ API 差異の吸収（`src/core/browser`）、共通機能（Db・Net・Ports・Workers・Manager・Util）
-- **Dependencies**: `dexie`（IndexedDB）、`ffmpeg.wasm`（アニメ生成）、`jszip`
+- PouchDB（`src/repositories/`: IllustHistory・DownloadRecord・AssetCache）
+- Dexie（`src/modules/Db/Repository/`: HistoryRepo・TrackedErrorRepo。`src/statics/lib/dexie` はページ側ロード用）
+
+## Media conversion
+
+- `ffmpeg.wasm`（ugoira 変換。カスタムコマンドの規約は `docs/help.md`）
+- `UPNG.js`（apng）、`jszip`
+- `src/statics/lib` の `gifjs` / `whammy.js` は上流の breaking change で削除扱いながら残存（known-issues）
 
 ## Data Flow
 
 1. content script がページを解析しリソース情報を取得
 2. Ports 経由で options page のマネージャへ送信
-3. Manager が Net で取得・変換（ffmpeg.wasm）し、浏览器 download API で保存
-4. 履歴は Db（dexie）へ記録
+3. Manager が Net で取得・変換（ffmpeg.wasm）し、ブラウザ download API で保存
+4. 履歴・ダウンロード記録は repositories（PouchDB）と Db（Dexie）へ記録
 
 ## Technical Decisions
 
-- Manifest V3 制約により `eval` / `Function` を使えない → `handlebars` 依存の `js-epub-maker` は現状動作不可（上流 readme の break change）
-- ビルドは webpack 4 + Babel。platform ごとに `config/webpack.*.config.js` を分割し `PLATFORM_ENV` で切り替える
-- 上流フォークとして、上流 `main` を upstream remote から取り込み、フォーク固有変更は `src/modules/` 単位で最小限に閉じる
+- Manifest V3 制約により `eval` / `Function` を使えない → `handlebars` 依存の `js-epub-maker` は現状動作不可。epub 生成不可（上流 readme）
+- ビルドは webpack 4 + Babel。platform ごとに `config/webpack.*.config.js` を分割し `PLATFORM_ENV` で切り替え、出力は `dist/chrome` / `dist/firefox`
+- テストは jest 27 + babel-jest。`jest.config.json` の `testRegex` が `test/*.spec.js` を収集（`package.json` に `test` script はなく `npx jest` で実行）
+- 上流フォークとして上流 `master` を upstream remote から取り込み、フォーク固有変更は `src/modules/` 単位で最小限に閉じる

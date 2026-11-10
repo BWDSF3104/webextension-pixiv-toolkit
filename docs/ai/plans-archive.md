@@ -1,11 +1,3 @@
 # Plans Archive
 
-Completed or cancelled plans are archived here. Active plans live in `plans.md`.
-
----
-
-## [Archived Plan Title]
-- **Created**: YYYY-MM-DD
-- **Completed**: YYYY-MM-DD
-- **Target**: [目標]
-- **Result**: [結果]
+完了・中止した計画をここに追記する（append-only、過去エントリは修正しない）。現在なし。

@@ -1,17 +1,5 @@
 # Plans
 
-Current active plans and their completion log.
+現在アクティブな計画なし。
 
-## Active Plans
-
-### [Plan Title]
-- **Created**: YYYY-MM-DD
-- **Target**: [目標]
-- **Steps**:
-  1. [ステップ1]
-  2. [ステップ2]
-- **Status**: 計画中 / 進行中 / 完了
-
-## Completion Log
-
-Completed plans are archived in `plans-archive.md`.
+計画は 1エントリ1ファイルで `docs/ai/plans/` に置かず、このファイルの Active Plans に書く。完了・中止は `plans-archive.md` へ移す。タスクとして着手した時点で `task_manager add` に移す。

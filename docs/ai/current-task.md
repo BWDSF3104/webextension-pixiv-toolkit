@@ -1,15 +1,5 @@
 # Current Task
 
-**Active Task**: [タスク名]
+アクティブタスク: なし。
 
-**Status**: [進行中 / 保留 / 完了]
-
-**Progress**:
-- [ ] [ステップ1]
-- [ ] [ステップ2]
-
-**Verification**:
-- [コマンドと結果]
-
-**Notes**:
-- [補足情報]
+トラッカーは `docs/ai/current-task.tsv`（`task_manager add` / `update` / `end` が管理し、edit ツールで直接編集しない）。タスク本文は `tasks/YYYY-MM-DD-short-name.md`。

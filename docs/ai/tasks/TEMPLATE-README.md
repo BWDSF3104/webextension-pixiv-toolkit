@@ -1,18 +1,23 @@
 # Task Record Template
 
-Save completed tasks as `YYYY-MM-DD-short-name.md` in this directory.
+1タスク1ファイル。`task_manager add` が `docs/ai/tasks/YYYY-MM-DD-short-name.md` を作成する（手書きしない）。
 
----
+必須フィールド:
 
+```
 # [Task Title] (YYYY-MM-DD)
 
-**Status**: 完了
+**Status**: 計画中 / 進行中 / 完了
+**Date**: YYYY-MM-DD
+**Backlog**: backlog.md の該当項目（該当時）
 
-**Summary**:
-- [完了した作業の要点]
+## 意図・背景
 
-**Files Changed**:
-- `[file path]`: [変更内容]
+## 調査結果 / 変更内容
 
-**Verification**:
-- `[command]`: [結果]
+## Verification
+- `[command]`: [結果]（推測ではなく実測）
+
+## 完了時 Memory Bank 操作チェックリスト
+- [ ] `current-task.tsv` の参照行を削除（`task_manager end`）
+```

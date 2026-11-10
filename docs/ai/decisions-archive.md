@@ -1,12 +1,3 @@
 # Decisions Archive
 
-Completed design decisions are archived here. Active decisions live in `decisions.md`.
-
----
-
-## [Archived Decision Title]
-- **Date**: YYYY-MM-DD
-- **Status**: 完了
-- **Context**: [背景]
-- **Decision**: [決定内容]
-- **Reasoning**: [理由]
+`decisions/` のエントリは作成後に修正しない。上書きする場合は新ファイルを `decisions/` に追加し、旧ファイル冒頭に `**Superseded by**: <新ファイル名>` を書く。このファイルには過去のエントリを持たない（現在なし）。
