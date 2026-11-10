@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: 拡張UIボタン実測済み。Download成功、Pixiv Omina scheme handlerなし、Legacy Mode handlerなし。実装開始指示待ち
+**Next Action**: UI表示方針確定（label視覚区別、Pixiv Omina非表示）。Download成功原因記録済み。ファイル未変更。実装開始指示待ち
 
 ## 意図 / 背景
 
@@ -107,6 +107,21 @@
 - `getMatchedRules()` は filter 属性が `minTimeStamp` / `tabId` only（公式 docs）で resourceType 別 filter は不可。本タスクでは `testMatchOutcome` を使う。
 - content script isolated world の CSP/`blob:` worker 可否は MCP の `evaluate_script` が main world で走るため実行時確認できていない。options page で `new Function` / blob worker test が通ったことは、isolated content script の CSP 判定ではない。
 - `https://www.pixiv.net/artworks/151883880` の content script UI ボタン確認: `Download` ボタンクリックで service worker の `chrome.downloads.search({})` に `D:\Downloads_Desktop\151883880_立冬.zip` の completed download が残った。UI でも `Download ✔` になった。`#ptk__new-handler` クリックで `ptk__container__body` の `--collapse` class が外れ、panel expand は動作。`P*` guide button (`ControlPanel.vue:8`) は `@click` がなく、guide P* 自体は action not wired。`Pixiv Omina` click は handler が走るが `Failed to launch 'pixiv-omina://create-download?...' because the scheme does not have a registered handler`。`Legacy` / `Mode` button (`AppLegacy.vue:41-44`) は `@click` handler がなく、runtime click で observable change なし。
+
+#### Download成功の原因（2026-11-10）
+
+- 実測で `Download` は成功した。これは MV3 不整合が修正されたからではない。
+- 実際の経路: content script UI -> `ContentPageDownloadManager` -> `Downloader` -> port `DownloadFile` -> background `DownloadFileService` -> `fetch` -> blob -> zip -> `browser.downloads.download()`。
+- `Downloader.js` の直接 `Download` 経路はコメントアウトされており、active pathは runtime port 経由。
+- DNR rule 1 は `resourceType` が不正なため `resourceTypes` 条件が省略され、実質全 request typeにマッチした。これにより background fetch で pximg request に `Referer: https://www.pixiv.net` が適用された。
+- `Handlebars is not defined` は EPUB生成側で問題。基本的な artwork zip download は handlebars を必要としないため、この error があっても `Download` は成功した。
+- `DownloadService.cachedDownloadIdFilenameMap` と `onDeterminingFilename` listener は、この testでは service worker が boot 済みで生存していたため filename suggestion に使えた。ただし MV3 service worker 再起動で map が失われるリスクは残る。
+
+#### UI表示方針（ユーザー決定）
+
+- ラベルは labelと分かる見た目にする。現状 buttonと同じ見た目で区別できない `P*` guide labelと `Legacy` labelを label表示へ変更する。
+- `Pixiv Omina` は不要。拡張UIから非表示にする。`AppLegacy.vue` と `App.vue` の button表示ブロックを削除する方針。
+- decision file: `docs/ai/decisions/2026-11-10-ui-label-distinction-and-pixiv-omina-hidden.md`
 
 ## 完了時 Memory Bank 操作
 
