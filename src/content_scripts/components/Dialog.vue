@@ -111,11 +111,17 @@ export default {
 
   .ptk__dialog-foot {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     row-gap: 6px;
     padding: 10px 0 20px 0;
     background: #fff;
+  }
+
+  .ptk__dialog-foot-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 

@@ -77,6 +77,10 @@
 - 不具合→修正（2026-11-10 06:43 ユーザー指摘、実測で確認）: 選択画面 dialog footer の button が dialog 幅からはみ出し左右のラベルが clip（before 画像 `op2-dialog-after-20261110.png` で左「Select」・右「Clo」のみ表示）。原因 `Dialog.vue` の `.ptk__dialog-foot` が `flex-wrap` なしの `display:flex`、`justify-content:center`（button 6個 ≈640px > container 幅 50%=466px）。修正（ユーザー指示「両方」）: `.ptk__dialog-foot` に `flex-wrap: wrap;` + `row-gap: 6px;`、`.ptk__dialog-container` の `width` 50%→60%。
   - 確認（同一条件 932x871・dpr 2、同一 page 151753981、viewport screenshot）: dialog width 550px、footer height 100px（2行）、`scrollWidth (550) <= width` = overflow false、全 button が wrapper 範囲内（1行目 Select All/Unselect All/Select Invert/DL to folder、2行目 DL per image/Close）。after 画像 `dialog-overflow-after-20261110.png`、txt `dialog-foot-overflow-confirmation-2026-11-10.txt` を Drive へ保存、local copy ゴミ箱。page 10 は last page のため close 不可 → 条件一致 chrome.exe 24 件終了、残存 0 確認。
   - 検証: `yarn test` 2 suites / 11 tests passed、`yarn build` exit=0（CSS のみ。`Dialog.vue` は PageSelector だけで使用）。
+- 固定改行（2026-11-10 06:52 ユーザー指示「DL to Folderから固定改行にする」、実装開始指示あり）: footer の折返しが窓幅依存（flex-wrap 自然折返し）だったため、`PageSelector.vue` の foot を2行 wrapper（`.ptk__dialog-foot-row`）へ分割 — 行1 = Select All / Unselect All / Select Invert / DL to folder、行2 = DL per image / Close。`Dialog.vue` は `.ptk__dialog-foot` を `flex-direction: column`（row-gap 6px 維持）し、row は `flex-wrap: wrap` を維持（狭い窓では行内折返し、clip なし）。
+  - 実測（chrome-devtools MCP、artwork 151753981、viewport screenshot）: 932x871・dpr 2 → dialog 550px、row1 y=488（4 button）、row2 y=526（DL per image / Close）。500x700・dpr 2（幅を変えた証明）→ dialog 291px、row1 が行内折返しで y=386（Select All/Unselect All）・y=418（Select Invert/DL to folder）、row2 y=456（DL per image/Close）= 境界（DL to folder→DL per image）は幅に依存せず保つ、clip なし。
+  - 保存: `I:\マイドライブ\kilo\2026-11-10-mv3-chrome-basic-function-audit\` の `fixedbreak-932x871-20261110.png`、`fixedbreak-narrow-500x700-20261110.png`、`fixed-linebreak-confirmation-2026-11-10.txt`。local copy ゴミ箱。page 11 は last page のため close 不可 → 条件一致 chrome.exe 26 件終了、残存 0 再確認。before 比較は修正前の狭い窓画像がないため DOM 実測＋コード差分で示す（932x871 の修正前画像 `dialog-overflow-after-20261110.png` は偶然4+2）。
+  - `yarn test` 11 passed、`yarn build` exit=0。
 
 ## 改修方針（実装開始指示後に着手）
 
