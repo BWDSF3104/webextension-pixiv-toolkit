@@ -143,6 +143,7 @@
 - `Pixiv Omina` は不要。拡張UIから非表示にする。`AppLegacy.vue` と `App.vue` の button表示ブロックを削除する方針。
 - decision file: `docs/ai/decisions/2026-11-10-ui-label-distinction-and-pixiv-omina-hidden.md`
 - Select & DL（選択画面 dialog）は zip 追従ではなく、選択画面内にボタンA/Bの2パターンを置く（A=フォルダ展開 / B=画像別保存）。ラベルは既存 `_download_to_folder` / `_download_per_image` を流用。decision file: `docs/ai/decisions/2026-11-10-select-and-dl-button-ab-in-selection-dialog.md`
+- 選択画面 footer の固定改行（DL to folder が2行目の先頭）は実装+確認済み。極端に狭い画面幅のレイアウトは今後気にしない（修整不要・スコープ外。`max-width`・メディアクエリ・行内折返しの追加制御は導入しない）。decision file: `docs/ai/decisions/2026-11-10-narrow-screen-layout-out-of-scope.md`
 
 #### 画面操作実測（2026-11-10）
 
