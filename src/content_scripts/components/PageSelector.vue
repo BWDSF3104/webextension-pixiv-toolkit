@@ -29,9 +29,9 @@
           <ptk-button @click="selectAll">{{ tl('_select_all') }}</ptk-button>
           <ptk-button @click="unselectAll">{{ tl('_unselect_all') }}</ptk-button>
           <ptk-button @click="selectInvert">{{ tl('_select_invert') }}</ptk-button>
-          <ptk-button @click="downloadSelectedPages('folder')" :disabled="selectedPageIndexes.length < 1">{{ tl('_download_to_folder') }}</ptk-button>
         </div>
         <div class="ptk__dialog-foot-row">
+          <ptk-button @click="downloadSelectedPages('folder')" :disabled="selectedPageIndexes.length < 1">{{ tl('_download_to_folder') }}</ptk-button>
           <ptk-button @click="downloadSelectedPages('perImage')" :disabled="selectedPageIndexes.length < 1">{{ tl('_download_per_image') }}</ptk-button>
           <ptk-button @click="closeSelectionDialog">{{ tl('_close') }}</ptk-button>
         </div>

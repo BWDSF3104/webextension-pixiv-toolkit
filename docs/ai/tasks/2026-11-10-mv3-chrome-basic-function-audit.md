@@ -81,6 +81,7 @@
   - 実測（chrome-devtools MCP、artwork 151753981、viewport screenshot）: 932x871・dpr 2 → dialog 550px、row1 y=488（4 button）、row2 y=526（DL per image / Close）。500x700・dpr 2（幅を変えた証明）→ dialog 291px、row1 が行内折返しで y=386（Select All/Unselect All）・y=418（Select Invert/DL to folder）、row2 y=456（DL per image/Close）= 境界（DL to folder→DL per image）は幅に依存せず保つ、clip なし。
   - 保存: `I:\マイドライブ\kilo\2026-11-10-mv3-chrome-basic-function-audit\` の `fixedbreak-932x871-20261110.png`、`fixedbreak-narrow-500x700-20261110.png`、`fixed-linebreak-confirmation-2026-11-10.txt`。local copy ゴミ箱。page 11 は last page のため close 不可 → 条件一致 chrome.exe 26 件終了、残存 0 再確認。before 比較は修正前の狭い窓画像がないため DOM 実測＋コード差分で示す（932x871 の修正前画像 `dialog-overflow-after-20261110.png` は偶然4+2）。
   - `yarn test` 11 passed、`yarn build` exit=0。
+  - 訂正（2026-11-10 07:01 ユーザー指摘「DL to folder が1行目になっている」）: 上の行グループは DL to folder を1行目の末尾に置いていた。指示の「DL to Folder から固定改行」= DL to folder が2行目の先頭へ訂正（行1 = Select All / Unselect All / Select Invert、行2 = DL to folder / DL per image / Close）。実測 932x871・dpr 2: row1 y=488（3 button）、row2 y=526（DL to folder / DL per image / Close）。500x700・dpr 2（幅を変えて固定境界確認）: row1 行内折返し y=370・402、row2 行内折返し y=440（DL to folder, DL per image）・472（Close）→ 境界（Select Invert → DL to folder）は幅依存せず保つ、clip なし。保存: `fixedbreak-corrected-932x871-20261110.png`、`fixedbreak-corrected-narrow-500x700-20261110.png`、`fixed-linebreak-correction-confirmation-2026-11-10.txt`。page 12 は last page のため close 不可 → 条件一致 chrome.exe 21 件終了、残存 0 確認。local copy ゴミ箱。`yarn test` 11 passed、`yarn build` exit=0。
 
 ## 改修方針（実装開始指示後に着手）
 
