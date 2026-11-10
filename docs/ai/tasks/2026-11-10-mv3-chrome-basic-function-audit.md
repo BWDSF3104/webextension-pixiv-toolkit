@@ -74,6 +74,9 @@
   - Pixiv Omina: legacy・mode2 の両 panel で button なし、`.ptk__pixiv-omina__btn` 要素なし（storage の showPixivOmina は true のまま → UIブロック削除が正）✓
   - op3 after は初回取得で Vue DOM 更新 lag により無変化 → 同一条件で再取得。op4 before は選択確定後へ修正。click の observable change ない項目は実測で確認（rule の前後1組例外を適用）。
   - ブラウザ: page 9（download manager）close 済み。page 8 は最後に開いている page のため close_page 不可（MCP制限）→ 識別条件（コマンドラインに `chrome-devtools-mcp\chrome-profile` を含む chrome.exe）の残存 26 件を終了し、残存 0 を確認（MCP にブラウザ終了操作がないためプロセス終了で対応）。
+- 不具合→修正（2026-11-10 06:43 ユーザー指摘、実測で確認）: 選択画面 dialog footer の button が dialog 幅からはみ出し左右のラベルが clip（before 画像 `op2-dialog-after-20261110.png` で左「Select」・右「Clo」のみ表示）。原因 `Dialog.vue` の `.ptk__dialog-foot` が `flex-wrap` なしの `display:flex`、`justify-content:center`（button 6個 ≈640px > container 幅 50%=466px）。修正（ユーザー指示「両方」）: `.ptk__dialog-foot` に `flex-wrap: wrap;` + `row-gap: 6px;`、`.ptk__dialog-container` の `width` 50%→60%。
+  - 確認（同一条件 932x871・dpr 2、同一 page 151753981、viewport screenshot）: dialog width 550px、footer height 100px（2行）、`scrollWidth (550) <= width` = overflow false、全 button が wrapper 範囲内（1行目 Select All/Unselect All/Select Invert/DL to folder、2行目 DL per image/Close）。after 画像 `dialog-overflow-after-20261110.png`、txt `dialog-foot-overflow-confirmation-2026-11-10.txt` を Drive へ保存、local copy ゴミ箱。page 10 は last page のため close 不可 → 条件一致 chrome.exe 24 件終了、残存 0 確認。
+  - 検証: `yarn test` 2 suites / 11 tests passed、`yarn build` exit=0（CSS のみ。`Dialog.vue` は PageSelector だけで使用）。
 
 ## 改修方針（実装開始指示後に着手）
 

@@ -86,7 +86,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 50%;
+    width: 60%;
     margin: 0 auto;
   }
 
@@ -111,7 +111,9 @@ export default {
 
   .ptk__dialog-foot {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    row-gap: 6px;
     padding: 10px 0 20px 0;
     background: #fff;
   }
