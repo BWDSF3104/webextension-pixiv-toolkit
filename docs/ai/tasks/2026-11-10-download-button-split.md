@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: 残件(段階3): IllustAdapter/Mangaのoptions構築でsaveMode透過なし(IllustAdapter.js:51-65)→承認範囲外の配線追加が必要でユーザー裁定待ち(推奨: adapter側でsaveMode透過+spec更新)。裁定待ちの未コミット変更を保持(手順2f逸脱として記録)。裁定後に画面確認再実測が必要(現実測は両ボタンzip=followで不合格)。テスト/ビルドは通過済み
+**Next Action**: 段階3解消(2026-11-10 05:01 常時表示/すべて承認)。残工程: adapter透過4行(IllustAdapter 2関数+EpisodeAdapter+PostAdapter)→yarn test/build→画面再実測(A=work folder内ファイル単位/B=直下ファイル単位)→項目分コミット+push。試行回数2回目(上限3)
 
 ## 意図 / 背景
 
@@ -32,6 +32,12 @@
 2. `App.vue` の非ugoiraボタンを2個へ分割: `@click="download({ saveMode: 'folder' })"` / `@click="download({ saveMode: 'perImage' })"`。ラベルは `tl()` で en / zh_CN 両ロケールへ追加。
 3. override 分岐は新ロジックなので jest spec を1本（`shouldZipFile` / `dontCreateWorkFolder` の override 判定）。
 4. Ugoira は既存の换算ボタン別（UgoiraDownloadTask は単一換算ファイル生成）なのでスコープ外とする — 要確認。
+
+### 使用条件の補足（2026-11-10 04:53 ユーザー）
+
+- A: 複数枚作品用 → Aの表示は画像が2枚以上のときだけ（Bは常時表示）。
+- B: どのタイプでも使用 → adapter透過の承認範囲を Illust/Manga（IllustAdapter）、PixivComic（EpisodeAdapter）、Fanbox（PostAdapter）へ拡張。Novel/Ugoira は単一ファイル生成のためBの効果=現状（直下保存）と等価、変更なし。
+- 判定ロジック（MultipleDownloadTask）は4タイプ共有で既存specがカバー。追加はadapterの `saveMode` 透過1行×4関数（IllustAdapterはillust/mangaの2関数）+表示条件1行（App.vue: pages>=2でA表示）。
 
 ### 承認（2026-11-10 04:20 ユーザー「推奨で承認」）
 

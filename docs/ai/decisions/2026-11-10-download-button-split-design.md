@@ -13,3 +13,10 @@
 - 不採用: 画像ごとにダウンロード項目/タスクを作り分ける解釈（候補2）。同一挙動になるため不要。
 
 supersedes: なし（新決定）。UI label 決定（2026-11-10-ui-label-distinction-and-pixiv-omina-hidden）には影響しない（新ボタンは button のまま）。
+
+## 補足（2026-11-10 04:53 ユーザー）
+
+- ボタンAは複数枚作品で使うもの。ボタンBはどのタイプでも使用する。
+- 表示: 2026-11-10 05:01 ユーザー裁定「常時表示」（A・Bとも枚数条件なし。単発作品でAを押せばフォルダ内1ファイル=Bとの差が出る）。
+- 2026-11-10 05:01「すべて承認」: adapter透過（IllustAdapter createIllust/createManga、EpisodeAdapter、PostAdapter）を承認範囲へ追加。Novel/Ugoiraは単一ファイル生成のためBの効果=現状（直下保存）と等価、変更なし。
+- Bが効く対象: Illust/Manga/PixivComic Episode/Fanbox Post は `MultipleDownloadTask` 共有でadapter透過のみ（計4行）。
