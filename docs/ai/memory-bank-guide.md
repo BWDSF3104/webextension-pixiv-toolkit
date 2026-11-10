@@ -13,6 +13,7 @@ docs/ai/
 ├── decisions/               # 1エントリ1ファイル（YYYY-MM-DD-short-name.md）
 ├── known-issues/            # 1エントリ1ファイル（KI-YYYYMMDD-NN-short-name.md）。解決済みは archive/
 ├── tasks/                   # 1タスク1ファイル。雛形は tasks/TEMPLATE-README.md
+├── reference/               # 常設参照（1エントリ1ファイル。アーカイブしない）
 └── tmp/                    # スクラッチ（gitignore、7日で削除）
 ```
 
