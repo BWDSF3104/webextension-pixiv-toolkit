@@ -1,6 +1,6 @@
 # ダウンロードボタン改修: ボタン分割（フォルダ展開 / 画像別保存）
 
-**Status**: 進行中
+**Status**: 完了
 **Date**: 2026-11-10
 **Next Action**: 段階3解消(2026-11-10 05:01 常時表示/すべて承認)。残工程: adapter透過4行(IllustAdapter 2関数+EpisodeAdapter+PostAdapter)→yarn test/build→画面再実測(A=work folder内ファイル単位/B=直下ファイル単位)→項目分コミット+push。試行回数2回目(上限3)
 
