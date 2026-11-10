@@ -8,9 +8,9 @@ Pixiv Toolkit Next（Chrome/Firefox 拡張機能）のフォーク。upstream: `
 
 ## コード検証（本プロジェクト）
 
-- 依存インストール: `yarn install`（`yarn.lock`）・Node 16 系
-- ビルド: `yarn build`（Chrome）/ `yarn build:firefox`（Firefox）
-- テスト: `npx jest`（`package.json` に `test` script は無い。`jest.config.json` + `test/*.spec.js`）
+- 依存インストール: `yarn install`（`yarn.lock`）・engines は Node `>=16.18`
+- ビルド: `yarn build`（Chrome）/ `yarn build:firefox`（Firefox）。dev / build script に `NODE_OPTIONS=--openssl-legacy-provider` を組込み（webpack 4 の md4 と OpenSSL 3 対策）
+- テスト: `yarn test`（`package.json` の `test` script。`jest.config.json` + `test/*.spec.js`）
 - 上流取り込み後: `git fetch upstream` → `git merge upstream/master`（上流の既定ブランチは `master`）してからビルド＋テスト
 - テストの外部 API 呼出し: 可（決定: `docs/ai/decisions/2026-11-02-tests-may-call-external-api.md`）
 

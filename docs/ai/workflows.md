@@ -17,10 +17,10 @@
 Before every commit:
 
 1. **Run verification**:
-   - JS 変更: `npx jest`（`package.json` の `test` script から呼ぶ）
+   - JS 変更: `yarn test`（`package.json` の `test` script）
    - ビルド影響変更: `yarn build`（Firefox 向け変更は `yarn build:firefox`）
    - Both: run both commands
-   - Node が engines（`~16.18.0`）と違う場合: `yarn install --ignore-engines`、ビルドは `NODE_OPTIONS=--openssl-legacy-provider` を設定して実行（known-issues KI-20261110-05）
+   - `package.json` の dev / build script に `NODE_OPTIONS=--openssl-legacy-provider` を組込み済み（webpack 4 の md4 と OpenSSL 3 のため）。engines は Node `>=16.18`
 2. **Check diff**: `git diff --cached` to review staged changes
 3. **Check status**: `git status` to ensure only intended files are staged
 4. **Never commit secrets**: Verify no API keys, tokens, or credentials in diff

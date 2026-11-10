@@ -5,13 +5,13 @@
   "author": "leoding86 <leoding86@msn.com>",
   "private": false,
   "scripts": {
-    "dev": "cross-env PLATFORM_ENV=chrome webpack --watch --progress --config webpack.config.js",
-    "dev:firefox": "cross-env PLATFORM_ENV=firefox webpack --watch --progress --config webpack.config.js --env.platform=firefox",
-    "dev:cs": "webpack --watch --progress --config config/webpack.content-scripts.config.js",
-    "dev:op": "webpack --watch --progress --config config/webpack.options-page.config.js",
-    "dev:bg": "webpack --watch --progress --config config/webpack.background.config.js",
-    "build": "cross-env NODE_ENV=production PLATFORM_ENV=chrome webpack --config webpack.config.js",
-    "build:firefox": "cross-env NODE_ENV=production PLATFORM_ENV=firefox webpack --config webpack.config.js --env.platform=firefox",
+    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider PLATFORM_ENV=chrome webpack --watch --progress --config webpack.config.js",
+    "dev:firefox": "cross-env NODE_OPTIONS=--openssl-legacy-provider PLATFORM_ENV=firefox webpack --watch --progress --config webpack.config.js --env.platform=firefox",
+    "dev:cs": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --watch --progress --config config/webpack.content-scripts.config.js",
+    "dev:op": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --watch --progress --config config/webpack.options-page.config.js",
+    "dev:bg": "cross-env NODE_OPTIONS=--openssl-legacy-provider webpack --watch --progress --config config/webpack.background.config.js",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=production PLATFORM_ENV=chrome webpack --config webpack.config.js",
+    "build:firefox": "cross-env NODE_OPTIONS=--openssl-legacy-provider NODE_ENV=production PLATFORM_ENV=firefox webpack --config webpack.config.js --env.platform=firefox",
     "test": "jest"
   },
   "dependencies": {
@@ -82,9 +82,9 @@
     "worker-loader": "^3.0.2"
   },
   "engines": {
-    "node": "~16.18.0",
-    "npm": "~8.19.2",
-    "yarn": "~1.22.4"
+    "node": ">=16.18.0",
+    "npm": ">=8.19.0",
+    "yarn": ">=1.22.0"
   },
   "browserslist": [
     "> 1%",

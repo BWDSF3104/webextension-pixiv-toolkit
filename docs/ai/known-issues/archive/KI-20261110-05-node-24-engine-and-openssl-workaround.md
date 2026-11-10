@@ -19,3 +19,5 @@
 
 ## Status
 回避策運用中（engine 指定の変更は未実施）
+
+**Resolved**: 2026-11-10（タスク `2026-11-10-package-json-modernize`）— 回避策をプロジェクト側へ取り込み済み。engines を `>=16.18.0`（npm `>=8.19.0` / yarn `>=1.22.0`）へ緩和し、`package.json` の dev / build script 7本に `cross-env NODE_OPTIONS=--openssl-legacy-provider` を追加。フラグなしの `yarn install` / `yarn build` / `yarn build:firefox` / `yarn test` が Node 24.22.1 で成功。残る限定: legacy provider は将来の Node / OpenSSL で除去される前提。webpack 5 へ更新すれば不要になる（現況は webpack 4 + `uglifyjs-webpack-plugin`）。
