@@ -8,6 +8,8 @@ Novel の epub 生成機能が動作しない。
 ## 原因
 `src/statics/lib/js-epub-maker` は `handlebars` に依存し、handlebars は `eval` / `Function` を使う。Manifest V3 では拡張ページでこれらが使えない。
 
+2026-11-10 補足: `handlebars-latest.js` は `manifest.json` の `content_scripts.js` 列に入っていない（`js-epub-maker.js` だけ）。content script の isolated world では `Handlebars` が undefined なので、CSP 以前に ReferenceError。content script の isolated world CSP も `new Function` を禁じる。
+
 ## 影響
 epub 生成は現状不可。上流 readme の 6.0.0 breaking change #3 と同じ状態。
 
