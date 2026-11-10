@@ -8,7 +8,7 @@
 
 ## P1 (High Priority)
 
-- [ ] `package.json` に `test` script を追加（現在の検証コマンドは `npx jest` 頼み）
+- なし（`package.json` の `test` script は 2026-11-10 に追加済み）
 
 ## P2 (Normal Priority)
 

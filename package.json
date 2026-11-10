@@ -11,7 +11,8 @@
     "dev:op": "webpack --watch --progress --config config/webpack.options-page.config.js",
     "dev:bg": "webpack --watch --progress --config config/webpack.background.config.js",
     "build": "cross-env NODE_ENV=production PLATFORM_ENV=chrome webpack --config webpack.config.js",
-    "build:firefox": "cross-env NODE_ENV=production PLATFORM_ENV=firefox webpack --config webpack.config.js --env.platform=firefox"
+    "build:firefox": "cross-env NODE_ENV=production PLATFORM_ENV=firefox webpack --config webpack.config.js --env.platform=firefox",
+    "test": "jest"
   },
   "dependencies": {
     "@ffmpeg/core": "^0.11.0",
