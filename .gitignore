@@ -7,3 +7,4 @@ package-lock.json
 /coverage
 /yarn-error.log
 /docs/ai/tmp/
+.env

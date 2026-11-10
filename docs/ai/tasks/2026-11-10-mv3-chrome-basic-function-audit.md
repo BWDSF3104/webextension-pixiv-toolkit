@@ -96,7 +96,7 @@
 
 #### 実行結果（2026-11-10, Chrome DevTools MCP）
 
-- 資格情報の保管場所はプロジェクト内 `docs/ai/tmp/pixiv_credentials.local.md`。これは `.gitignore` の `/docs/ai/tmp/` により git 管理外。最初 `C:\Users\fujim\AppData\Local\Temp\kilo` に作っていた一時コピーは Recycle Bin へ削除した。
+- 資格情報の保管場所はプロジェクト内 `.env`（gitignored）。`git check-ignore -v .env` → `.gitignore:10:.env`。`docs/ai/tmp/` は archive で消えるため使用しない。旧 `docs/ai/tmp/pixiv_credentials.local.md` と temp の一時コピーは Recycle Bin へ削除済み。変数名は `PIXIV_EMAIL` / `PIXIV_PASSWORD`。
 - DevTools MCP の persistent profile でログイン完了（profile `ぶるめ`）。`accounts.pixiv.net/security-setting/reminder` を通過し、`https://www.pixiv.net/` で login session 確認。`git check-ignore -v docs/ai/tmp/pixiv_credentials.local.md` → `.gitignore:9:/docs/ai/tmp/`。
 - `dist/chrome` を DevTools MCP の `install_extension` で読み込めた（extension id `nccfhdinjmbjnlgnmmgglmenmaacgagf`）。service worker `background/background.js` が起動し、`chrome.declarativeNetRequest` / `chrome.storage` / `chrome.downloads` / `chrome.runtime` は object。`chrome.webRequest` は undefined。`chrome.downloads.onDeterminingFilename` listener は object として確認できた。
 - `chrome.storage.local.get(null)` は成功。`self.oninstall` は service worker の install listener（`function`）で、`onBooted()` は SW install 時だけ走るという既存の設計確認は保つ。listener の同期登録、cache/port 喪失、ファイル名実測は未実施。
