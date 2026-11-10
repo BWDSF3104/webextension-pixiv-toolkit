@@ -87,6 +87,13 @@
 - ブラウザ: page 1（artwork）は最後に開いているpageのためclose_page不可（MCP制限）。識別条件一致のchrome.exeを5回の巡回（延べ76件、うち41件は親プロセス終了で既に消滅）で終了し、残存0確認。
 - decision: `docs/ai/decisions/2026-11-10-collapsed-state-button-operation.md`。
 
+### Select & DL 再実測（2026-11-10 06:11 ユーザー質問、実測）: **機能する**
+
+- 対象: artwork 151753981（2page）。p1相当（`.ptk__page-preview` 2番目）を選択、dialog footerの `Download` をclick（uid snapshotはa11y非公開のため、evaluate_scriptで実DOM要素への実click＝Vueハンドラインデックスへイベントdispatch。window size 945x1020/viewport 932x871・dpr 2）。
+- 実測: `D:\Downloads_Desktop\151753981_隊員Oさん (2).zip` complete（06:16:46Z）→ 展開確認でzip内容 `p1.jpg` のみ（選択反映OK、p0未保存）。download manager pageが開き（MV3で `ensureDownloadManagerOpen` 経路OK）、設定どおりzip保存（saveMode未指定のためglobal設定追従）。
+- 保存（Drive）: `sd-select-before/mid/after-20261110.png`（before=選択前、mid=選択反映、after=Download click後）、`select-dl-recheck-20261110.txt`。local copyは `kilo-safe-remove`。pageはclose済み（download manager page含む）、chrome.exe残存0確認。downloadMode 2→1復元済み。
+- 補足: 分割ボタン（A/B）もpage-selectorの選択状態を反映する（`pageSelectorSelectHandler` → `getDownloadArgs` の `selectedIndexes`）。
+
 ### 試行2（2026-11-10 05:03 委譲、裁定反映）: **合格**
 
 - 正典矛盾の記録: 本記録04:53の「A表示=2枚以上」条件は05:01裁定「常時表示（枚数条件なし）」に置換（新しい文書を優先）。実装（App.vue）は常時表示で裁定と一致、削除する表示条件はなし。単発作品でA=work folder内1ファイル（=Bとの差）を単発実測で確認。
