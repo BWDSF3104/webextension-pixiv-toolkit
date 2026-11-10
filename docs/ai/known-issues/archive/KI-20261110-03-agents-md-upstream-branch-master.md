@@ -16,3 +16,5 @@
 
 ## Status
 ユーザー承認待ち
+
+**Resolved**: 2026-11-10（ユーザー承認。AGENTS.md を `upstream/master` へ修正）

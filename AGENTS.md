@@ -11,7 +11,7 @@ Pixiv Toolkit Next（Chrome/Firefox 拡張機能）のフォーク。upstream: `
 - 依存インストール: `yarn install`（`yarn.lock`）・Node 16 系
 - ビルド: `yarn build`（Chrome）/ `yarn build:firefox`（Firefox）
 - テスト: `npx jest`（`package.json` に `test` script は無い。`jest.config.json` + `test/*.spec.js`）
-- 上流取り込み後: `git fetch upstream` → `git merge upstream/main` してからビルド＋テスト
+- 上流取り込み後: `git fetch upstream` → `git merge upstream/master`（上流の既定ブランチは `master`）してからビルド＋テスト
 - テストの外部 API 呼出し: 可（決定: `docs/ai/decisions/2026-11-02-tests-may-call-external-api.md`）
 
 ## Development
@@ -23,9 +23,9 @@ Pixiv Toolkit Next（Chrome/Firefox 拡張機能）のフォーク。upstream: `
 
 ## Code Standards
 
-- JavaScript (ESM) + Vue 3（options page）・Babel・webpack 4
+- JavaScript (ESM) + Vue 2.6 / Vuetify 1（options page）・Babel・webpack 4
 - 上流の既存スタイル（2 space・`.editorconfig`）に従う。フォーク固有の変更は `src/modules/` 配下の既存モジュール単位で最小限に閉じる
-- ロケール: `src/statics/_locales/`（en / zh-CN）。新規文言は両ロケールに追加
+- ロケール: `src/statics/_locales/`（en / zh_CN）。新規文言は両ロケールに追加
 
 ## Documentation
 
@@ -41,7 +41,7 @@ webextension-pixiv-toolkit/
 │   ├── content_scripts/  # ページ側注入（components/modules/styles）
 │   ├── core/browser/     # 拡張 API のブラウザ差異吸収
 │   ├── modules/          # Browser Db Extension Manager Net PageResource Parser Ports Util Workers
-│   ├── options_page/     # ダウンロードマネージャ（Vue 3・router・services）
+│   ├── options_page/     # ダウンロードマネージャ（Vue 2.6・router・services）
 │   ├── popup_page/
 │   ├── repositories/
 │   ├── errors/ mixins/ config/

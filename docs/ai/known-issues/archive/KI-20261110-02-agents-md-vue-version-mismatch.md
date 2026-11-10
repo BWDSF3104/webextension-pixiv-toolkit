@@ -16,3 +16,5 @@
 
 ## Status
 ユーザー承認待ち
+
+**Resolved**: 2026-11-10（ユーザー承認。AGENTS.md Code Standards と Project Structure を Vue 2.6 / Vuetify 1 へ修正）
