@@ -11,8 +11,11 @@
     :class="downloadButtonType"
   >
     <template v-if="!isUgoira">
-      <ptk-button @click="download"
-      >{{ tl('_download') }}{{ generalTaskProgressText }}</ptk-button>
+      <ptk-button @click="download({ saveMode: 'folder' })"
+      >{{ tl('_download_to_folder') }}{{ generalTaskProgressText }}</ptk-button>
+
+      <ptk-button @click="download({ saveMode: 'perImage' })"
+      >{{ tl('_download_per_image') }}{{ generalTaskProgressText }}</ptk-button>
     </template>
     <template v-else>
       <ptk-button @click="download({ ugoiraConvertType: 'apng' })"
@@ -355,19 +358,20 @@ export default {
       }
     },
 
-    getDownloadArgs({ ugoiraConvertType }) {
+    getDownloadArgs({ ugoiraConvertType, saveMode }) {
       return {
         unpackedResource: this.resource.unpack(),
         options: {
           ugoiraConvertType,
+          saveMode,
           selectedIndexes: this.selectedIndexes
         }
       };
     },
 
-    async downloadWithDownloadManager({ ugoiraConvertType, redownload = false }) {
+    async downloadWithDownloadManager({ ugoiraConvertType, saveMode, redownload = false }) {
       await this.ensureDownloadManagerOpen(async () => {
-        const args = this.getDownloadArgs({ ugoiraConvertType });
+        const args = this.getDownloadArgs({ ugoiraConvertType, saveMode });
         args.options.redownload = redownload;
 
         let response = await browser.runtime.sendMessage({
@@ -378,7 +382,7 @@ export default {
         if (!response.result && redownload === false) {
           if (response.errorName === 'DownloadTaskExistsError') {
             if (window.confirm(this.tl(`_the_resource_is_already_in_download_manager`))) {
-              this.downloadWithDownloadManager({ ugoiraConvertType, redownload: true })
+              this.downloadWithDownloadManager({ ugoiraConvertType, saveMode, redownload: true })
             }
 
             return;
@@ -410,8 +414,8 @@ export default {
       });
     },
 
-    download({ ugoiraConvertType } = {}) {
-      this.downloadWithDownloadManager({ ugoiraConvertType });
+    download({ ugoiraConvertType, saveMode } = {}) {
+      this.downloadWithDownloadManager({ ugoiraConvertType, saveMode });
     },
 
     pageSelectorSelectHandler(selectedPages, selectedIndexes) {

@@ -77,6 +77,19 @@
 - ブラウザ: chrome-devtools MCP既存ブラウザ使用（プロファイル`ぶるめ`）。開いたpageはdownload manager tab（page 2）をclose_pageで閉じた。page 1（artwork）は「最後に開いているpageは閉じ不可」のため残し（ブラウザプロセスそのものはMCPに終了操作なし、残存処理は親）。確認用一時変更 `downloadMode` は 2→1（元の値）へ復元済み。
 - コミット: 未実施（画面確認不合格＝未解決のため保留。作業ツリーは変更を残して継続、parent裁定待ち）。
 
+### 試行2（2026-11-10 05:03 委譲、裁定反映）: **合格**
+
+- 正典矛盾の記録: 本記録04:53の「A表示=2枚以上」条件は05:01裁定「常時表示（枚数条件なし）」に置換（新しい文書を優先）。実装（App.vue）は常時表示で裁定と一致、削除する表示条件はなし。単発作品でA=work folder内1ファイル（=Bとの差）を単発実測で確認。
+- adapter透過4行（承認範囲どおり、既存フィールドコピーの流儀）: `IllustAdapter.js`（createIllustDownloadTask・createMangaDownloadTaskへ `saveMode: options.saveMode`）、`EpisodeAdapter.js`、`PostAdapter.js`。Novel/Ugoira変更なし。
+- `yarn test`: 2 suites / 11 tests passed（既存維持、Time 1.937s）。`yarn build`（chrome）: 成功（ERRORなし、14:05-14:06、既存警告のみ）。
+- 画面確認（新instance、拡張id `nccfhdinjmbjnlgnmmgglmenmaacgagf` を dist/chrome からinstall、window size viewport 932x871・dpr 2・同一取得方法、before/after 6枚+txtをDriveへ、local copyゴミ箱）: `I:\マイドライブ\kilo\2026-11-10-download-button-split\` の `wired-artwork-151753981-buttonA-before/after-20261110.png`、`wired-artwork-151753981-buttonB-before/after-20261110.png`、`wired-single-151883880-buttonB-before/after-20261110.png`、`wired-confirmation-2026-11-10.txt`。
+- 実測（chrome.downloads search・state complete・ディスクLastWriteTime）:
+  - A（2page illust 151753981）: `D:\Downloads_Desktop\151753981_隊員Oさん\p0.jpg`・`p1.jpg`（14:06:56）= work folder内ファイル単位 ✓
+  - B（同）: `D:\Downloads_Desktop\p0.jpg`・`p1.jpg`（14:07:28）= 直下ファイル単位（work folderなし） ✓
+  - B（単発1枚 151883880）: `D:\Downloads_Desktop\p0.png`（14:09:37）= 直下1ファイル ✓、2ボタン常時表示 ✓
+  - 不合格条件（ZIP保存/A直下/B folder内）発生せず。テスト用実ファイルは実測証拠として保持（削除は `kilo-safe-remove`）。
+- downloadMode=2（App.vue描画条件）への一時変更→確認後1（元の値）へ復元。試行回数は項目全体で試行2（上限3内）。ブラウザプロセスは閉じられず（MCPに終了操作なし、page 2閉じる・page 1は最終pageのため閉じ不可、残存処理は親）。
+
 ## 完了時 Memory Bank 操作
 
 - [ ] `current-task.tsv` の参照行を削除

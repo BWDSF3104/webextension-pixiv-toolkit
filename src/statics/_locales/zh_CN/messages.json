@@ -653,10 +653,16 @@
    "_zeros_will_be_filled_at_the_beginning_of_page_number": {
        "message": "将会在页码前填充\"0\""
    },
-   "_download": {
-       "message": "下载"
-   },
-   "_select_and_dl": {
+    "_download": {
+        "message": "下载"
+    },
+    "_download_to_folder": {
+        "message": "保存到文件夹"
+    },
+    "_download_per_image": {
+        "message": "逐张保存"
+    },
+    "_select_and_dl": {
        "message": "选择并下载"
    },
    "_select_pages_you_want_to_download": {

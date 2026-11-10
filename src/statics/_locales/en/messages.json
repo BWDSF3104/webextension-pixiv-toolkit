@@ -650,10 +650,16 @@
    "_zeros_will_be_filled_at_the_beginning_of_page_number": {
        "message": "Zeros will be filled at the beginning of page number"
    },
-   "_download": {
-       "message": "Download"
-   },
-   "_select_and_dl": {
+    "_download": {
+        "message": "Download"
+    },
+    "_download_to_folder": {
+        "message": "DL to folder"
+    },
+    "_download_per_image": {
+        "message": "DL per image"
+    },
+    "_select_and_dl": {
        "message": "Select & DL"
    },
    "_select_pages_you_want_to_download": {

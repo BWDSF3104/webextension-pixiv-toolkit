@@ -54,6 +54,7 @@ class EpisodeAdapter {
       id: 'pixiv_comic:episode:' + this.context.id,
       url: this.url,
       pages: this.context.pages,
+      saveMode: options.saveMode,
       pageNumberStartWithOne: this.settings.pixivComicEpisodePageNumberStartWithOne === -2 ?
                               this.settings.globalTaskPageNumberStartWithOne :
                               this.settings.pixivComicEpisodePageNumberStartWithOne,

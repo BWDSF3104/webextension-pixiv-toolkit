@@ -14,6 +14,7 @@ import { fixFilename } from "@/modules/Util";
  * @property {string} url
  * @property {string[]} pages
  * @property {number[]} selectedIndexes
+ * @property {string} [saveMode] task-level override ('folder' | 'perImage'); undefined follows GlobalSettings
  * @property {string} [renameRule]
  * @property {string} [renameImageRule]
  * @property {number} pageNumberStartWithOne
@@ -132,6 +133,11 @@ class MultipleDownloadTask extends AbstractDownloadTask {
   }
 
   shouldZipFile() {
+    if (this.options.saveMode) {
+      // shortcut: saveMode override values are only 'folder'/'perImage' (both file-save). Add a case if 'zip' ever becomes selectable.
+      return false;
+    }
+
     if (GlobalSettings().downloadSaveMode !== 0) {
       return false;
     }
@@ -142,6 +148,10 @@ class MultipleDownloadTask extends AbstractDownloadTask {
   }
 
   dontCreateWorkFolder() {
+    if (this.options.saveMode) {
+      return this.options.saveMode === 'perImage';
+    }
+
     if (GlobalSettings().downloadSaveMode !== 1) {
       return false;
     }

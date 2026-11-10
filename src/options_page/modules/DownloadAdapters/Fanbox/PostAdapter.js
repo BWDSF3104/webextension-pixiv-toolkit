@@ -62,6 +62,7 @@ class PostAdapter {
       url: this.url,
       pages: this.context.pages,
       selectedIndexes: options.selectedIndexes,
+      saveMode: options.saveMode,
       renameRule: this.settings.fanboxPostRenameRule,
       renameImageRule: this.settings.fanboxPostRenameImageRule,
       pageNumberStartWithOne: this.settings.fanboxPostPageNumberStartWithOne === -2 ?

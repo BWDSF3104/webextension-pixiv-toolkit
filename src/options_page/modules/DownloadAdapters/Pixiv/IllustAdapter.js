@@ -53,6 +53,7 @@ class IllustAdapter {
       url: this.url,
       pages: this.context.pages,
       selectedIndexes: options.selectedIndexes,
+      saveMode: options.saveMode,
       renameRule:  this.settings.illustRenameRule,
       renameImageRule: this.settings.illustRenameImageRule,
       pageNumberStartWithOne: this.settings.illustrationPageNumberStartWithOne === -2 ?
@@ -76,6 +77,7 @@ class IllustAdapter {
       url: this.url,
       pages: this.context.pages,
       selectedIndexes: options.selectedIndexes,
+      saveMode: options.saveMode,
       renameRule: this.settings.mangaRenameRule,
       renameImageRule: this.settings.mangaRenameImageRule,
       pageNumberStartWithOne: this.settings.mangaPageNumberStartWithOne === -2 ?
