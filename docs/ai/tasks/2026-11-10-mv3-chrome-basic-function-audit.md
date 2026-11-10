@@ -62,6 +62,7 @@
 
 - `git fetch upstream` + `git diff --stat upstream/master...HEAD`: 29 files changed（コード差分なし・docs / .gitignore / package.json のみ）
 - 実行時確認（Chrome への読み込み）: 未実施（Playwright が拡張を読み込めない）
+- 画面操作実測: Drive保存 `I:\マイドライブ\kilo\2026-11-10-mv3-chrome-basic-function-audit\ui-button-self-operation-confirmation-2026-11-10.txt`。before/after画像も同じフォルダ。browser tool pageはlast open pageのため閉じられず、記録時点でopenのまま。
 
 ## 改修方針（実装開始指示後に着手）
 
