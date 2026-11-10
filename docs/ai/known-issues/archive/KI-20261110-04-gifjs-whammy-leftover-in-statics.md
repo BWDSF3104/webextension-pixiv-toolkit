@@ -16,3 +16,5 @@
 
 ## Status
 調査中
+
+**Resolved**: 2026-11-10（調査）— 未参照ではない。`src/statics/manifest.json` の content_scripts `js` に `lib/gifjs/gif.js`・`lib/whammy.js` が登録され、`src/content_scripts/modules/Legacy/UgoiraGenerator/GifGenerator.js:77`（`new GIF`）と `WebmGenerator.js:81`（`new Whammy.Video()`）から参照されている。上流 readme の「削除」記述が古い。削除は不要なので `docs/ai/architecture.md` を実コードへ合わせた。上記「原因」は誤り（単なる残存ではなく、Legacy 経路が現に参照している）。

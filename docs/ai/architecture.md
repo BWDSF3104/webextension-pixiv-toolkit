@@ -26,7 +26,7 @@ Manifest V3 の Chrome/Firefox 拡張（`package.json` v6.4.2）。ダウンロ�
 
 - `ffmpeg.wasm`（ugoira 変換。カスタムコマンドの規約は `docs/help.md`）
 - `UPNG.js`（apng）、`jszip`
-- `src/statics/lib` の `gifjs` / `whammy.js` は上流の breaking change で削除扱いながら残存（known-issues）
+- `src/statics/lib` の `gifjs` / `whammy.js` は上流 readme で削除扱いながら、manifest の content_scripts `js` に登録され、`src/content_scripts/modules/Legacy/UgoiraGenerator/{GifGenerator,WebmGenerator}`（グローバル `GIF` / `Whammy`）から参照されている
 
 ## Data Flow
 
@@ -37,7 +37,7 @@ Manifest V3 の Chrome/Firefox 拡張（`package.json` v6.4.2）。ダウンロ�
 
 ## Technical Decisions
 
-- Manifest V3 制約により `eval` / `Function` を使えない → `handlebars` 依存の `js-epub-maker` は現状動作不可。epub 生成不可（上流 readme）
+- Manifest V3 制約により `eval` / `Function` を使えない → `handlebars` 依存の `js-epub-maker` は現状動作不可。コード上は `options_page/downloads.html` が handlebars / js-epub-maker を読み、`NovelDownloadTask.makeEpubBook()` が `EpubMaker` を呼ぶため、実行時に失敗する（known-issues KI-20261110-01）
 - ビルドは webpack 4 + Babel。platform ごとに `config/webpack.*.config.js` を分割し `PLATFORM_ENV` で切り替え、出力は `dist/chrome` / `dist/firefox`
 - テストは jest 27 + babel-jest。`jest.config.json` の `testRegex` が `test/*.spec.js` を収集（`package.json` に `test` script はなく `npx jest` で実行）
 - 上流フォークとして上流 `master` を upstream remote から取り込み、フォーク固有変更は `src/modules/` 単位で最小限に閉じる
