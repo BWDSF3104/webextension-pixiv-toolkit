@@ -1,2 +1,2 @@
 task_file	status	next_action
-docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	UI表示方針確定（label視覚区別、Pixiv Omina非表示）。Download成功原因記録済み。ファイル未変更。実装開始指示待ち
+docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	画面操作実測完了: Download成功、handler toggle可、Pixiv Omina scheme handler失敗、Legacy click no state change。UI label化とPixiv Omina表示ブロック削除の実装開始指示待ち

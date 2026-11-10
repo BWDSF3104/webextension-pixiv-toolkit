@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: UI表示方針確定（label視覚区別、Pixiv Omina非表示）。Download成功原因記録済み。ファイル未変更。実装開始指示待ち
+**Next Action**: 画面操作実測完了: Download成功、handler toggle可、Pixiv Omina scheme handler失敗、Legacy click no state change。UI label化とPixiv Omina表示ブロック削除の実装開始指示待ち
 
 ## 意図 / 背景
 
@@ -122,6 +122,13 @@
 - ラベルは labelと分かる見た目にする。現状 buttonと同じ見た目で区別できない `P*` guide labelと `Legacy` labelを label表示へ変更する。
 - `Pixiv Omina` は不要。拡張UIから非表示にする。`AppLegacy.vue` と `App.vue` の button表示ブロックを削除する方針。
 - decision file: `docs/ai/decisions/2026-11-10-ui-label-distinction-and-pixiv-omina-hidden.md`
+
+#### 画面操作実測（2026-11-10）
+
+- `Download ✔` button clickで service worker `chrome.downloads.search({})` に `D:\Downloads_Desktop\151883880_立冬 (1).zip` が `complete` で追加された。UI上の label textは click前後で `Download ✔` のまま。
+- `#ptk__new-handler` clickで `.ptk__container__body` の classが `ptk__container__body--collapse` と `ptk__container__body` の間で切り替わった。handler arrow clickは panel toggleとして動作している。
+- `Pixiv Omina` button clickで handlerは走るが、console error `Failed to launch 'pixiv-omina://create-download?url=...' because the scheme does not have a registered handler` が追加された。この環境では目的の動作は失敗。
+- `Legacy Mode` button clickで class/text変化なし。handlerがないため操作としての状態変化は確認できなかった。
 
 ## 完了時 Memory Bank 操作
 
