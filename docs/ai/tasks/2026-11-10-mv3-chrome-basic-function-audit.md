@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: UI表示の実装開始指示待ち: (1) P*/Legacy label表示化 (2) Pixiv Omina block削除+showPixivOmina default false (3) Select & DL dialogのzip button→A/B button（saveMode透過）。最小差分は decision 2026-11-10-select-and-dl-button-ab-in-selection-dialog.md に記録
+**Next Action**: Select & DL A/B button化・Pixiv Omina非表示は実装+画面確認合格（2026-11-10）。残件: P*/Legacy label表示化の実装開始指示待ち（decision 2026-11-10-ui-label-distinction-and-pixiv-omina-hidden.md）。MV3改修方針1-6は未着手
 
 ## 意図 / 背景
 
@@ -66,6 +66,14 @@
 - 実装（2026-11-10 実装開始指示）: `PageSelector.vue` dialog footer の `Download` → `downloadSelectedPages('folder')` / `downloadSelectedPages('perImage')` の2 button（ラベルは既存 `_download_to_folder` / `_download_per_image` 流用、ロケール追加なし）、`downloadSelectedPages(saveMode)` の emit に `saveMode` 追加。`App.vue` / `AppLegacy.vue` の `pageSelectorDownloadHandler` が `saveMode` を受け取り、AppLegacy は `download()` → `ContentPageDownloadManager.addTask` options へ透過（addTask は options 丸ごと adapter へ渡すため追加配線なし）。Pixiv Omina: `App.vue` / `AppLegacy.vue` の button 表示ブロック・`passToPixivOmina`・`.ptk__pixiv-omina__btn` style を削除、`src/config/default.js` の `showPixivOmina` → false。
 - `yarn test`（2026-11-10 実装後）: 2 suites / 11 tests passed（Time 5.1s、既存spec維持）。dialog経由の saveMode 透過はunit対象外（引数受け渡しのみ・新規分岐なし）→ 画面実測は未実施。
 - `yarn build`（chrome, 2026-11-10 実装後）: 成功（exit=0、WARNING は既存の asset size limit のみ、Time 7.5s / 6.2s）。
+- 画面確認試験（2026-11-10 06:35-06:40、chrome-devtools MCP、拡張 `nccfhdinjmbjnlgnmmgglmenmaacgagf` を dist/chrome から install、viewport 932x871・dpr 2 同一条件、artwork 151753981、local copy は `kilo-safe-remove` でゴミ箱）: **合格**。Drive `I:\マイドライブ\kilo\2026-11-10-mv3-chrome-basic-function-audit\` の `op1-panel-before/after`、`op2-dialog-before/after`、`op3-select-before/after`、`op4-buttonA-before/after`、`op5-buttonB-before/after`、`op6-mode2-panel-before/after`、`op7-mode2-dialog-before/after`、`op8-mode2-buttonA-before/after`（各 -20261110.png）と `select-dl-button-ab-confirmation-2026-11-10.txt`。
+  - dialog footer = `DL to folder` / `DL per image` の2 button（zip 追従の `Download` なし）✓
+  - A click（2枚選択、legacy）→ `151753981_隊員Oさん\p0 (1).jpg`・`p1 (1).jpg`（06:37:32Z complete）= work folder 内ファイル単位 ✓
+  - B click（同）→ `p0 (2).jpg`・`p1 (2).jpg`（06:38:04Z）= 直下ファイル単位 ✓
+  - mode2（downloadMode 1→2 一時変更、確認後1へ復元）で p1のみ選択 → A click → `151753981_隊員Oさん\p1 (2).jpg`（06:39:29Z）= 選択反映 ✓
+  - Pixiv Omina: legacy・mode2 の両 panel で button なし、`.ptk__pixiv-omina__btn` 要素なし（storage の showPixivOmina は true のまま → UIブロック削除が正）✓
+  - op3 after は初回取得で Vue DOM 更新 lag により無変化 → 同一条件で再取得。op4 before は選択確定後へ修正。click の observable change ない項目は実測で確認（rule の前後1組例外を適用）。
+  - ブラウザ: page 9（download manager）close 済み。page 8 は最後に開いている page のため close_page 不可（MCP制限）→ 識別条件（コマンドラインに `chrome-devtools-mcp\chrome-profile` を含む chrome.exe）の残存 26 件を終了し、残存 0 を確認（MCP にブラウザ終了操作がないためプロセス終了で対応）。
 
 ## 改修方針（実装開始指示後に着手）
 
