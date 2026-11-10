@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: DevTools MCPで自動実行確認完了（options/popup load、content script UI false、DNR rule1 image match、rule2 no match、login/download未実施）→ download実測・改修方針確定
+**Next Action**: MCP実行確認完了・login済み。download実測・改修方針確定
 
 ## 意図 / 背景
 

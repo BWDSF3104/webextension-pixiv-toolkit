@@ -1,2 +1,2 @@
 task_file	status	next_action
-docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	DevTools MCPで自動実行確認完了（options/popup load、content script UI false、DNR rule1 image match、rule2 no match、login/download未実施）→ download実測・改修方針確定
+docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	MCP実行確認完了・login済み。download実測・改修方針確定
