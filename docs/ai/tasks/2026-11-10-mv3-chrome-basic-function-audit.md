@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: MCP実行確認完了・login済み。download実測・改修方針確定
+**Next Action**: Chrome拡張確認ルール確定済み。download実測・改修方針確定
 
 ## 意図 / 背景
 
