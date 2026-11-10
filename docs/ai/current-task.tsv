@@ -1,2 +1,2 @@
 task_file	status	next_action
-docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	Chrome拡張確認ルール確定済み。download実測・改修方針確定
+docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	拡張UIボタン実測済み。Download成功、Pixiv Omina scheme handlerなし、Legacy Mode handlerなし。実装開始指示待ち

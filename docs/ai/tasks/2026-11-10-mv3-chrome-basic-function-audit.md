@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: Chrome拡張確認ルール確定済み。download実測・改修方針確定
+**Next Action**: 拡張UIボタン実測済み。Download成功、Pixiv Omina scheme handlerなし、Legacy Mode handlerなし。実装開始指示待ち
 
 ## 意図 / 背景
 
