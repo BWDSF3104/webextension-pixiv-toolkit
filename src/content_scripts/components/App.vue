@@ -11,10 +11,10 @@
     :class="downloadButtonType"
   >
     <template v-if="!isUgoira">
-      <ptk-button @click="download({ saveMode: 'folder' })"
+      <ptk-button type="download" @click="download({ saveMode: 'folder' })"
       >{{ tl('_download_to_folder') }}{{ generalTaskProgressText }}</ptk-button>
 
-      <ptk-button @click="download({ saveMode: 'perImage' })"
+      <ptk-button type="download" @click="download({ saveMode: 'perImage' })"
       >{{ tl('_download_per_image') }}{{ generalTaskProgressText }}</ptk-button>
     </template>
     <template v-else>

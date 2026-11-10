@@ -26,18 +26,19 @@
       </div>
       <template slot="foot">
         <div class="ptk__dialog-foot-row">
-          <ptk-button @click="selectAll">{{ tl('_select_all') }}</ptk-button>
-          <ptk-button @click="unselectAll">{{ tl('_unselect_all') }}</ptk-button>
-          <ptk-button @click="selectInvert">{{ tl('_select_invert') }}</ptk-button>
+          <ptk-button type="select" @click="selectAll">{{ tl('_select_all') }}</ptk-button>
+          <ptk-button type="select" @click="unselectAll">{{ tl('_unselect_all') }}</ptk-button>
+          <ptk-button type="select" @click="selectInvert">{{ tl('_select_invert') }}</ptk-button>
         </div>
         <div class="ptk__dialog-foot-row">
-          <ptk-button @click="downloadSelectedPages('folder')" :disabled="selectedPageIndexes.length < 1">{{ tl('_download_to_folder') }}</ptk-button>
-          <ptk-button @click="downloadSelectedPages('perImage')" :disabled="selectedPageIndexes.length < 1">{{ tl('_download_per_image') }}</ptk-button>
-          <ptk-button @click="closeSelectionDialog">{{ tl('_close') }}</ptk-button>
+          <ptk-button type="download" @click="downloadSelectedPages('folder')" :disabled="selectedPageIndexes.length < 1">{{ tl('_download_to_folder') }}</ptk-button>
+          <ptk-button type="download" @click="downloadSelectedPages('perImage')" :disabled="selectedPageIndexes.length < 1">{{ tl('_download_per_image') }}</ptk-button>
+          <ptk-button type="close" @click="closeSelectionDialog">{{ tl('_close') }}</ptk-button>
         </div>
       </template>
     </ptk-dialog>
     <ptk-button
+      type="select"
       :text="tl('_select_and_dl')"
       @click="openSelectionDialog()"
     ></ptk-button>

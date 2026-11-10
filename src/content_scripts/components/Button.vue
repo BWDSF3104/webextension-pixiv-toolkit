@@ -70,6 +70,21 @@ export default {
     border-color:#00dc68;
   }
 
+  .button--select {
+    background: #0b74c4;
+    border-color: #0b74c4;
+  }
+
+  .button--download {
+    background: #0a7d46;
+    border-color: #0a7d46;
+  }
+
+  .button--close {
+    background: #5b6b78;
+    border-color: #5b6b78;
+  }
+
   .button--disabled {
     opacity: 0.3;
   }
