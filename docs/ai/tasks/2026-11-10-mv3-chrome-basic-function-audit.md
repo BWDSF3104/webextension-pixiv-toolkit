@@ -74,13 +74,25 @@
 
 ## 実行時確認（自動化）
 
-- `--load-extension` はこの Chrome ビルドで無視される。最小構成の MV3 拡張（`docs/ai/tmp/testext/`）でも service worker ターゲットが出なかった → 本プロジェクトの manifest 起因ではない。
-- 読み込み工程だけ自動化できない。専用プロファイルで一度 Load unpacked すれば、以降は `docs/ai/tmp/mv3_probe.js` で無人的に次を確認できる:
-  - service worker での API 可用性（`onDeterminingFilename` / `tabs.executeScript` / `scripting` / `webRequest` / `notifications`）
-  - `getEnabledRulesets()`（rule 2 が拒否されているか）と `getMatchedRules()`（rule 1 が画像リクエストに-hit するか）
-  - content script が `#__ptk-app` を作ったか、起動時の例外
-- 使い方: `chrome.exe --remote-debugging-port=9336 <プロファイル>` → `node docs/ai/tmp/mv3_probe.js 9336 [確認したいURL]`
-- 完全自動化（読み込み含む）は Chrome 企業ポリシー `ExtensionSettings`（`installation_mode: load` + `load_path`）での登録のみ。レジストリ書き込みなのでユーザー承認が必要。
+- `--load-extension` はこの Chrome ビルド（157.0.8103.38）で無視される。最小構成の MV3 拡張（`docs/ai/tmp/testext/`）でも service worker ターゲットが出なかった → 本プロジェクトの manifest 起因ではない。
+- 自動化は Chrome DevTools MCP の拡張ツールで行う。Kilo のグローバル設定 `C:\Users\fujim\.config\kilo\kilo.jsonc` の `mcp` に追加済み（再起動後に有効）:
+
+  ```jsonc
+  "chrome-devtools": {
+    "type": "local",
+    "command": ["npx", "-y", "chrome-devtools-mcp@latest", "--categoryExtensions",
+                "--experimentalIncludeAllPages",
+                "--filesystemRoot=S:/Documents/Kilo_Commons/webextension-pixiv-toolkit"],
+    "enabled": true,
+    "timeout": 120000
+  }
+  ```
+
+- 確認済み（公式ドキュメント）: ツールは `install_extension` / `list_extensions` / `reload_extension` / `trigger_extension_action` / `uninstall_extension`。`--categoryExtensions` は既定で無効。ファイルアクセスは roots か `--filesystemRoot`（alias `--workspace`）内のパス only。
+- 注意（ユーザー提供情報の補正）: `--categoryExtensions` は **pipe connection のみ**サポート。`--autoConnect` / `--browserUrl` で既存 Chrome に接続する経路では拡張ツールが使えない → MCP が起動する Chrome が対象になる。ログイン状態は既定の永続プロファイル（`~/.cache/chrome-devtools-mcp/chrome-profile`）に維持されるので `--isolated` は付けない。
+- `--experimentalIncludeAllPages` を入れた理由: service worker / extension page を対象に入れてコンソールと評価を見ため。これがないと page コンテキストしか見えない。
+- 実行計画（再起動後）: `list_extensions` → `install_extension`（`dist/chrome`）→ pixiv へ移動（そのプロファイルで一度ログイン）→ `#__ptk-app` の有無とコンソールの例外 → ダウンロード実行 → `getMatchedRules` / ルール2の登録エラー確認。
+- 補完: service worker 内の `typeof chrome.webRequest` 等は `docs/ai/tmp/mv3_probe.js`（CDP）で見る。MCP が pipe で起動したインスタンスには接続できないため、これは別途 `--remote-debugging-port` で起動した Chrome 用のスクリプトとして残す。
 
 ## 完了時 Memory Bank 操作
 
