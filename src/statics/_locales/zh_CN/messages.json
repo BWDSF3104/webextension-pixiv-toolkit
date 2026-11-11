@@ -983,6 +983,9 @@
     "_download_save_mode_1_desc": {
         "message": "将下载的图片直接保存到文件夹"
     },
+    "_dl_button_override_note": {
+        "message": "“保存到文件夹”和“逐张保存”按钮会覆盖此设置"
+    },
     "_pack_in_zip": {
         "message": "打包到ZIP"
     },

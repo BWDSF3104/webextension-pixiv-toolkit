@@ -57,6 +57,7 @@ export default {
     <v-list-tile-content>
       <v-list-tile-title>{{ tl('_dont_create_work_folder') }}</v-list-tile-title>
       <v-list-tile-sub-title>{{ tl('_dont_create_work_folder_desc') }}</v-list-tile-sub-title>
+      <v-list-tile-sub-title>{{ tl('_dl_button_override_note') }}</v-list-tile-sub-title>
     </v-list-tile-content>
     <v-list-tile-action>
       <v-select :items="options"

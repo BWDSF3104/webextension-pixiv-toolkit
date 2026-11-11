@@ -977,6 +977,9 @@
     "_download_save_mode_1_desc": {
         "message": "Save downloaded image(s) in folder directly"
     },
+    "_dl_button_override_note": {
+        "message": "The \"DL to folder\" and \"DL per image\" buttons override this setting"
+    },
     "_pack_in_zip": {
         "message": "Pack in zip"
     },
