@@ -1,6 +1,6 @@
 # 設定画面の項目棚卸し（不要残存・追加候補）
 
-**Status**: 進行中
+**Status**: 完了
 **Date**: 2026-11-11
 **Next Action**: options page項目列挙（NewSettings/DownloadOptions/InterfaceOptions等）→残存不要項目確認（Omina済み・mode済み）→画面1点確認→Drive保存→追加候補は判断依頼として提示（実装指示待ち）
 
