@@ -115,7 +115,7 @@ export default {
 
   data() {
     return {
-      downloadMode: 1,
+      downloadMode: 2,
       showDownloadRelativeLocationDialog: false,
       hasDownloadsPermission: false,
       downloadSaveAs: false,
@@ -193,7 +193,7 @@ export default {
      * Non-reactive property
      */
     this.locationRegex = /^([^./]+\/)*$/i;
-    this.downloadMode = this.browserItems.downloadMode || 1;
+    this.downloadMode = this.browserItems.downloadMode || 2;
     this.downloadRelativeLocation = this.oldDownloadRelativeLocation = this.browserItems.downloadRelativeLocation;
     this.enableDownloadMetadata = !!this.browserItems.enableDownloadMetadata;
     this.downloadSaveAs = !!this.browserItems.downloadSaveAs;

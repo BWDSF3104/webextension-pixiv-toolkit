@@ -35,7 +35,7 @@ export default {
 
   data() {
     return {
-      downloadMode: 1
+      downloadMode: 2
     }
   },
 
@@ -53,7 +53,7 @@ export default {
   },
 
   created() {
-    this.downloadMode = this.browserItems.downloadMode || 1;
+    this.downloadMode = this.browserItems.downloadMode || 2;
   }
 };
 </script>
