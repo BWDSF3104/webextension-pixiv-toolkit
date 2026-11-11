@@ -1,2 +1,3 @@
 task_file	status	next_action
 docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	Select & DL A/B button化・Pixiv Omina非表示は実装+画面確認合格（2026-11-10）。残件: P*/Legacy label表示化の実装開始指示待ち（decision 2026-11-10-ui-label-distinction-and-pixiv-omina-hidden.md）。MV3改修方針1-6は未着手
+docs/ai/tasks/2026-11-11-settings-audit.md	進行中	options page項目列挙（NewSettings/DownloadOptions/InterfaceOptions等）→残存不要項目確認（Omina済み・mode済み）→画面1点確認→Drive保存→追加候補は判断依頼として提示（実装指示待ち）
