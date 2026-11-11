@@ -1,4 +1,6 @@
 task_file	status	next_action
 docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	Select & DL A/B button化・Pixiv Omina非表示は実装+画面確認合格（2026-11-10）。残件: P*/Legacy label表示化の実装開始指示待ち（decision 2026-11-10-ui-label-distinction-and-pixiv-omina-hidden.md）。MV3改修方針1-6は未着手
-docs/ai/tasks/2026-11-11-assess-settings-fork-inconsistencies.md	進行中	終了3/4（項目1 734780f・項目3 e394079+91138db・項目2 c5f05a4+8e4ac8a+1b2fb34、いずれ画面確認合格）。残件: 項目4（段階3持ち帰り＝fork label文言 en/zh_CN のユーザー決定待ち。決定後: key追加+AppLegacy Downloadへtype=download適用→yarn test/build→legacy mode画面確認before/after→単独コミット）
-docs/ai/tasks/2026-11-11-legacy-label-record-and-apply.md	進行中	段階3持ち帰り: fork label文言（en/zh_CN）のユーザー決定待ち→決定後key追加+AppLegacy Downloadへtype=download適用→yarn test/build→legacy mode画面確認(before/after Drive保存)→単独コミット。監査task fileの訂正対象記述は不存在（claimはチャット回答のみ）と記録済み
+docs/ai/tasks/2026-11-11-assess-settings-fork-inconsistencies.md	進行中	終了3/4（1・2・3合格）。執行順 4→5→6: 項目4（文言決定済・委譲実施へ）、項目5（作品画面確認・確認専用）、項目6（手順書 docs/help-fork.md）
+docs/ai/tasks/2026-11-11-legacy-label-record-and-apply.md	進行中	文言決定記録済み（decision 2026-11-11-fork-label-wording）→委譲実施: en/zh_CN 4 key追加+AppLegacy Download/ugoira換算buttonへfork label+type=download→yarn test/build→legacy mode作品画面確認（非ugoira: Download、ugoira: 換算button）before/after Drive保存→単独コミット+push+終了
+docs/ai/tasks/2026-11-11-assess-artwork-confirmation.md	進行中	子委譲: fresh相当テストインスタンスでdist/chrome install→artwork page確認（A/B button緑・Select & DL dialog・Ominaなし）→before/after+txt Drive保存→記録コミット
+docs/ai/tasks/2026-11-11-fork-usage-guide.md	進行中	子委譲: 日本語手順書（インストール・既定2の即使用・A/Bの意味・dialog・色・上流設定の追従/上書き関係・既存プロファイル不変）→単独コミット+push

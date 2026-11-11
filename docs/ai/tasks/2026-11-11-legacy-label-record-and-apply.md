@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-11
-**Next Action**: 段階3持ち帰り: fork label文言（en/zh_CN）のユーザー決定待ち→決定後key追加+AppLegacy Downloadへtype=download適用→yarn test/build→legacy mode画面確認(before/after Drive保存)→単独コミット。監査task fileの訂正対象記述は不存在（claimはチャット回答のみ）と記録済み
+**Next Action**: 文言決定記録済み（decision 2026-11-11-fork-label-wording）→委譲実施: en/zh_CN 4 key追加+AppLegacy Download/ugoira換算buttonへfork label+type=download→yarn test/build→legacy mode作品画面確認（非ugoira: Download、ugoira: 換算button）before/after Drive保存→単独コミット+push+終了
 
 ## 意図 / 背景
 
@@ -11,7 +11,11 @@
 ## 調査結果 / 変更内容
 
 実行固有ID: assess-settings-fork-inconsistencies / 項目4（優先4）
-承認範囲: `docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md` の記録訂正、en/zh_CN ロケールへの fork label key追加、`AppLegacy.vue` の `Download` buttonへ `type="download"`＋label適用。button表示のみ。
+承認範囲: `docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md` の記録訂正（試行1で実施済み）、en/zh_CN ロケールへの fork label key追加、`AppLegacy.vue` の `Download` button と ugoira 換算 button へ `type="download"`＋fork label適用（claimされた実施範囲へ拡張、既存key `_download` は変更なし）。button表示のみ。
+
+### 文言決定（2026-11-11 06:57 ユーザー指示「適切なもので実施」）
+
+decision `docs/ai/decisions/2026-11-11-fork-label-wording.md`。採用: `fork_legacy_download_label` en `Download (zip, follows settings)` / zh_CN `下载（zip，跟随设置）`、`fork_ugoira_zip_label` en `Ugoira (zip, follows settings)` / zh_CN `Ugoira（zip，跟随设置）`。段階3解消、実装委譲可能。
 
 ### 試行1（2026-11-11 委譲・前提検証）: 不合格（前提の記録と実物が不一致）→ 実施せず持ち帰り
 

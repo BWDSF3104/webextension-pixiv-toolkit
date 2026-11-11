@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-11
-**Next Action**: 終了3/4（項目1 734780f・項目3 e394079+91138db・項目2 c5f05a4+8e4ac8a+1b2fb34、いずれ画面確認合格）。残件: 項目4（段階3持ち帰り＝fork label文言 en/zh_CN のユーザー決定待ち。決定後: key追加+AppLegacy Downloadへtype=download適用→yarn test/build→legacy mode画面確認before/after→単独コミット）
+**Next Action**: 終了3/4（1・2・3合格）。執行順 4→5→6: 項目4（文言決定済・委譲実施へ）、項目5（作品画面確認・確認専用）、項目6（手順書 docs/help-fork.md）
 
 ## 意図 / 背景
 
