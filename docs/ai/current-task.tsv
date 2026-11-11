@@ -1,2 +1,3 @@
 task_file	status	next_action
 docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	Select & DL A/B button化・Pixiv Omina非表示は実装+画面確認合格（2026-11-10）。残件: P*/Legacy label表示化の実装開始指示待ち（decision 2026-11-10-ui-label-distinction-and-pixiv-omina-hidden.md）。MV3改修方針1-6は未着手
+docs/ai/tasks/2026-11-11-remove-legacy-mode.md	進行中	委譲: UIApplication.js render常時App（条件削除）、DownloadOptions.vue mode設定tile+DownloadMode.vue削除、AppLegacy.vue削除、fork label 2key（en/zh_CN/ja）削除、default.js downloadMode key削除→yarn test/build→画面確認（既存プロファイルdownloadMode=1保存のままA/B表示、optionsにmode設定なし）→Drive保存→単独コミット+push
