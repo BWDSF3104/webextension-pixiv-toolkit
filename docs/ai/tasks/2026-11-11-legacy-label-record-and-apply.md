@@ -1,6 +1,6 @@
 # 監査記録の訂正とlegacy label/type適用（記録とコード不一致）
 
-**Status**: 進行中
+**Status**: 完了
 **Date**: 2026-11-11
 **Next Action**: 文言決定記録済み（decision 2026-11-11-fork-label-wording）→委譲実施: en/zh_CN 4 key追加+AppLegacy Download/ugoira換算buttonへfork label+type=download→yarn test/build→legacy mode作品画面確認（非ugoira: Download、ugoira: 換算button）before/after Drive保存→単独コミット+push+終了
 
