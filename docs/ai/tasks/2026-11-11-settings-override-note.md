@@ -1,6 +1,6 @@
 # 設定画面にA/Bクリックoverrideの注記追加
 
-**Status**: 進行中
+**Status**: 完了
 **Date**: 2026-11-11
 **Next Action**: A/Bボタンで上書きされる3設定（downloadSaveMode/dontCreateWorkFolder/globalZipMultipleImages）のdesc注記1行をen/zh_CN追加→画面確認→コミット
 
