@@ -32,9 +32,9 @@
    "extDescription": {
       "message": "下载Pixiv，Fanbox、Comic上的动图、图片、漫画和小说等"
    },
-   "extName": {
-      "message": "Pixiv 工具箱 Next"
-   },
+    "extName": {
+       "message": "Pixiv 工具箱 Next Fork"
+    },
    "generate_gif_btn_complete_text": {
       "message": "保存GIF"
    },
