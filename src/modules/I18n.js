@@ -16,6 +16,7 @@ export default class I18n {
       locale: (!locale || locale === 'default') ? (fallback || 'en') : locale,
       messages: {
         en: locales.localeEn,
+        ja: locales.localeJa,
         'zh_CN': locales.localeZhCN
       }
     });

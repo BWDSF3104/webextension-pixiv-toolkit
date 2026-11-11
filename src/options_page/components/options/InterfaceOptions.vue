@@ -108,6 +108,9 @@ export default {
           text: '简体中文',
           value: 'zh_CN',
         }, {
+          text: '日本語',
+          value: 'ja'
+        }, {
           text: 'English',
           value: 'en'
         }

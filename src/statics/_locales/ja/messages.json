@@ -1,0 +1,1001 @@
+{
+  "_author": {
+    "message": "作者"
+  },
+  "_author_id": {
+    "message": "作者ID"
+  },
+  "downloadFullscreenZipFile": {
+    "message": "フルスクリーン zip をダウンロード"
+  },
+  "downloadNormalZipFile": {
+    "message": "通常 zip をダウンロード"
+  },
+  "downloadZipFile": {
+    "message": "zip をダウンロード"
+  },
+  "downloadPage": {
+    "message": "ダウンロードページ"
+  },
+  "download_page__short": {
+    "message": "DLページ"
+  },
+  "waitDownload": {
+    "message": "前回のダウンロードの完了をお待ちください"
+  },
+  "save_page": {
+    "message": "ページを保存"
+  },
+  "enable_ugoira_meta": {
+    "message": "メタを使用できます（ドラッグで選択）"
+  },
+  "extDescription": {
+    "message": "Pixiv、Pixiv Fanbox、Pixivコミックのうごコミ・イラスト・漫画・小説をダウンロードします。"
+  },
+  "extName": {
+    "message": "Pixiv Toolkit Next Fork"
+  },
+  "generate_gif_btn_complete_text": {
+    "message": "GIF を保存"
+  },
+  "generate_gif_btn_text": {
+    "message": "GIF を生成"
+  },
+  "generate_webm_btn_complete_text": {
+    "message": "WebM を保存"
+  },
+  "generate_webm_btn_text": {
+    "message": "WebM を生成"
+  },
+  "generating_webm": {
+    "message": "WebM を編集中"
+  },
+  "generating": {
+    "message": "生成中"
+  },
+  "preparing": {
+    "message": "準備中"
+  },
+  "id": {
+    "message": "ID"
+  },
+  "rename_ugoira_file": {
+    "message": "うごコミファイルの名前変更"
+  },
+  "setting": {
+    "message": "設定"
+  },
+  "settings": {
+    "message": "設定"
+  },
+  "setting_not_saved": {
+    "message": "設定の保存に失敗しました"
+  },
+  "setting_saved": {
+    "message": "設定を保存しました"
+  },
+  "title": {
+    "message": "タイトル"
+  },
+  "used_ugoira_meta": {
+    "message": "メタは使用中です"
+  },
+  "ugoira_quality": {
+    "message": "うごコミ画質"
+  },
+  "ugoira_best": {
+    "message": "最高"
+  },
+  "ugoira_good": {
+    "message": "良"
+  },
+  "ugoira_normal": {
+    "message": "普通"
+  },
+  "quality": {
+    "message": "画質"
+  },
+  "extend_duration": {
+    "message": "再生時間延長"
+  },
+  "extend_duration_desc": {
+    "message": "期待した再生時間でない場合、うごコミの再生時間を延長します"
+  },
+  "enable_extend_title": {
+    "message": "選択した再生時間より短いうごコミは繰り返し再生"
+  },
+  "enable_extend_desc": {
+    "message": "0 を選択すると再生時間延長は無効になります"
+  },
+  "extend_duration_seconds_title": {
+    "message": "少なくとも選択した再生時間まで延長"
+  },
+  "open_settings": {
+    "message": "設定を開く"
+  },
+  "open_settings_intro": {
+    "message": "アイコンを右クリックし「Options」をクリックして設定ページを開いてください"
+  },
+  "extend_enable": {
+    "message": "再生時間延長機能のオン/オフ"
+  },
+  "rename_ugoira": {
+    "message": "ダウンロードしたうごコミの名前変更"
+  },
+  "Ugoira": {
+    "message": "うごコミ"
+  },
+  "Manga": {
+    "message": "漫画"
+  },
+  "_rename_manga": {
+    "message": "漫画の名前変更"
+  },
+  "quick_picks": {
+    "message": "クイックピックス"
+  },
+  "rename_format": {
+    "message": "名前変更フォーマット"
+  },
+  "manga_image_name_prefix": {
+    "message": "漫画画像のページ番号接頭辞"
+  },
+  "page_num": {
+    "message": "ページ番号"
+  },
+  "pending": {
+    "message": "待機中"
+  },
+  "general": {
+    "message": "一般"
+  },
+  "pack_ugoira_frames_info_into_zip": {
+    "message": "フレーム情報を zip ファイルに格納"
+  },
+  "pack_ugoira_frames_info": {
+    "message": "フレーム情報を格納"
+  },
+  "number_of_pages_in_each_chunk": {
+    "message": "各チャンクに含める画像数"
+  },
+  "number_of_pages_in_each_chunk_desc": {
+    "message": "ダウンロード中にブラウザがクラッシュする場合はこの数値を減らしてください"
+  },
+  "download_novel": {
+    "message": "小説をダウンロード"
+  },
+  "Menu": {
+    "message": "メニュー"
+  },
+  "_give_5_stars": {
+    "message": "5つ星を贈る"
+  },
+  "_support_me": {
+    "message": "支援する"
+  },
+  "Change_History": {
+    "message": "変更履歴"
+  },
+  "Sponsors": {
+    "message": "スポンサー"
+  },
+  "_sponsors": {
+    "message": "スポンサー"
+  },
+  "Third_Party": {
+    "message": "サードパーティ"
+  },
+  "setting_generate_and_download": {
+    "message": "生成してダウンロード"
+  },
+  "setting_generate_and_download_desc": {
+    "message": "ファイル生成後に gif/webm をダウンロードします"
+  },
+  "setting_pack_and_download": {
+    "message": "圧縮してダウンロード"
+  },
+  "setting_pack_and_download_desc": {
+    "message": "画像圧縮後に zip をダウンロードします"
+  },
+  "Downloads": {
+    "message": "ダウンロード"
+  },
+  "setting_downloads_permission": {
+    "message": "ダウンロード権限"
+  },
+  "setting_downloads_permission_desc": {
+    "message": "ダウンロード設定は動作にダウンロード権限が必要です"
+  },
+  "Grant": {
+    "message": "許可"
+  },
+  "Remove": {
+    "message": "取消"
+  },
+  "setting_ext_take_over_downloads": {
+    "message": "拡張機能がダウンロードを引き継ぐことを許可"
+  },
+  "setting_ext_take_over_downloads_desc": {
+    "message": "ダウンロード権限が必要"
+  },
+  "setting_relative_location": {
+    "message": "相対ロケーション"
+  },
+  "relative_location_hint": {
+    "message": "ロケーションは Chrome のダウンロード先の接尾辞になります。例: Chrome のダウンロード先が \"D:/downloads/\" の場合、完全なダウンロード先は \"D:/downloads/{{downloadRelativeLocation}}\" になります"
+  },
+  "Change": {
+    "message": "変更"
+  },
+  "Others": {
+    "message": "その他"
+  },
+  "setting_show_history_when_update_completed": {
+    "message": "更新完了時に変更履歴を表示"
+  },
+  "sponsor_update_periodically": {
+    "message": "みなさんが良くしてくれてありがとうございます！（リストは定期的に更新されます）"
+  },
+  "sponsor_very_first": {
+    "message": "最初のスポンサーになる"
+  },
+  "Try_Manga_Toolkit": {
+    "message": "Manga Toolkit を試す"
+  },
+  "Subscribes": {
+    "message": "購読"
+  },
+  "Search": {
+    "message": "検索"
+  },
+  "Enable_search_suffix": {
+    "message": "検索接尾辞を有効化"
+  },
+  "Add_a_search_suffix_for_searching_popular_works_probably": {
+    "message": "人気作品検索用の接尾辞を追加（おそらく）"
+  },
+  "_star_it": {
+    "message": "スターをつける"
+  },
+  "Novel": {
+    "message": "小説"
+  },
+  "_novel_rename_rule": {
+    "message": "小説の名前変更ルール"
+  },
+  "include_novel_description": {
+    "message": "小説の説明を含める"
+  },
+  "include_novel_description_at_the_beginning": {
+    "message": "ファイルの冒頭に小説の説明を含める"
+  },
+  "clear_history_data": {
+    "message": "履歴データをクリア"
+  },
+  "clear_history_data_cannot_be_reversed": {
+    "message": "この操作は元に戻せません"
+  },
+  "_clear": {
+    "message": "クリア"
+  },
+  "History": {
+    "message": "履歴"
+  },
+  "comment": {
+    "message": "コメント"
+  },
+  "description": {
+    "message": "説明"
+  },
+  "createDate": {
+    "message": "作成日"
+  },
+  "uploadDate": {
+    "message": "アップロード日"
+  },
+  "type": {
+    "message": "種別"
+  },
+  "bookmarkCount": {
+    "message": "ブックマーク数"
+  },
+  "likeCount": {
+    "message": "いいね数"
+  },
+  "responseCount": {
+    "message": "返信数"
+  },
+  "viewCount": {
+    "message": "閲覧数"
+  },
+  "_number_of_works_downloaded": {
+    "message": "ダウンロードした作品数"
+  },
+  "_infomation_of_current_work": {
+    "message": "現在の作品の情報"
+  },
+  "work": {
+    "message": "作品"
+  },
+  "works": {
+    "message": "作品"
+  },
+  "_report_issue": {
+    "message": "問題を報告"
+  },
+  "_settings": {
+    "message": "設定"
+  },
+  "Ask_where_to_save_each_file_before_downloading": {
+    "message": "ダウンロード前に各ファイルの保存先を毎回尋ねる"
+  },
+  "This_setting_has_no_effect_if_the_similar_setting_of_your_Chrome_is_on": {
+    "message": "Chrome の同様の設定がオンの場合、この設定は効果ありません"
+  },
+  "Enable_save_visit_history": {
+    "message": "閲覧履歴の保存を有効化"
+  },
+  "Enable_Disable_save_visit_history": {
+    "message": "閲覧履歴の保存を有効/無効化"
+  },
+  "Do_not_save_NSFW_work_to_history": {
+    "message": "NSFW 作品を履歴に保存しない"
+  },
+  "Activate_download_panel_automatically": {
+    "message": "ダウンロードパネルを自動的に有効化"
+  },
+  "Download_panel_will_show_up_automatically_when_page_loaded": {
+    "message": "ページ読み込み時にダウンロードパネルが自動的に表示されます"
+  },
+  "_history": {
+    "message": "履歴"
+  },
+  "Illustration": {
+    "message": "イラスト"
+  },
+  "_rename_illustration": {
+    "message": "イラストの名前変更"
+  },
+  "Download_file_if_everything_is_ready": {
+    "message": "すべて準備ができたら直接ファイルをダウンロード"
+  },
+  "Reload_extension": {
+    "message": "拡張機能をリロード"
+  },
+  "Reload_extension_if_there_is_something_wrong": {
+    "message": "問題がある場合は拡張機能をリロード"
+  },
+  "Reload": {
+    "message": "リロード"
+  },
+  "Export_visit_history": {
+    "message": "閲覧履歴をエクスポート"
+  },
+  "_export": {
+    "message": "エクスポート"
+  },
+  "Import_visit_history": {
+    "message": "閲覧履歴をインポート"
+  },
+  "_import": {
+    "message": "インポート"
+  },
+  "_display_ugoira_download_progress": {
+    "message": "うごコミダウンロード進捗を表示"
+  },
+  "_display_download_progress_will_block_images_loadings_on_the_page_until_the_download_complete": {
+    "message": "進捗表示はダウンロード完了までページの画像読み込みをブロックする場合があります（UI 処理はブロックしません）。"
+  },
+  "_you_need_to_download_Pixiv_Omina_for_the_button_to_work": {
+    "message": "ボタンを動作させるには Pixiv Omina をダウンロードする必要があります"
+  },
+  "_Enable_this_may_cause_issue_about_loading_images": {
+    "message": "有効化すると画像読み込みの問題が発生する可能性があります"
+  },
+  "_year": {
+    "message": "年"
+  },
+  "_month": {
+    "message": "月"
+  },
+  "_day": {
+    "message": "日"
+  },
+  "_keep_page_number": {
+    "message": "ページ番号を残す"
+  },
+  "_keep_page_number_even_if_the_illustration_only_has_one_image": {
+    "message": "イラストが1枚の画像だけの場合でもページ番号を残す"
+  },
+  "_copy_settings": {
+    "message": "設定をコピー"
+  },
+  "_export_settings": {
+    "message": "設定をエクスポート"
+  },
+  "_import_settings": {
+    "message": "設定をインポート"
+  },
+  "_this_item_may_has_been_saved": {
+    "message": "この項目はすでに保存済みかもしれません。それでもダウンロードしますか？"
+  },
+  "_this_work_may_has_been_saved": {
+    "message": "この作品はすでに保存済みかもしれません。それでもダウンロードしますか？"
+  },
+  "_ask_whether_to_download_the_work_may_has_been_downloaded": {
+    "message": "ダウンロード済みの可能性のある作品についてダウンロードするか確認する"
+  },
+  "_grant_the_extension_to_access": {
+    "message": "拡張機能へのアクセスを許可"
+  },
+  "_some_user_find_some_resources_of_pixiv_are_store_at": {
+    "message": "一部のユーザーにより、一部の作品のアクセスが必要だと報告されています"
+  },
+  "_do_not_show_again": {
+    "message": "再度表示しない"
+  },
+  "_you_can_grant_remove_permission_in_options_page_too": {
+    "message": "設定ページでも権限の許可/取消が可能です"
+  },
+  "_close": {
+    "message": "閉じる"
+  },
+  "_work_relative_location_desc": {
+    "message": "この設定は「ダウンロード」セクションの「相対ロケーション」設定を上書きします。<br><strong>{id}、{title} など名前変更メタを使ってフォルダを整理できます。利用可能な名前変更メタは名前変更設定で確認できます。</strong>"
+  },
+  "_save_ugoira_in_relative_location": {
+    "message": "相対ロケーションにうごコミを保存"
+  },
+  "_save_illustration_in_relative_location": {
+    "message": "相対ロケーションにイラストを保存"
+  },
+  "_save_manga_in_relative_location": {
+    "message": "相対ロケーションに漫画を保存"
+  },
+  "_save_novel_in_relative_location": {
+    "message": "相対ロケーションに小説を保存"
+  },
+  "_change": {
+    "message": "変更"
+  },
+  "_must_enable_extension_take_over_downloads_setting": {
+    "message": "「拡張機能がダウンロードを引き継ぐ」設定の有効化が必要です"
+  },
+  "_rename_illustration_image_hint": {
+    "message": "例: {authorId}_{id}_{pageNum}。イラストが1枚の画像だけの場合は、削除する部分を2つの # タグの間に配置できます。"
+  },
+  "_create_a_specified_number_of_download_tasks": {
+    "message": "ダウンロードリクエスト数"
+  },
+  "_create_a_specified_number_of_download_tasks_when_downloading_illustration_or_manga": {
+    "message": "同時にダウンロードする画像数"
+  },
+  "_recovery": {
+    "message": "復元"
+  },
+  "_recovery_history": {
+    "message": "履歴復元"
+  },
+  "_total_backup": {
+    "message": "合計"
+  },
+  "_recovery_history_will_take_some_time_determine_by_how_many_history_need_to_be_recovery_are_you_sure": {
+    "message": "履歴復元は対象件数により時間がかかります。実行しますか？"
+  },
+  "_import_history_will_take_some_time_determine_by_how_many_history_need_to_be_imported_are_you_sure": {
+    "message": "履歴インポートは対象件数により時間がかかります。実行しますか？"
+  },
+  "_do_not_pack": {
+    "message": "圧縮しない"
+  },
+  "_type": {
+    "message": "種別"
+  },
+  "pack_ugoira_frames_info_into_tip": {
+    "message": "種別1: フレーム情報のみ格納；種別2: フレームと他の情報を格納。"
+  },
+  "_this_operation_cannot_be_reversed_are_you_sure": {
+    "message": "この操作は元に戻せません。実行しますか？"
+  },
+  "_recovery_complete_refresh_page_please": {
+    "message": "復元が完了しました。ページを更新してください。"
+  },
+  "_language": {
+    "message": "言語"
+  },
+  "_default": {
+    "message": "既定"
+  },
+  "_preparing": {
+    "message": "準備中"
+  },
+  "_generate": {
+    "message": "生成"
+  },
+  "_downloading": {
+    "message": "ダウンロード中"
+  },
+  "_save": {
+    "message": "保存"
+  },
+  "_interrupted_click_to_retry": {
+    "message": "中断されました。クリックで再試行"
+  },
+  "_generating": {
+    "message": "生成中"
+  },
+  "_generating_please_wait": {
+    "message": "生成中。お待ちください"
+  },
+  "_dl_image": {
+    "message": "画像 DL"
+  },
+  "_dl_page": {
+    "message": "ページ DL"
+  },
+  "_dl_pages": {
+    "message": "ページ DL"
+  },
+  "_save_image": {
+    "message": "画像を保存"
+  },
+  "_save_page": {
+    "message": "ページを保存"
+  },
+  "_save_pages": {
+    "message": "ページを一括保存"
+  },
+  "_return_old_style": {
+    "message": "旧スタイルに戻す"
+  },
+  "_disable_mask": {
+    "message": "マスクを無効化"
+  },
+  "_go_to_new_style": {
+    "message": "新スタイルへ移動"
+  },
+  "_total_records": {
+    "message": "合計レコード"
+  },
+  "_save_visit_history_has_been_disabled": {
+    "message": "閲覧履歴の保存は無効化されています"
+  },
+  "_keep": {
+    "message": "保持"
+  },
+  "_delete": {
+    "message": "削除"
+  },
+  "_notice": {
+    "message": "通知"
+  },
+  "_newer": {
+    "message": "新しい"
+  },
+  "_older": {
+    "message": "古い"
+  },
+  "_page": {
+    "message": "ページ"
+  },
+  "_there_is_no_any_history": {
+    "message": "履歴がまったくありません"
+  },
+  "_search_history": {
+    "message": "履歴検索"
+  },
+  "_page_number_start_with_1": {
+    "message": "ページ番号を1から開始"
+  },
+  "_page_number_start_with_1_otherwise_start_with_0": {
+    "message": "ページ番号を1から開始（そうでなければ0から開始）"
+  },
+  "_always_pack": {
+    "message": "常に圧縮"
+  },
+  "_always_pack_images_into_zip_file_even_if_there_is_only_one_image_in_the_illustration": {
+    "message": "イラストが1枚の画像だけの場合でも常に画像を zip ファイルに圧縮"
+  },
+  "_max_history_items": {
+    "message": "履歴の最大件数"
+  },
+  "_reload_to_apply_change": {
+    "message": "変更を適用するためリロード（進行中のダウンロードは中止されます）"
+  },
+  "_search": {
+    "message": "検索"
+  },
+  "_downloads": {
+    "message": "ダウンロード"
+  },
+  "_enable_mask": {
+    "message": "マスクを有効化"
+  },
+  "_enable_save_download_history": {
+    "message": "ダウンロード履歴の保存を有効化"
+  },
+  "_disable": {
+    "message": "無効"
+  },
+  "_enable": {
+    "message": "有効"
+  },
+  "_show_in_work_only": {
+    "message": "作品内のみ表示"
+  },
+  "_display_work_type_label": {
+    "message": "作品種別ラベルを表示"
+  },
+  "_small": {
+    "message": "小"
+  },
+  "_normal": {
+    "message": "普通"
+  },
+  "_large": {
+    "message": "大"
+  },
+  "_all_settings": {
+    "message": "すべての設定"
+  },
+  "_exclude_history_backup": {
+    "message": "履歴バックアップを除く"
+  },
+  "_cover_size": {
+    "message": "カバーサイズ"
+  },
+  "_the_length_of_page_number": {
+    "message": "ページ番号の桁数"
+  },
+  "_zeros_will_be_filled_at_the_beginning_of_page_number": {
+    "message": "ページ番号の冒頭に0が補完されます"
+  },
+  "_download": {
+    "message": "ダウンロード"
+  },
+  "_download_to_folder": {
+    "message": "フォルダへ DL"
+  },
+  "_download_per_image": {
+    "message": "画像ごとに DL"
+  },
+  "_select_and_dl": {
+    "message": "選択＆DL"
+  },
+  "_select_pages_you_want_to_download": {
+    "message": "ダウンロードするページを選択"
+  },
+  "_pending": {
+    "message": "待機中"
+  },
+  "_pack_files": {
+    "message": "ファイル圧縮"
+  },
+  "_pack_downloaded_files_to_a_zip_file": {
+    "message": "ダウンロードしたファイルを zip ファイルに圧縮"
+  },
+  "_start_page_number": {
+    "message": "開始ページ番号"
+  },
+  "_last_page_number": {
+    "message": "終了ページ番号"
+  },
+  "_example_authorId_id_if_you_use_start_page_num_or_last_page_num_you_should_place_the_page_section_between_the_two_hash_tags_like_id_startPageNum_lastPageNum": {
+    "message": "例: {authorId}_{id}。「開始ページ番号」または「終了ページ番号」を使う場合、ページ部分を2つの # タグの間に配置してください。例 {id}_#{startPageNum}-{lastPageNum}#"
+  },
+  "_more_info": {
+    "message": "詳細情報"
+  },
+  "_convert_tool": {
+    "message": "変換ツール"
+  },
+  "_ffmpeg": {
+    "message": "FFmpeg"
+  },
+  "_select_gif_convert_tool": {
+    "message": "うごコミ変換ツールを選択"
+  },
+  "_startup_message": {
+    "message": "6.0.0 への更新以来継続的な問題があり、主な原因はアップグレードが急ぎすぎたことによる判断の誤りでした。この期間の修復を経て、再び正常な軌道に戻るはずです。引き続き利用し問題を報告いただきありがとうございます。今後の個人の用件の都合もあり、今後の計画は2週間ごとに問題に対処することです。ご理解ください 🙏。"
+  },
+  "_ffmpeg_custom_convert_command": {
+    "message": "FFmpeg カスタム変換コマンド、Enter で改行"
+  },
+  "_custom": {
+    "message": "カスタム"
+  },
+  "_need_permission_to_load_library_from_unpkg_com_go_to_the_next_step": {
+    "message": "unpkg.com からライブラリを読み込む権限が必要です。次のステップへ進みますか？"
+  },
+  "_not_set": {
+    "message": "未設定"
+  },
+  "_has_not_effect_if_selected_converter_is_ffmpeg": {
+    "message": "選択した変換ツールが FFmpeg の場合効果はありません"
+  },
+  "_disable_downloads_shelf": {
+    "message": "ダウンロードシェルフを無効化"
+  },
+  "_create_subdirectory": {
+    "message": "サブディレクトリ作成"
+  },
+  "_create_subdirectory_for_illustration": {
+    "message": "イラスト用サブディレクトリ作成"
+  },
+  "_dynamic": {
+    "message": "動的"
+  },
+  "_when_multiple_images": {
+    "message": "複数の画像のとき"
+  },
+  "_redownload": {
+    "message": "再ダウンロード"
+  },
+  "_select_all": {
+    "message": "すべて選択"
+  },
+  "_unselect_all": {
+    "message": "すべて解除"
+  },
+  "_select_invert": {
+    "message": "選択反転"
+  },
+  "_multiple_downloads_time_gap": {
+    "message": "複数ダウンロードの間隔"
+  },
+  "_unit_ms": {
+    "message": "単位: ms"
+  },
+  "_add_time_gap_between_each_file_download_to_prevent_download_issue": {
+    "message": "ダウンロード問題を防ぐため各ファイルダウンロード間に間隔を追加"
+  },
+  "_diagnosis_messages": {
+    "message": "診断メッセージ"
+  },
+  "_error_messages": {
+    "message": "エラーメッセージ"
+  },
+  "_history_backup": {
+    "message": "履歴バックアップ"
+  },
+  "_permissions": {
+    "message": "権限"
+  },
+  "_open": {
+    "message": "開く"
+  },
+  "_view": {
+    "message": "表示"
+  },
+  "_interface": {
+    "message": "インターフェース"
+  },
+  "_center": {
+    "message": "中央"
+  },
+  "_left": {
+    "message": "左"
+  },
+  "_right": {
+    "message": "右"
+  },
+  "_download_panel_position": {
+    "message": "ダウンロードパネル位置"
+  },
+  "_download_panel_style": {
+    "message": "ダウンロードパネルスタイル"
+  },
+  "_series_id": {
+    "message": "シリーズID"
+  },
+  "_series_title": {
+    "message": "シリーズタイトル"
+  },
+  "_series_order": {
+    "message": "シリーズ順序"
+  },
+  "novel_rename_hint": {
+    "message": "例: {authorId}_{author}_{id}_{title}。小説がどのシリーズにも属さない場合、削除する部分を2つの # タグの間にこのように配置できます {author}#-{seriesTitle}-{seriesOrder}#-{title}-{id}"
+  },
+  "_show_reload_in_popup": {
+    "message": "拡張機能ポップアップページにリロードを表示"
+  },
+  "_show": {
+    "message": "表示"
+  },
+  "_pixiv_comic": {
+    "message": "Pixivコミック"
+  },
+  "_rename_comic": {
+    "message": "コミックの名前変更"
+  },
+  "_save_comic_in_relative_location": {
+    "message": "相対ロケーションにコミックを保存"
+  },
+  "_id": {
+    "message": "ID"
+  },
+  "_title": {
+    "message": "タイトル"
+  },
+  "_sub_title": {
+    "message": "サブタイトル"
+  },
+  "_numbering_title": {
+    "message": "番号付きタイトル"
+  },
+  "_work_id": {
+    "message": "作品ID"
+  },
+  "_work_title": {
+    "message": "作品タイトル"
+  },
+  "_page_num": {
+    "message": "ページ番号"
+  },
+  "_download_metadata": {
+    "message": "メタデータをダウンロード"
+  },
+  "_download_metadata_when_downloading_works_only_support_works_from_pixiv_main_site": {
+    "message": "作品ダウンロード時にメタデータをダウンロードします。Pixiv本体サイトの作品のみ対応（小説を除く）"
+  },
+  "_all": {
+    "message": "すべて"
+  },
+  "_download_manager": {
+    "message": "ダウンロードマネージャ"
+  },
+  "_show_in_folder": {
+    "message": "フォルダに表示"
+  },
+  "_download_task_settings": {
+    "message": "ダウンロードタスク設定"
+  },
+  "_global_settings": {
+    "message": "グローバル"
+  },
+  "_global_setting": {
+    "message": "グローバル設定"
+  },
+  "_rename": {
+    "message": "名前変更"
+  },
+  "_downloaded": {
+    "message": "ダウンロード済み"
+  },
+  "_the_resource_is_already_in_download_manager": {
+    "message": "このダウンロード資源はすでにダウンロードマネージャにあります。再ダウンロードしますか？"
+  },
+  "_download_manager_isnt_open": {
+    "message": "ダウンロードマネージャが開いていないようです。設定またはポップアップページで開けます。今開きますか？"
+  },
+  "_switch_to_it_and_close": {
+    "message": "切り替えて閉じる"
+  },
+  "_download_manager_is_already_opened": {
+    "message": "ダウンロードマネージャはすでに開いています。"
+  },
+  "_there_isnt_any_download": {
+    "message": "ダウンロードがありません"
+  },
+  "_cancel": {
+    "message": "キャンセル"
+  },
+  "_max_process_download_tasks": {
+    "message": "同時に処理するダウンロードタスクの最大数"
+  },
+  "_rename_illustration_image": {
+    "message": "イラスト画像の名前変更"
+  },
+  "_rename_manga_image": {
+    "message": "漫画画像の名前変更"
+  },
+  "_rename_fanbox_post_image": {
+    "message": "Fanbox 投稿画像の名前変更"
+  },
+  "_rename_pixiv_comic_episode_image": {
+    "message": "Pixivコミックのページ画像の名前変更"
+  },
+  "_zip_multiple_images": {
+    "message": "ダウンロード用に zip ファイルを作成"
+  },
+  "_zip_multiple_images_desc": {
+    "message": "イラスト、漫画、コミックの作業にのみ影響します"
+  },
+  "_download_gif": {
+    "message": "GIF DL"
+  },
+  "_download_apng": {
+    "message": "APNG DL"
+  },
+  "_download_webm": {
+    "message": "WEBM DL"
+  },
+  "_download_mp4": {
+    "message": "MP4 DL"
+  },
+  "_download_custom": {
+    "message": "カスタム DL"
+  },
+  "fork_legacy_download_label": {
+    "message": "ダウンロード（zip、設定に従う）"
+  },
+  "fork_ugoira_zip_label": {
+    "message": "うごコミ（zip、設定に従う）"
+  },
+  "_download_added": {
+    "message": "ダウンロード追加済み"
+  },
+  "_opening_download_manager": {
+    "message": "ダウンロードマネージャを開いています。お待ちください…"
+  },
+  "_running_too_many_download_tasks_at_same_time_may_be_cause_high_CPU_usage": {
+    "message": "同時に多量のダウンロードタスクを実行すると高 CPU 使用率を引き起こします"
+  },
+  "_use_standalone_download_manage": {
+    "message": "独立したダウンロードマネージャを使用"
+  },
+  "_always": {
+    "message": "常時"
+  },
+  "_when_there_is_only_one_image": {
+    "message": "1枚の画像だけのとき"
+  },
+  "_dont_create_work_folder": {
+    "message": "作品フォルダを作成しないとき"
+  },
+  "_dont_create_work_folder_desc": {
+    "message": "イラストと Fanbox 作品にのみ影響します"
+  },
+  "_combin_work_and_image_rename_rule_when_dont_create_work_folder": {
+    "message": "作品フォルダを作成しない場合、作品と画像の名前変更ルールを \"_\" で結合"
+  },
+  "_new_settings": {
+    "message": "新設定"
+  },
+  "_legacy": {
+    "message": "従来"
+  },
+  "_download_mode": {
+    "message": "ダウンロードモード"
+  },
+  "_download_mode_desc": {
+    "message": "従来モードでは ffmpeg と .mp4 生成はサポートされません"
+  },
+  "_only_if_the_work_has_multiple_images": {
+    "message": "作品が複数の画像を持つ場合のみ"
+  },
+  "_only_when_downloading_multiple_images": {
+    "message": "複数の画像をダウンロードするときのみ"
+  },
+  "_only_if_the_work_has_one_image": {
+    "message": "作品が1枚の画像だけの場合のみ"
+  },
+  "_only_when_downloading_one_image": {
+    "message": "1枚の画像をダウンロードするときのみ"
+  },
+  "_download_save_mode": {
+    "message": "ダウンロード保存モード"
+  },
+  "_download_save_mode_0_desc": {
+    "message": "ダウンロードした画像を zip に圧縮して保存"
+  },
+  "_download_save_mode_1_desc": {
+    "message": "ダウンロードした画像をフォルダに直接保存"
+  },
+  "_dl_button_override_note": {
+    "message": "「フォルダへ DL」と「画像ごとに DL」ボタンはこの設定を上書きします"
+  },
+  "_pack_in_zip": {
+    "message": "zip に圧縮"
+  },
+  "_save_in_folder": {
+    "message": "フォルダに保存"
+  },
+  "_always_dont": {
+    "message": "常にしない"
+  },
+  "_always_create": {
+    "message": "常に作成"
+  }
+}
