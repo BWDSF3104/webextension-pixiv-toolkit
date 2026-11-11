@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-11
-**Next Action**: 委譲: UIApplication.js render常時App（条件削除）、DownloadOptions.vue mode設定tile+DownloadMode.vue削除、AppLegacy.vue削除、fork label 2key（en/zh_CN/ja）削除、default.js downloadMode key削除→yarn test/build→画面確認（既存プロファイルdownloadMode=1保存のままA/B表示、optionsにmode設定なし）→Drive保存→単独コミット+push
+**Next Action**: 持ち帰り(段階3): NewSettings.vueがDownloadMode.vueをstatic import(14/25/35行)。ファイル削除+残存参照0の合格条件は承認範囲内の修正で成立せず、yarn buildはmodule not foundでfail。実装せず作業ツリーは委譲前状態(記録更新除くclean)。親の追加承認(Import/登録/template使用の削除)後にVerification実行
 
 ## 意図 / 背景
 
@@ -18,8 +18,14 @@
 - `src/content_scripts/components/AppLegacy.vue` 削除（`kilo-safe-remove`）
 - `fork_legacy_download_label`・`fork_ugoira_zip_label` を en/zh_CN/ja の messages.json から削除（適用先消滅）
 - `src/config/default.js` の `downloadMode` key 削除
+- `src/options_page/components/NewSettings.vue`（拡張承認・2026-11-11 08:21 親判定、根拠: `DownloadMode.vue` の残存呼び出しは NewSettings.vue:14（template `<download-mode>`）/25（import）/35（components登録）のみ。削除成立にこの3箇所削除が必要。上流key `_legacy`/`_download_manager` は削除しない（上流ロケール・デッドkeyは無害））
 - `Application.js` のonChanged（downloadMode比較）は変更しない（設定UI消失で発火不能、無害）
 - `PageSelector` は `App.vue` 経由で維持（dialog footer 2行契約不変）
+
+承認範囲と実コードの矛盾（2026-11-11 子実行、実装前確認で発見・実装せず持ち帰り）:
+- `src/options_page/components/NewSettings.vue`（承認範囲外）が `option-items/DownloadMode.vue` を static import（line 25・登録 line 35・template使用 line 14）。build graph: options page `Index.vue` → `UpdateNotice.vue` → `NewSettings.vue` → `DownloadMode.vue`。item3のファイル削除と合格条件「DownloadMode残存参照0」は NewSettings.vue の3箇所変更なしに成立せず、`yarn build` は module not found でexit≠0。承認範囲内の修正方法では合格不能 → 段階3持ち帰り（最小追加承認: NewSettings.vue import/登録/template使用の削除）。
+- fork label 2keyの参照元は `AppLegacy.vue` と messages.json（en/zh_CN/ja）のみを確認（rg照合）。AppLegacy削除でkey削除は整合。
+- 基線の矛盾: タスク記録の「基線 63ad5e3」と委譲文（parent記録 08:18）の HEAD f31b085 が食い違う。新しい文書（委譲文）を優先し、実測で `git rev-parse` = f31b085・clean（untracked scratch/ のみ）を確認。この旨を記録。
 
 ## Verification
 
