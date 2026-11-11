@@ -947,15 +947,6 @@
   "_new_settings": {
     "message": "新設定"
   },
-  "_legacy": {
-    "message": "従来"
-  },
-  "_download_mode": {
-    "message": "ダウンロードモード"
-  },
-  "_download_mode_desc": {
-    "message": "従来モードでは ffmpeg と .mp4 生成はサポートされません"
-  },
   "_only_if_the_work_has_multiple_images": {
     "message": "作品が複数の画像を持つ場合のみ"
   },

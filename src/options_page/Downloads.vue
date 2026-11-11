@@ -116,16 +116,6 @@ export default {
     window.addEventListener('resize', this.resizeHandle)
 
     this.resizeHandle();
-
-    browser.runtime.getPlatformInfo(platformInfo => {
-      if (platformInfo.os === 'win' && platformInfo.arch !== 'arm') {
-        this.displayAppSuggest = true;
-
-        this.$nextTick(() => {
-          setTimeout(() => this.showAppSuggest = true, 1000);
-        });
-      }
-    });
   },
 
   methods: {
@@ -182,21 +172,6 @@ $primary-blue-text-color: #fff;
       strong {
         font-weight: 700;
       }
-    }
-
-    .app-suggest_container {
-      position: fixed;
-      bottom: 10px;
-      left: 10px;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-      background: rgb(255, 255, 255);
-      transform: translateX(-300px);
-      transition: 800ms ease all;
-    }
-
-    .app-suggest_container--show {
-      transform: translateX(0px);
     }
 }
 </style>

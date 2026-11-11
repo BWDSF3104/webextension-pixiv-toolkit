@@ -93,23 +93,11 @@
       <div style="height:100px;"></div>
     </v-app>
 
-    <app-suggest
-      :class="{
-        'app-suggest_container': true,
-        'app-suggest_container--show': showAppSuggest
-      }"
-      v-if="displayAppSuggest"
-      icon="https://raw.githubusercontent.com/leoding86/webextension-pixiv-toolkit/master/src/statics/remote/img/pixiv-omina.png"
-      title="Pixiv Omina"
-      subTitle="A more powerful Pixiv downloader"
-      link="https://github.com/leoding86/pixiv-omina"
-    ></app-suggest>
   </div>
 </template>
 
 <script>
 import Supports from '@@/components/Supports';
-import AppSuggest from '@@/components/AppSuggest';
 import UpdateNotice from '@@/components/UpdateNotice';
 import browser from '@/modules/Extension/browser';
 
@@ -118,16 +106,13 @@ export default {
 
   components: {
     'supports': Supports,
-    'app-suggest': AppSuggest,
     'update-notice': UpdateNotice
   },
 
   data () {
     return {
       drawer: true,
-      drawerTemporary: false,
-      displayAppSuggest: false,
-      showAppSuggest: false
+      drawerTemporary: false
     }
   },
 
@@ -147,16 +132,6 @@ export default {
     window.addEventListener('resize', this.resizeHandle)
 
     this.resizeHandle();
-
-    browser.runtime.getPlatformInfo(platformInfo => {
-      if (platformInfo.os === 'win' && platformInfo.arch !== 'arm') {
-        this.displayAppSuggest = true;
-
-        this.$nextTick(() => {
-          setTimeout(() => this.showAppSuggest = true, 1000);
-        });
-      }
-    });
   },
 
   methods: {
@@ -232,19 +207,5 @@ $primary-blue-text-color: #fff;
       }
     }
 
-    .app-suggest_container {
-      position: fixed;
-      bottom: 10px;
-      left: 10px;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-      background: rgb(255, 255, 255);
-      transform: translateX(-300px);
-      transition: 800ms ease all;
-    }
-
-    .app-suggest_container--show {
-      transform: translateX(0px);
-    }
 }
 </style>
