@@ -1,6 +1,6 @@
 # downloadMode設定画面フォールバックを既定2へ整合
 
-**Status**: 進行中
+**Status**: 完了
 **Date**: 2026-11-11
 **Next Action**: DownloadOptions.vue:118,196 と DownloadMode.vue:38,56 を2へ→yarn test/build→画面確認（初回読み込み表示）→Drive保存→コミット
 
@@ -15,9 +15,13 @@ fork既定 downloadMode=2（decision 2026-11-11）に対し、設定画面のフ
 
 ## Verification
 
-- `yarn test` / `yarn build` 通過。
-- 画面確認: storageに downloadMode が未定義の状態で設定画面が「Download manager(2)」表示こと。既存プロファイルの storage に既に値がある場合、その値の削除/変更は段階3（不可逆データ変更）として持ち帰るか、新規プロファイルで確認。Drive保存先 `I:\マイドライブ\kilo\2026-11-11-align-download-mode-fallback\`（playwright-confirmation-rule、chrome-devtools MCP、残存識別条件は要約参照）。項目終了時にpage閉じる。
-- 画面確認不可なら未検証扱い（合格しない）。
+- `yarn test`: 2 suites / 11 tests passed（4.47s）。`yarn build`（chrome）: 成功（13.78s）。
+- 画面確認（chrome-devtools MCP、window 945x1020 / viewport 932x871）:
+  - 既存プロファイル（id nccfhdinjmbjnlgnmmgglmenmaacgagf）storage実測: downloadMode=1（既存値。削除・変更なし。正挙動としてLegacy(1)表示のまま）。
+  - 新規install相当のテストインスタンス（dist/chromeのscratch\ptk-freshコピー → id ajaipaagpmcfplifmgpijffkknlkjgga。このテストインスタンスのstorageのみ操作）で合格条件の「storage未定義」状態を作成（fresh installのonInstalled seed（Application.js:135）でkeyが埋まるため、テストインスタンス限りの `chrome.storage.local.remove('downloadMode')` を実行）。リロード後の設定画面: select表示「Download Manager」、`v-if="downloadMode === 2"` 行（Max process）表示。storage get → undefined。合格。
+  - Drive保存: `I:\マイドライブ\kilo\2026-11-11-align-download-mode-fallback\` → `download-mode-fallback-undefined-storage-20261111.png`・`download-mode-fallback-confirmation-2026-11-11.txt`。local copyは `kilo-safe-remove` でゴミ箱へ送った。
+  - page閉: page 3閉。最後に開いていたpage（page 5）はMCP制限で閉じられない（その旨記録）。
+- decision 2026-11-11-default-download-mode-manager.md 補足（「フォールバックは変更しない」）と本タスクの承認範囲が矛盾。同日のタスク記録（実装指示）を採用。fresh installではonInstalledがdefaultSettingsをseedするため、実運用の「未定義」状態はseed前またはキー欠落時のみ（実測）。
 
 ## 完了時 Memory Bank 操作
 
