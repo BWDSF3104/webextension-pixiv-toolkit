@@ -1,3 +1,2 @@
 task_file	status	next_action
 docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	Select & DL A/B button化・Pixiv Omina非表示は実装+画面確認合格（2026-11-10）。残件: P*/Legacy label表示化の実装開始指示待ち（decision 2026-11-10-ui-label-distinction-and-pixiv-omina-hidden.md）。MV3改修方針1-6は未着手
-docs/ai/tasks/2026-11-11-remove-legacy-mode.md	進行中	持ち帰り(段階3): NewSettings.vueがDownloadMode.vueをstatic import(14/25/35行)。ファイル削除+残存参照0の合格条件は承認範囲内の修正で成立せず、yarn buildはmodule not foundでfail。実装せず作業ツリーは委譲前状態(記録更新除くclean)。親の追加承認(Import/登録/template使用の削除)後にVerification実行
