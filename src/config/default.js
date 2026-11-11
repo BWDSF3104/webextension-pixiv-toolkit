@@ -249,10 +249,6 @@ export default Object.assign({}, {
     ugoiraFFmpegWEBMCliArgs: '-f concat -i input.txt -safe 0 output.webm',
     ugoiraFFmpegMP4CliArgs: '-f concat -i input.txt -safe 0 -c copy output.mp4',
 
-    /**
-     * @since 6.3.0
-     */
-    downloadMode: 2, // 1: legacy; 2: download manager. fork default: 2（A/B分割ボタンを既定UIで即使用）
     dontCreateWorkFolder: 0,
     combinWRRuleAndIRRuleWhenDontCreateWorkFolder: 0,
 

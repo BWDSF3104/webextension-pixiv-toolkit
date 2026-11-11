@@ -917,12 +917,6 @@
     "_download_custom": {
         "message": "DL Custom"
     },
-    "fork_legacy_download_label": {
-        "message": "Download (zip, follows settings)"
-    },
-    "fork_ugoira_zip_label": {
-        "message": "Ugoira (zip, follows settings)"
-    },
     "_download_added": {
         "message": "Download added"
     },

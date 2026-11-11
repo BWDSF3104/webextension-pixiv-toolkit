@@ -917,12 +917,6 @@
   "_download_custom": {
     "message": "カスタム DL"
   },
-  "fork_legacy_download_label": {
-    "message": "ダウンロード（zip、設定に従う）"
-  },
-  "fork_ugoira_zip_label": {
-    "message": "うごコミ（zip、設定に従う）"
-  },
   "_download_added": {
     "message": "ダウンロード追加済み"
   },
