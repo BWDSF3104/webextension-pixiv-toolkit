@@ -6,16 +6,6 @@
     <cacheable-image style="width:100px;height:100px;border:1px solid #000"
       mode="background"
       :src="image"></cacheable-image>
-    <h2>app-suggest component</h2>
-    <div>
-      <app-suggest
-        style="width:200px;border:1px solid #000"
-        :icon="pixivOminaIcon"
-        title="Pixiv Omina"
-        subTitle="Sub title"
-        link="https://www.github.com">
-      </app-suggest>
-    </div>
     <h1>Debug actions</h1>
     <div>
       <v-btn @click="resetVersionNumber">Reset version number</v-btn>
@@ -35,19 +25,16 @@
 <script>
 import Request from '@/modules/Net/Request';
 import CacheableImage from './CacheableImage';
-import AppSuggest from './AppSuggest';
 import browser from '@/modules/Extension/browser';
 
 export default {
   components: {
-    'cacheable-image': CacheableImage,
-    'app-suggest': AppSuggest
+    'cacheable-image': CacheableImage
   },
 
   data() {
     return {
       image: 'https://s.pximg.net/www/images/logo/pixiv-logo.svg',
-      pixivOminaIcon: 'https://raw.githubusercontent.com/leoding86/webextension-pixiv-toolkit/master/src/statics/remote/img/pixiv-omina.png',
       requestUrl: '',
       requestOptions: '',
       requestResponseType: ''
