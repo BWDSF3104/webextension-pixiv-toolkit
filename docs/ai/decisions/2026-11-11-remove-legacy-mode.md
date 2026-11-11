@@ -15,5 +15,6 @@
 - `2026-11-11-fork-label-wording.md` の legacy label部分（key削除。`fork_ugoira_zip_label` も適用先消失で削除）
 - `2026-11-10-select-and-dl-button-ab-in-selection-dialog.md` の AppLegacy配線部分（ファイル削除で消滅。dialog footer 2行契約は `App.vue` 側で維持）
 - `2026-11-10-button-group-colors.md` のlegacy未確認部分（不要化）
+- `2026-11-10-ui-label-distinction-and-pixiv-omina-hidden.md` のLegacy label部分（legacy mode廃止でLegacy label表示は無効化。P* label部分は有効のまま）
 
 項目4の fork label実装（e7e7139）は本決定で取り消し（key削除）。項目4は記録訂正・実測事実として保持し、タスクは再開しない。
