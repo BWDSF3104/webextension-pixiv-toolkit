@@ -253,7 +253,7 @@ export default Object.assign({}, {
     /**
      * @since 6.3.0
      */
-    downloadMode: 1, // 1: legacy; 2: download manager
+    downloadMode: 2, // 1: legacy; 2: download manager. fork default: 2（A/B分割ボタンを既定UIで即使用）
     dontCreateWorkFolder: 0,
     combinWRRuleAndIRRuleWhenDontCreateWorkFolder: 0,
 
