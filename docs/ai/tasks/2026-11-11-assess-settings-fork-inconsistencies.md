@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-11
-**Next Action**: 優先順位 1→3→2→4 で子委譲サイクル
+**Next Action**: 終了3/4（項目1 734780f・項目3 e394079+91138db・項目2 c5f05a4+8e4ac8a+1b2fb34、いずれ画面確認合格）。残件: 項目4（段階3持ち帰り＝fork label文言 en/zh_CN のユーザー決定待ち。決定後: key追加+AppLegacy Downloadへtype=download適用→yarn test/build→legacy mode画面確認before/after→単独コミット）
 
 ## 意図 / 背景
 
