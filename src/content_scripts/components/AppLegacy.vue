@@ -11,18 +11,18 @@
     :class="downloadButtonType"
   >
     <template v-if="!isUgoira">
-      <ptk-button @click="download"
-      >{{ tl('_download') }}{{ generalTaskProgressText }}</ptk-button>
+      <ptk-button type="download" @click="download"
+      >{{ tl('fork_legacy_download_label') }}{{ generalTaskProgressText }}</ptk-button>
     </template>
     <template v-else>
-      <ptk-button @click="download({ ugoiraConvertType: 'gif' })"
-      >{{ tl('_download_gif') }}{{ gifProgress }}</ptk-button>
+      <ptk-button type="download" @click="download({ ugoiraConvertType: 'gif' })"
+      >{{ tl('fork_ugoira_zip_label') }}{{ gifProgress }}</ptk-button>
 
-      <ptk-button @click="download({ ugoiraConvertType: 'apng' })"
-      >{{ tl('_download_apng') }}{{ apngProgress }}</ptk-button>
+      <ptk-button type="download" @click="download({ ugoiraConvertType: 'apng' })"
+      >{{ tl('fork_ugoira_zip_label') }}{{ apngProgress }}</ptk-button>
 
-      <ptk-button @click="download({ ugoiraConvertType: 'webm' })"
-      >{{ tl('_download_webm') }}{{ webmProgress }}</ptk-button>
+      <ptk-button type="download" @click="download({ ugoiraConvertType: 'webm' })"
+      >{{ tl('fork_ugoira_zip_label') }}{{ webmProgress }}</ptk-button>
     </template>
     <page-selector
       ref="pageSelector"

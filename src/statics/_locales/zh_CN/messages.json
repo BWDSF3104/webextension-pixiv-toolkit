@@ -923,6 +923,12 @@
     "_download_custom": {
         "message": "自定义下载"
     },
+    "fork_legacy_download_label": {
+        "message": "下载（zip，跟随设置）"
+    },
+    "fork_ugoira_zip_label": {
+        "message": "Ugoira（zip，跟随设置）"
+    },
     "_download_added": {
         "message": "下载已添加"
     },

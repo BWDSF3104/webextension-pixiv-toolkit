@@ -25,12 +25,25 @@ decision `docs/ai/decisions/2026-11-11-fork-label-wording.md`。採用: `fork_le
 - 実施・検証: 実装なし（コード変更ゼロ）。`yarn test`/`yarn build` 実行なし（変換対象なし）。画面確認未実施＝未検証（不合格）。試行1回で停止。
 - 作業ツリー: 基線 HEAD `1b2fb34`・cleanを維持（コード変更なし。本項目の未コミット変更は記録更新のみ: 本task file＋監査task fileの訂正項目）。コミットなし。ブラウザは開いていない（画面確認不可のため起動せず）。
 
+### 試行2（2026-11-11 委譲）: 合格（試行1の持帰り件は decision 2026-11-11-fork-label-wording で解消済み）
+
+- 実装（承認範囲どおり、試行1で確定した方針のまま）: en/zh_CN へ `fork_legacy_download_label`・`fork_ugoira_zip_label` 追加（既存key変更なし）、`AppLegacy.vue` の `Download` button と ugoira 換算3 button（gif/apng/webm）へ fork label + `type="download"`（既存 `.button--download` 流用・新CSSなし）。
+- before 取得方法: 実装コード revert → build → `reload_extension` → before screenshot → 再適用 → build → after（同一条件 932x871・dpr 2・viewport full page）。before＝現状（label未表示・既定青 `rgb(0,150,250)`）、after＝fork label + `rgb(10,125,70)` = `#0a7d46`（非ugoira/ugoira 両方）。
+- 観察点: ugoira 換算3 button が同一文言 `Ugoira (zip, follows settings)` になる（decision の文字どおり適用。format区別は progress text のみ）。判断変更なし・記録のみ。
+- ugoira 作品特定（実測で閉じた）: 履歴4件に ugoira なし、Rankings ugoira 入口 404（実測）→ tag検索 `うごイラ` で illustType=2 の `151936600` 確定。storage downloadMode=1 は実測（`{"downloadMode":1}`）・既存値のまま。
+- 合格（証拠）: `yarn test` 11 passed、`yarn build` exit 0、画面確認 before/after 両組合格（Verification 参照・Drive保存済み）。
+- 作業ツリー: 基線 HEAD `54214cf` 上、本項目分のみ変更（AppLegacy.vue・en/zh_CN・task file）。単独コミット+push。ブラウザ: 画面確認後、last open page は MCP制限で close_page 不可 → 識別条件一致 chrome.exe（ブラウザ本体のみ）を終了、残存 0 確認（MCPにブラウザ終了操作がないためプロセス終了で対応）。
+
 ## Verification
 
 - 記録訂正: 実施報告の該当記述を「記録と実コード不一致（実施なし）。訂正＝label key追加と型適用を実施」へ更新。→ 訂正対象記述が監査task fileに不存在（grep＋git log --all -Sで証明）。監査task fileへ訂正項目を追記（2026-11-11）。実施＝事実として未実施（一度も実施されていない）。
-- `yarn test` / `yarn build` 通過。→ 実行せず（実装なし）。
-- 画面確認: legacy mode（`downloadMode=1`、確認用にテストプロファイルで設定し確認後復元）。before/afterを `I:\マイドライブ\kilo\2026-11-11-legacy-label-record-and-apply\` へ保存（playwright-confirmation-rule、chrome-devtools MCP、残存識別条件は要約参照）。項目終了時にpage閉じる。→ 未実施（label文言未決定のため合格条件成立不可）。未検証。
-- 画面確認不可なら未検証扱い（合格しない）。→ 該当: 不合格（未検証）。
+- `yarn test` / `yarn build` 通過。→ 試行2で通過（2026-11-11）: `yarn test` 2 suites / 11 tests passed（Time 1.989s、Done 4.25s）。`yarn build`（chrome）exit 0（WARNING は既存 asset size limit のみ、Done 9.94s。before 用 rebuild Done 9.31s）。
+- 画面確認: legacy mode（`downloadMode=1`、確認用にテストプロファイルで設定し確認後復元）。before/afterを `I:\マイドライブ\kilo\2026-11-11-legacy-label-record-and-apply\` へ保存（playwright-confirmation-rule、chrome-devtools MCP、残存識別条件は要約参照）。項目終了時にpage閉じる。→ 試行2で合格（2026-11-11、同一条件 932x871・dpr 2・viewport full page・panel handler展開）。
+  - 保存ファイル: `legacy-download-before-20261111.png` / `legacy-download-after-20261111.png`（非ugoira artwork 151753981）、`legacy-ugoira-before-20261111.png` / `legacy-ugoira-after-20261111.png`（ugoira artwork 151936600）、txt `legacy-label-confirmation-2026-11-11.txt`。local copy は `kilo-safe-remove` でゴミ箱へ送った。Drive側は残す。
+  - 実測（before → after）: 非ugoira `Download` `class="button"` bg `rgb(0,150,250)`（既定青）→ `Download (zip, follows settings)` `button button--download` bg `rgb(10,125,70)` = `#0a7d46` ✓。ugoira `DL GIF`/`DL APNG`/`DL WEBM` `class="button"` 既定青 → 3 buttonすべて `Ugoira (zip, follows settings)` `button button--download` bg `rgb(10,125,70)` ✓。
+  - ugoira 作品特定（実測で閉じた）: storage downloadMode=1 は既存値のまま（実測 `{"downloadMode":1}`・変更なし）。既存プロファイル履歴に ugoira なし（history 4件・type pixiv_illust/pixiv_manga）。Rankings ugoira 入口は pixiv 側 404（`ranking.php?mode=ugoira`・API実測）。tag検索 `うごイラ` 実測で illustType=2 の `151936600` を確定。
+  - 判断（段階1/2）: ugoira 換算3 button への fork label適用（同一文言）は decision 2026-11-11-fork-label-wording と項目4承認範囲の文字どおり（「換算 button へ fork label + type=download」）。3 button が同一文言になるのは観察点（記録のみ・持帰りなし）。
+- 画面確認不可なら未検証扱い（合格しない）。→ 該当: 不合格（未検証）。→ 試行2で画面確認実施、合格。
 
 ## 完了時 Memory Bank 操作
 
