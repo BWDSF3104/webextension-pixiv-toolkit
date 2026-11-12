@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: 方針2/5/6は実施済み(e732fe7)。方針1は「修正不要・rule 2削除済み」で判断確定。方針3(GIF)/4(EPUB)/ffmpeg core同封(MP4)はユーザー判断待ち（2026-11-12-mv3-remediation 参照）
+**Next Action**: 方針1-6すべて決着（remediation完了・e732fe7,25c2c7c,5b4513a・ffmpeg退役決定）。残は実機確認のみ: ファイル名表示/CS内GIF worker/EPUB実DL/ugoira webm,gif,apng変換e2e（remediation Verification 未確認欄参照、pixivログイン環境が必要）
 
 ## 意図 / 背景
 
