@@ -29,7 +29,7 @@
   - プレースホルダ展開: `{authorId}`→3348890 / `{id}`→151916777 / `{title}`→危ないポッキーゲーム / `p{pageNum}`→p0,p1 と全て一致
 - 合否: 合格
 - スクショ: `I:\マイドライブ\kilo\2026-11-12-rename-rule-browser-check\dlmanager-real-{before,after}-20261112.png`、`real-downloaded-folder-20261112.png`。手順・実測値・環境制約は同フォルダ `rename-rule-browser-confirmation-2026-11-12.txt` に追記済み。
-- 残置物: `D:\Downloads_Desktop\3348890_151916777_危ないポッキーゲーム\`（実作品2枚・約29MB）。削除要否はユーザー連絡待ち。
+- 残置物: 上記ダウンロードフォルダはユーザー承認のもと同日ゴミ箱へ送信済み（`kilo-recycle-external -Approved`、復元可能）。
 
 ## 完了時 Memory Bank 操作
 
