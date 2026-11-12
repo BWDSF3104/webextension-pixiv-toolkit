@@ -264,6 +264,12 @@ export default Object.assign({}, {
     autoFavoriteAfterDownload: false,
 
     /**
+     * @since 6.5.0
+     * Like the work automatically after a download completed (novel not included)
+     */
+    autoLikeAfterDownload: false,
+
+    /**
      * @since 1.0.0
      * @deprecated since version 6.0.0
      */

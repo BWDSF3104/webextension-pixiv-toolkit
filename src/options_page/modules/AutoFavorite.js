@@ -12,35 +12,48 @@ const FAVORITE_TYPES = {
 };
 
 /**
- * Resolve favorite request target from a download task
- * @param {any} task
- * @returns {{ favKind: string, idKey: string, id: string }|null}
+ * task types that Pixiv allows to be liked (novels have no like)
  */
-function resolveTarget(task) {
-  const mapping = FAVORITE_TYPES[task.type];
-  const id = task.context && task.context.id;
+const LIKEABLE_TYPES = ['PIXIV_ILLUST', 'PIXIV_MANGA', 'PIXIV_UGOIRA'];
 
-  if (!mapping || !id) {
-    return null;
+/**
+ * Resolve the favorite/like actions to run for a download task
+ * @param {any} task
+ * @param {any} settings
+ * @returns {any[]} content script actions in request order
+ */
+function resolveActions(task, settings) {
+  const id = task.context && task.context.id;
+  const actions = [];
+
+  if (!id) {
+    return actions;
   }
 
-  return { favKind: mapping.favKind, idKey: mapping.idKey, id: String(id) };
+  const mapping = FAVORITE_TYPES[task.type];
+
+  if (settings.autoFavoriteAfterDownload && mapping) {
+    actions.push({ type: 'favorite', favKind: mapping.favKind, idKey: mapping.idKey, id: String(id) });
+  }
+
+  if (settings.autoLikeAfterDownload && LIKEABLE_TYPES.indexOf(task.type) > -1) {
+    actions.push({ type: 'like', id: String(id) });
+  }
+
+  return actions;
 }
 
 /**
- * Favorite a completed download task through an opened pixiv.net tab.
- * The authenticated POST runs in the tab's content script, so the tab must
- * be open, otherwise the favorite is skipped.
+ * Favorite/like a completed download task through an opened pixiv.net tab.
+ * The authenticated POSTs run in the tab's content script, so the tab must
+ * be open, otherwise the actions are skipped.
  * @param {any} task
  */
 function tryFavorite(task) {
-  if (!GlobalSettings({}).autoFavoriteAfterDownload) {
-    return;
-  }
+  const settings = GlobalSettings({});
+  const actions = resolveActions(task, settings);
 
-  const target = resolveTarget(task);
-
-  if (!target) {
+  if (!actions.length) {
     return;
   }
 
@@ -59,16 +72,22 @@ function tryFavorite(task) {
       return;
     }
 
+    let pending = actions.length;
+
     port.onMessage.addListener(message => {
-      if (message.favorite && message.favorite.ok === false) {
-        console.warn('[PTK] auto favorite failed: %s', message.favorite.message);
+      const result = message.favorite || message.like;
+
+      if (result && result.ok === false) {
+        console.warn('[PTK] auto favorite failed: %s', result.message);
       }
 
-      port.disconnect();
+      if (--pending <= 0) {
+        port.disconnect();
+      }
     });
 
-    port.postMessage(Object.assign({ type: 'favorite' }, target));
+    actions.forEach(action => port.postMessage(action));
   });
 }
 
-export default { resolveTarget, tryFavorite };
+export default { resolveActions, tryFavorite };

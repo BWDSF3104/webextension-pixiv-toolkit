@@ -15,25 +15,52 @@ jest.mock('@/modules/Extension/browser', () => ({
 
 const AutoFavorite = require('@/options_page/modules/AutoFavorite').default;
 
-test('illust/manga/ugoira map to illusts endpoint, novel to novels', () => {
+test('favorite actions map each work type to its endpoint', () => {
+  const settings = { autoFavoriteAfterDownload: true, autoLikeAfterDownload: false };
+
   for (const type of ['PIXIV_ILLUST', 'PIXIV_MANGA', 'PIXIV_UGOIRA']) {
-    expect(AutoFavorite.resolveTarget({ type, context: { id: '123' } }))
-      .toEqual({ favKind: 'illusts', idKey: 'illust_id', id: '123' });
+    expect(AutoFavorite.resolveActions({ type, context: { id: '123' } }, settings))
+      .toEqual([{ type: 'favorite', favKind: 'illusts', idKey: 'illust_id', id: '123' }]);
   }
 
-  expect(AutoFavorite.resolveTarget({ type: 'PIXIV_NOVEL', context: { id: '456' } }))
-    .toEqual({ favKind: 'novels', idKey: 'novel_id', id: '456' });
+  expect(AutoFavorite.resolveActions({ type: 'PIXIV_NOVEL', context: { id: '456' } }, settings))
+    .toEqual([{ type: 'favorite', favKind: 'novels', idKey: 'novel_id', id: '456' }]);
 });
 
-test('unsupported type or missing work id returns null', () => {
-  expect(AutoFavorite.resolveTarget({ type: 'PIXIV_COMIC_EPISODE', context: { id: '1' } })).toBeNull();
-  expect(AutoFavorite.resolveTarget({ type: 'FANBOX_POST', context: { id: '1' } })).toBeNull();
-  expect(AutoFavorite.resolveTarget({ type: 'PIXIV_ILLUST', context: {} })).toBeNull();
-  expect(AutoFavorite.resolveTarget({ type: 'PIXIV_ILLUST' })).toBeNull();
+test('like is only resolved for likeable types (novel has no like)', () => {
+  const settings = { autoFavoriteAfterDownload: false, autoLikeAfterDownload: true };
+
+  for (const type of ['PIXIV_ILLUST', 'PIXIV_MANGA', 'PIXIV_UGOIRA']) {
+    expect(AutoFavorite.resolveActions({ type, context: { id: '123' } }, settings))
+      .toEqual([{ type: 'like', id: '123' }]);
+  }
+
+  expect(AutoFavorite.resolveActions({ type: 'PIXIV_NOVEL', context: { id: '456' } }, settings)).toEqual([]);
 });
 
-test('tryFavorite does nothing when the setting is disabled', () => {
+test('favorite runs before like for the same task', () => {
+  const settings = { autoFavoriteAfterDownload: true, autoLikeAfterDownload: true };
+
+  expect(AutoFavorite.resolveActions({ type: 'PIXIV_ILLUST', context: { id: '123' } }, settings))
+    .toEqual([
+      { type: 'favorite', favKind: 'illusts', idKey: 'illust_id', id: '123' },
+      { type: 'like', id: '123' }
+    ]);
+});
+
+test('unsupported type or missing work id resolves no action', () => {
+  const settings = { autoFavoriteAfterDownload: true, autoLikeAfterDownload: true };
+
+  expect(AutoFavorite.resolveActions({ type: 'PIXIV_COMIC_EPISODE', context: { id: '1' } }, settings)).toEqual([]);
+  expect(AutoFavorite.resolveActions({ type: 'FANBOX_POST', context: { id: '1' } }, settings)).toEqual([]);
+  expect(AutoFavorite.resolveActions({ type: 'PIXIV_ILLUST', context: {} }, settings)).toEqual([]);
+  expect(AutoFavorite.resolveActions({ type: 'PIXIV_ILLUST' }, settings)).toEqual([]);
+});
+
+test('tryFavorite does nothing when both settings are disabled', () => {
   mockSettings.autoFavoriteAfterDownload = false;
+  mockSettings.autoLikeAfterDownload = false;
+  mockTabsQuery.mockClear();
 
   AutoFavorite.tryFavorite({ type: 'PIXIV_ILLUST', context: { id: '123' } });
 
@@ -52,23 +79,31 @@ test('tryFavorite skips favorite when no pixiv.net tab is opened', () => {
   expect(mockTabsConnect).not.toHaveBeenCalled();
 });
 
-test('tryFavorite posts favorite target to the pixiv.net tab port', () => {
+test('tryFavorite posts all actions to the pixiv.net tab port and disconnects after all results', () => {
   mockSettings.autoFavoriteAfterDownload = true;
+  mockSettings.autoLikeAfterDownload = true;
   mockTabsQuery.mockClear();
   mockTabsConnect.mockClear();
   mockTabsQuery.mockImplementation((options, callback) => callback([{ id: 7 }]));
 
   const postMessage = jest.fn();
   const disconnect = jest.fn();
+  let onMessageListener = null;
   mockTabsConnect.mockReturnValue({
-    onMessage: { addListener: jest.fn() },
-    onDisconnect: { addListener: jest.fn() },
+    onMessage: { addListener: listener => { onMessageListener = listener; } },
     postMessage: postMessage,
     disconnect: disconnect
   });
 
-  AutoFavorite.tryFavorite({ type: 'PIXIV_NOVEL', context: { id: '456' } });
+  AutoFavorite.tryFavorite({ type: 'PIXIV_ILLUST', context: { id: '123' } });
 
   expect(mockTabsConnect).toHaveBeenCalledWith(7, { name: 'auto-favorite' });
-  expect(postMessage).toHaveBeenCalledWith({ type: 'favorite', favKind: 'novels', idKey: 'novel_id', id: '456' });
+  expect(postMessage).toHaveBeenNthCalledWith(1, { type: 'favorite', favKind: 'illusts', idKey: 'illust_id', id: '123' });
+  expect(postMessage).toHaveBeenNthCalledWith(2, { type: 'like', id: '123' });
+
+  onMessageListener({ favorite: { ok: true } });
+  expect(disconnect).not.toHaveBeenCalled();
+
+  onMessageListener({ like: { ok: false, message: 'rate limited' } });
+  expect(disconnect).toHaveBeenCalledTimes(1);
 });

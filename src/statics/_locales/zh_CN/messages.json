@@ -851,6 +851,12 @@
     "_auto_favorite_after_download_hint": {
         "message": "下载完成后自动将该作品加入收藏，需要保持一个pixiv.net标签页处于打开状态"
     },
+    "_auto_like_after_download": {
+        "message": "下载完成后自动点赞"
+    },
+    "_auto_like_after_download_hint": {
+        "message": "下载完成后自动为该作品点赞，不支持小说类型，需要保持一个pixiv.net标签页处于打开状态"
+    },
     "_all": {
         "message": "全部"
     },

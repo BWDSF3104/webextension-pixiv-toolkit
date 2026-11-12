@@ -845,6 +845,12 @@
     "_auto_favorite_after_download_hint": {
         "message": "Add the work to your bookmarks automatically after download completed. A pixiv.net tab must be opened"
     },
+    "_auto_like_after_download": {
+        "message": "Add likes automatically"
+    },
+    "_auto_like_after_download_hint": {
+        "message": "Like the work automatically after download completed. Novel not included. A pixiv.net tab must be opened"
+    },
     "_all": {
         "message": "All"
     },

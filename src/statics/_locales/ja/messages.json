@@ -845,6 +845,12 @@
   "_auto_favorite_after_download_hint": {
     "message": "ダウンロード完了後、その作品を自動でお気に入りに追加します。pixiv.net のタブが開いている必要があります"
   },
+  "_auto_like_after_download": {
+    "message": "ダウンロード完了後に自動でいいねする"
+  },
+  "_auto_like_after_download_hint": {
+    "message": "ダウンロード完了後、その作品に自動でいいねします。小説は対象外です。pixiv.net のタブが開いている必要があります"
+  },
   "_all": {
     "message": "すべて"
   },
