@@ -33,4 +33,4 @@
 
 ## Status
 
-進行中（`2026-11-10-mv3-chrome-basic-function-audit`）
+解決（2026-11-12・全項目処理済み: webRequest listener+rules 削除/掃除（e732fe7）、listener 同期登録と SW 状態（方針2 で listener ごと削除）、handlebars 列追加・EPUB sandbox・GIF 同封 worker・ffmpeg 退役（25c2c7c + 退役コミット）。実装記録は `docs/ai/tasks/2026-11-12-mv3-remediation.md`、decision `2026-11-12-mv3-remediation.md` / `2026-11-12-ffmpeg-retirement-and-generator-wiring.md`）

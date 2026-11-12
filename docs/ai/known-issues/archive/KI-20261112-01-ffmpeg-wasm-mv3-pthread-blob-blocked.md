@@ -20,3 +20,7 @@ MP4 変換のみ不可。webm（whammy・worker 不要）と APNG はこの経�
 ## 修正に必要なこと（判断: 今回合流せず・別枠）
 
 0.12.x 系（単一スレッド core、SAB 不要）への移行が必要。ただし 0.12.10 UMD は blob worker、ESM は `import.meta.url` で webpack 4 が未対応のため、**自作 worker ブリッジ（同封 worker から `importScripts('ffmpeg-core.js')` + `locateFile` で拡張 URL）**か別ページ隔離が必要になる。中規模改修 + ugoira 実機検証（ログイン環境）が前提。
+
+## Status
+
+解決（2026-11-12・MP4/ffmpeg 機能そのものを退役し、webm/gif/apng を pure-JS ジェネレータへ配線。ffmpeg 依存・同封ファイル・converter UI を全削除。詳細: `docs/ai/decisions/2026-11-12-ffmpeg-retirement-and-generator-wiring.md`）

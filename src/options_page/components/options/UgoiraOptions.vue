@@ -13,19 +13,6 @@
         </v-list-tile-action>
       </v-list-tile>
 
-      <v-list-tile class="option-section__auto-height">
-        <v-list-tile-content>
-          <v-list-tile-title>{{ tl('_ffmpeg_custom_convert_command') }} (<a href="https://github.com/leoding86/webextension-pixiv-toolkit/blob/master/docs/help.md#about-ffmpeg-custom-convert-command-en_us" target="_blank"><strong>{{ tl('_more_info') }}</strong></a>)</v-list-tile-title>
-          <v-list-tile-sub-title>
-            <textarea class="option-section__input-text"
-              v-model="ugoiraCustomFFmpegCommand"
-              :placeholder="tl('_not_set')"
-              @blur="onUgoiraCustomFFmpegCommandChangeHandler"
-            ></textarea>
-          </v-list-tile-sub-title>
-        </v-list-tile-content>
-      </v-list-tile>
-
       <v-list-tile>
         <v-list-tile-content>
           <v-list-tile-title>
@@ -83,8 +70,6 @@ export default {
 
       location: '',
 
-      ugoiraCustomFFmpegCommand: '',
-
       animationJsonFormat: 1,
 
       showRenameDialog: false,
@@ -129,7 +114,6 @@ export default {
 
   created() {
     this.renameRule = this.browserItems.ugoiraRenameRule;
-    this.ugoiraCustomFFmpegCommand = this.browserItems.ugoiraCustomFFmpegCommand || '';
     this.animationJsonFormat = this.browserItems.animationJsonFormat;
     this.location = this.browserItems.ugoiraRelativeLocation;
 
@@ -166,12 +150,6 @@ export default {
   },
 
   methods: {
-    onUgoiraCustomFFmpegCommandChangeHandler() {
-      browser.storage.local.set({
-        ugoiraCustomFFmpegCommand: this.ugoiraCustomFFmpegCommand.trim()
-      });
-    },
-
     openRenameDialog() {
       this.showRenameDialog = true;
     }

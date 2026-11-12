@@ -46,15 +46,6 @@ module.exports = env => {
             from: utils.resolve('node_modules/vue-i18n/dist/vue-i18n.min.js'),
             to: utils.resolve(`dist/${platform}/lib/vue-i18n.min.js`)
           }, {
-            from: utils.resolve('node_modules/pouchdb/dist/pouchdb.min.js'),
-            to: utils.resolve(`dist/${platform}/lib/pouchdb.min.js`)
-          }, {
-            from: utils.resolve('node_modules/pouchdb/dist/pouchdb.find.min.js'),
-            to: utils.resolve(`dist/${platform}/lib/pouchdb.find.min.js`)
-          }, {
-            from: utils.resolve('node_modules/@ffmpeg/core/dist'),
-            to: utils.resolve(`dist/${platform}/lib/ffmpeg`)
-          }, {
             from: utils.resolve('src/statics/manifest.json'),
             to: utils.resolve(`dist/${platform}/manifest.json`),
             transform(content, path) {
@@ -96,8 +87,7 @@ module.exports = env => {
     ],
     externals: {
       browser: 'browser',
-      chrome: 'chrome',
-      FFmpeg: 'FFmpeg'
+      chrome: 'chrome'
     }
   });
 };

@@ -33,11 +33,6 @@ export default {
   data () {
     return {
       thirdPartList: [{
-        name: 'ffmpeg.wasm',
-        version: '0.11.6',
-        desc: 'ffmpeg.wasm is a pure Webassembly / Javascript port of FFmpeg. It enables video & audio record, convert and stream right inside browsers.',
-        url: 'https://github.com/ffmpegwasm/ffmpeg.wasm'
-      }, {
         name: 'jszip',
         version: '3.1.5',
         desc: 'Create, read and edit .zip files with Javascript',

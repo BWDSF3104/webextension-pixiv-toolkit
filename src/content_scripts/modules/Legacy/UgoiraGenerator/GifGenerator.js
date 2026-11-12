@@ -8,6 +8,7 @@
 import AbstractGenerator from "./AbstractGenerator";
 import getImageSize from '@/modules/Util/getImageSize'
 import browser from "@/modules/Extension/browser";
+import GlobalSettings from "@/modules/GlobalSettings";
 import MimeType from "@/modules/Util/MimeType";
 
 class GifGenerator extends AbstractGenerator {
@@ -71,7 +72,7 @@ class GifGenerator extends AbstractGenerator {
 
     this.zip.file(self.frames[0].file).async('base64').then(base64 => {
       let imageBase64 = "data:" + MimeType.getFileMimeType(self.frames[0].file) + ';base64,' + base64,
-        quality = $extension.browserItems.ugoiraQuanlity || 10
+          quality = GlobalSettings({}).ugoiraQuanlity || 10
 
       getImageSize(imageBase64).then(size => {
         self.gif = new GIF({

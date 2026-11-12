@@ -26,12 +26,6 @@
 
       <ptk-button @click="download({ ugoiraConvertType: 'webm' })"
       >{{ tl('_download_webm') }}{{ webmProgress }}</ptk-button>
-
-      <ptk-button @click="download({ ugoiraConvertType: 'mp4' })"
-      >{{ tl('_download_mp4') }}{{ mp4Progress }}</ptk-button>
-
-      <ptk-button @click="download"
-      >{{ tl('_download_custom') }}{{ customProgress }}</ptk-button>
     </template>
     <page-selector
       ref="pageSelector"
@@ -104,9 +98,7 @@ export default {
       ugoiraTaskProgresses: {
         'gif': { d: 0, p: 0 },
         'apng': { d: 0, p: 0 },
-        'webm': { d: 0, p: 0 },
-        'mp4': { d: 0, p: 0 },
-        'custom': { d: 0, p: 0 }
+        'webm': { d: 0, p: 0 }
       },
 
       generalTaskProgress: 0
@@ -142,14 +134,6 @@ export default {
 
     webmProgress() {
       return this.ugoiraProgress('webm');
-    },
-
-    mp4Progress() {
-      return this.ugoiraProgress('mp4');
-    },
-
-    customProgress() {
-      return this.ugoiraProgress('custom');
     },
 
     generalTaskProgressText() {
@@ -262,9 +246,7 @@ export default {
       this.ugoiraTaskProgresses = {
         'gif': { d: 0, p: 0 },
         'apng': { d: 0, p: 0 },
-        'webm': { d: 0, p: 0 },
-        'mp4': { d: 0, p: 0 },
-        'custom': { d: 0, p: 0 }
+        'webm': { d: 0, p: 0 }
       };
     },
 
@@ -288,7 +270,7 @@ export default {
     observeDownloadTask() {
       if (this.isUgoira) {
         this.downloadTaskObserver.observeDownloadTasks(
-          ['gif', 'apng', 'mp4', 'webm', 'custom'].map(type => this.resource.getDownloadTaskId(type))
+          ['gif', 'apng', 'webm'].map(type => this.resource.getDownloadTaskId(type))
         );
       } else {
         this.downloadTaskObserver.observeDownloadTasks([this.resource.getDownloadTaskId()]);
@@ -425,14 +407,6 @@ export default {
     disableGuide() {
       browser.storage.local.set({
         guideShowed: true
-      });
-    },
-
-    test() {
-      const { createFFmpeg } = FFmpeg;
-      this.ffmpeg = new createFFmpeg({
-        log: true,
-        corePath: browser.runtime.getURL('lib/ffmpeg/ffmpeg-core.js'),
       });
     }
   }

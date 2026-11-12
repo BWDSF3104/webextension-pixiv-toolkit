@@ -7,6 +7,10 @@ import NameFormatter from "@/modules/Util/NameFormatter";
 import MimeType from "@/modules/Util/MimeType";
 import pathjoin from "@/modules/Util/pathjoin";
 import AbstractGenerator from "@/content_scripts/modules/Legacy/UgoiraGenerator/AbstractGenerator";
+import GifGenerator from "@/content_scripts/modules/Legacy/UgoiraGenerator/GifGenerator";
+import WebmGenerator from "@/content_scripts/modules/Legacy/UgoiraGenerator/WebmGenerator";
+import ApngGenerator from "@/content_scripts/modules/Legacy/UgoiraGenerator/ApngGenerator";
+import { RuntimeError } from "@/errors";
 
 class ZipRepo {
   /**
@@ -46,7 +50,6 @@ class ZipRepo {
  * @property {any[]} frames
  * @property {string} renameRule
  * @property {0|1|2} packAnimationJsonType
- * @property {string} ffmpegCommandArgs
  * @property {any} context
  * @property {string} convertType
  *
@@ -79,14 +82,9 @@ class UgoiraDownloadTask extends AbstractDownloadTask {
   processedFramesCount = 0;
 
   /**
-   * @type {number} FFmpeg process progress
+   * @type {number} conversion process progress
    */
   processProgress = 0;
-
-  /**
-   * @type {import("@ffmpeg/ffmpeg").FFmpeg}
-   */
-  ffmpeg;
 
   /**
    * @type {AbstractGenerator}
@@ -108,6 +106,15 @@ class UgoiraDownloadTask extends AbstractDownloadTask {
     this.title = options.context.title;
     this.context = options.context;
     this.options = options;
+
+    const generatorClasses = { gif: GifGenerator, webm: WebmGenerator, apng: ApngGenerator };
+    const Generator = generatorClasses[String(options.convertType || '').toLowerCase()];
+
+    if (!Generator) {
+      throw new RuntimeError('NOT_SUPPORT_CONVERT_TYPE');
+    }
+
+    this.generator = new Generator();
 
     this.downloader = new Downloader({ processors: GlobalSettings().downloadTasksWhenDownloadingImages });
     this.downloader.appendFile(options.resource);
@@ -203,150 +210,23 @@ class UgoiraDownloadTask extends AbstractDownloadTask {
   }
 
   /**
-   *
-   * @param {(args: { data: any, outputFilename: string}) => void} completeHandler
-   * @returns
-   */
-  async runFFmpeg(completeHandler) {
-    /**
-     * FFmpeg loaded as external library
-     */
-    let { createFFmpeg } = FFmpeg;
-    this.ffmpeg = new createFFmpeg({
-      log: true,
-      corePath: browser.runtime.getURL('lib/ffmpeg/ffmpeg-core.js'),
-    });
-    this.ffmpeg.setProgress(progress => {
-      this.processProgress = progress.ratio;
-
-      this.dispatch('progress', [this.processProgress]);
-    });
-
-    await this.ffmpeg.load();
-
-    let framesContent = '';
-    let loadedFiles = [];
-
-    /**
-     * Add files to ffmpeg file system
-     */
-    for (let i = 0; i < this.options.frames.length; i++) {
-      let frame = this.options.frames[i];
-      let data = await this.zip.file(frame.file).async('uint8array');
-      let indexStr = i + '';
-      let filename = '0'.repeat(6 - indexStr.length) + i + '.jpg';
-      this.ffmpeg.FS('writeFile', filename, data);
-      loadedFiles.push(filename);
-
-      /**
-       * Build frames information
-       */
-      framesContent += `file '${frame.file}'` + "\r\n";
-      framesContent += `duration ${frame.delay / 1000}` + "\r\n";
-    }
-
-    /**
-     * Add frames to ffmpeg file system
-     */
-    this.ffmpeg.FS('writeFile', 'input.txt', framesContent);
-    loadedFiles.push('input.txt');
-
-    /**
-     * parse ffmpeg command line(s)
-     */
-    const ffmpegCommands = [];
-    const ffmpegCommandSetting = this.options.ffmpegCommandArgs ?
-      this.options.ffmpegCommandArgs.trim() :
-      null;
-
-    if (!ffmpegCommandSetting) {
-      ffmpegCommands.push(['-f', 'concat', '-i', 'input.txt', '-plays', 0, 'out.gif']);
-    } else {
-      const lines = ffmpegCommandSetting.split(/\r\n|\n|\r/);
-
-      lines.forEach(line => {
-        ffmpegCommands.push(line.trim().split(' '));
-      });
-    }
-
-    const lastCommand = ffmpegCommands[ffmpegCommands.length - 1];
-    const outputFilename = lastCommand[lastCommand.length - 1];
-
-    for (const seq in ffmpegCommands) {
-      console.log(ffmpegCommands[seq]);
-      await this.ffmpeg.run.apply(this.ffmpeg, ffmpegCommands[seq]);
-    }
-
-    await completeHandler.call(this, {
-      data: this.ffmpeg.FS('readFile', outputFilename),
-      outputFilename
-    });
-
-    loadedFiles.push(outputFilename);
-
-    /**
-     * Clearup assets
-     */
-    loadedFiles.forEach(file => this.ffmpeg.FS('unlink', file));
-
-    this.ffmpeg.exit();
-    this.ffmpeg = null;
-  }
-
-  /**
-   * When resource is downloaded, then generate animation file using ffmpeg
+   * When resource is downloaded, then generate animation file using generator
    * @fires UgoiraDownloadTask#progress
    * @fires UgoiraDownloadTask#complete
    */
   async onFinish() {
     this.changeState(this.PROCESSING_STATE);
 
-    if (this.generator) {
-      this.generator.addListener('progress', (progress) => {
-        this.processProgress = progress;
-        this.dispatch('progress', [progress]);
-      });
+    this.generator.addListener('progress', (progress) => {
+      this.processProgress = progress;
+      this.dispatch('progress', [progress]);
+    });
 
-      this.generator.addListener('complete', async (blob, mimeType) => {
-        /**
-         * Save file to disk
-         */
-        let animationFileUrl = URL.createObjectURL(blob);
-        let nameFormatter = NameFormatter.getFormatter({ context: this.context });
-
-        const downloadId = await browser.runtime.sendMessage({
-          to: 'ws',
-          action: 'download:saveFile',
-          args: {
-            url: animationFileUrl,
-            filename: pathjoin(GlobalSettings().downloadRelativeLocation, nameFormatter.format(
-              this.options.renameRule
-            )) + '.' + MimeType.getExtenstion(mimeType)
-          }
-        });
-
-        console.log(downloadId);
-
-        URL.revokeObjectURL(animationFileUrl);
-
-        this.dispatch('complete');
-      });
-
-      this.generator.addListener('error', (error) => {
-        this.changeState(this.FAILURE_STATE);
-        this.dispatch('error', [error]);
-      });
-
-      this.generator.generate(this);
-
-      return;
-    }
-
-    await this.runFFmpeg(async ({ data, outputFilename }) => {
+    this.generator.addListener('complete', async (blob, mimeType) => {
       /**
        * Save file to disk
        */
-      let animationFileUrl = URL.createObjectURL(new Blob([data], { type: MimeType.getFileMimeType(outputFilename) }));
+      let animationFileUrl = URL.createObjectURL(blob);
       let nameFormatter = NameFormatter.getFormatter({ context: this.context });
 
       this.lastDownloadId = await browser.runtime.sendMessage({
@@ -356,15 +236,22 @@ class UgoiraDownloadTask extends AbstractDownloadTask {
           url: animationFileUrl,
           filename: pathjoin(GlobalSettings().downloadRelativeLocation, nameFormatter.format(
             this.options.renameRule
-          )) + '.' + MimeType.getFileExtension(outputFilename)
+          )) + '.' + MimeType.getExtenstion(mimeType)
         }
       });
 
       URL.revokeObjectURL(animationFileUrl);
+
+      this.changeState(this.COMPLETE_STATE);
+      this.dispatch('complete');
     });
 
-    this.changeState(this.COMPLETE_STATE);
-    this.dispatch('complete');
+    this.generator.addListener('error', (error) => {
+      this.changeState(this.FAILURE_STATE);
+      this.dispatch('error', [error]);
+    });
+
+    this.generator.generate(this);
   }
 
   /**
@@ -432,11 +319,6 @@ class UgoiraDownloadTask extends AbstractDownloadTask {
   abortProcess() {
     if (this.downloader) {
       this.downloader.pause();
-    }
-
-    if (this.ffmpeg) {
-      this.ffmpeg.exit();
-      this.processProgress = this.processedFramesCount = 0;
     }
 
     if (this.generator) {

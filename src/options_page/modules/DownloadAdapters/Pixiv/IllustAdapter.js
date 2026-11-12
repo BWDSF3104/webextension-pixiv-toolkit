@@ -95,38 +95,21 @@ class IllustAdapter {
    * @param {Object} options
    * @returns {UgoiraDownloadTask}
    */
-  createUgoiraDownloadTask(resource, options) {
-    const fixedFFmpegCliArgs = {
-      ugoiraFFmpegGIFCliArgs: '-f concat -i input.txt -plays 0 out.gif',
-      ugoiraFFmpegAPNGCliArgs: '-f concat -i input.txt -plays 0 output.apng',
-      ugoiraFFmpegWEBMCliArgs: '-f concat -i input.txt -safe 0 output.webm',
-      ugoiraFFmpegMP4CliArgs: '-f concat -i input.txt -safe 0 -c copy output.mp4'
-    };
+   createUgoiraDownloadTask(resource, options) {
+     // gif/webm/apng 以外は UgoiraDownloadTask 側で NOT_SUPPORT_CONVERT_TYPE になる（mp4/ffmpeg 退役 2026-11-12）
+     const convertType = (options && options.ugoiraConvertType) || 'CUSTOM';
 
-    let ffmpegCommandArgs = this.settings.ugoiraCustomFFmpegCommand;
-    let convertType = 'CUSTOM';
-
-    if (options && typeof options.ugoiraConvertType === 'string') {
-      const key = `ugoiraFFmpeg${options.ugoiraConvertType.toUpperCase()}CliArgs`;
-
-      if (fixedFFmpegCliArgs[key]) {
-        ffmpegCommandArgs = fixedFFmpegCliArgs[key];
-        convertType = options.ugoiraConvertType;
-      }
-    }
-
-    const downloadTask = UgoiraDownloadTask.create({
-      uid: resource.getUid(),
-      id: resource.getDownloadTaskId(convertType),
-      url: this.url,
-      resource: this.context.illustOriginalSrc,
-      frames: this.context.illustFrames,
-      packAnimationJsonType: this.settings.animationJsonFormat,
-      renameRule: this.settings.ugoiraRenameRule,
-      ffmpegCommandArgs,
-      context: this.context,
-      convertType
-    });
+     const downloadTask = UgoiraDownloadTask.create({
+       uid: resource.getUid(),
+       id: resource.getDownloadTaskId(convertType),
+       url: this.url,
+       resource: this.context.illustOriginalSrc,
+       frames: this.context.illustFrames,
+       packAnimationJsonType: this.settings.animationJsonFormat,
+       renameRule: this.settings.ugoiraRenameRule,
+       context: this.context,
+       convertType
+     });
 
     return downloadTask;
   }

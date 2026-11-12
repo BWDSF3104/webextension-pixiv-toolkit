@@ -1,6 +1,6 @@
 # MV3改修方針1-6の実装
 
-**Status**: 進行中
+**Status**: 完了
 **Date**: 2026-11-12
 **Next Action**: 方針2/3/4/5/6とrule2実施済み・sandbox EPUBとGIF workerは実測合格(e732fe7,25c2c7c)。残: ffmpeg MP4はKI-20261112-01の0.12.xブリッジ移行（別タスク）、EPUB実DLとCS内GIF workerとファイル名の実機確認
 
@@ -35,6 +35,16 @@
   - **上流バグ修正**: 上流は `downloadEpub()`（ブラウザDL発火・undefined 返し）を呼んでおり EPUB は CSP 以前に壊れていた。正しくは `makeEpub()`。リネーム関連の未定義変数 `saveUrl` 参照バグも書き換えで解消
 - **監査項目8 ffmpeg MP4**: 「core 同封」では直せないことが判明（`@ffmpeg/core@0.11.0` は pthread ビルド=SharedArrayBuffer 必須、MV3 拡張ページは cross-origin isolated 不可。0.11.6 ローダーは blob importScripts/blob worker で CSP ブロック）。→ issue `KI-20261112-01` へ記録、0.12.x 自作ブリッジ移行は別タスク。decision `2026-11-12-epub-sandbox-and-ffmpeg-deferred.md`
 
+### ffmpeg 退役とジェネレータ配線（2026-11-12、ユーザー指示「webm/gif/apng 配線して mp4/ffmpeg は退役」）
+
+- `UgoiraDownloadTask`: コンストラクタで `convertType`(gif/webm/apng)→ジェネレータ解決（未対応は `RuntimeError('NOT_SUPPORT_CONVERT_TYPE')`）。`runFFmpeg`・ffmpeg 分岐・abortProcess の ffmpeg 停止を削除。`onFinish` は generator 経路のみ（complete/error 処理追加）
+- `ApngGenerator`: worker-loader（blob worker=CSP 不可）廃止、`APNG.encode` 直接呼び出しへ。`APngGenerator.worker.js` 削除。`GifGenerator`: `$extension.browserItems` → `GlobalSettings().ugoiraQuanlity`
+- `downloads.html`: `gif.js`/`whammy.js` script 追加、`ffmpeg.min.js` 参照削除
+- UI/設定削除: CS の mp4/custom ボタンと進捗系、`UgoiraOptions.vue` の ffmpeg CLI テキスト、`UgoiraConverterOption.vue`・`ContentPageDownloadManager.js`（参照ゼロ）・`src/statics/lib/ffmpeg/`、`default.js` の ugoiraConvertTool/ugoiraCustomFFmpegCommand/ugoiraFFmpeg*CliArgs、`ThirdParty.vue` の ffmpeg.wasm クレジット、`IllustAdapter` の fixedFFmpegCliArgs
+- ビルド削除: `webpack.background.config.js` の ffmpeg・pouchdb（参照ゼロ）コピー規則と `FFmpeg` external、`webpack.base.config.js` の worker-loader 規則
+- `jest.config.json`: `modulePathIgnorePatterns: ["<rootDir>/dist/"]` 追加（dist 内 `UPNG.js/package.json` の haste 重複で `upng-js` 解決が `dupMap.get is not a function` となっていた）
+- decision `2026-11-12-ffmpeg-retirement-and-generator-wiring.md`（`2026-11-12-epub-sandbox-and-ffmpeg-deferred.md` の ffmpeg 保留決定を supersede）。`KI-20261112-01`・`KI-20261110-06` は解決として archive へ
+
 ## Verification
 
 - `yarn test`: 7 suites / 37 tests passed（複数回）
@@ -45,10 +55,16 @@
   - `sandbox/epub.html`: console error ゼロ（js-epub-maker の underscore.string fallback debug のみ）、`EpubMaker`/`JSZip`/`Handlebars` 定義、`new Function` = allowed（sandbox CSP 免除確認）
   - sandbox self-test: postMessage IPC で EPUB 生成 → **3648 bytes・先頭 50 4B 03 04（ZIP local header）= 有効 epub**。jszip-utils 不足と `makeEpub()` 修正はこの実測で発見・修正
   - `lib/gifjs/gif.worker.js`: extension page から `new Worker(getURL(...))` が起動し応答を返す（CSP 通過確認）
-- **未確認**: ダウンロードファイル名の Chrome 実機表示（listener 削除後、上流 v6.4.2 同方針を根拠とする）、content script isolated world からの GIF worker 起動（MCP 評価が main world のため実測不可、同拡張ファイル参照なので同一と推定）、EPUB の download manager 経由の実 DL（pixiv ログイン操作が必要）、ugoira webm/mp4 の変換実測
+### ffmpeg 退役後（2026-11-12）
+
+- `yarn test`: 7 suites passed（`modulePathIgnorePatterns` 追加後。追加前は dist 内 haste 重複で `renameRules.spec` が failed to run）
+- `yarn build`（chrome・Done in 13.46s）/ `yarn build:firefox`（Done in 14.04s）: ERROR in / Module not found ゼロ
+- `rg -in ffmpeg src/ config/ test/`: 残りは IllustAdapter の退役コメント、`_locales`（未使用文言・残置）、HISTORY（歴史記述）のみ
+- Chrome 実機（reload 後 downloads.html）: console error ゼロ、`GIF`=function（gif.js global）、`Whammy`=object、`lib/gifjs/gif.worker.js` の拡張 URL 解決 OK、`JSZip`=function。APNG/UPNG は webpack バンドル経由（global 不要）
+- **未確認**: ugoira webm/gif/apng の実データ変換 e2e（pixiv ログイン操作が必要。ジェネレータ本体は CS 側で動作実績、options 側は global 読込とビルドまで確認）、ダウンロードファイル名の Chrome 実機表示、content script isolated world からの GIF worker 起動（MCP 評価が main world のため実測不可、同拡張ファイル参照なので同一と推定）、EPUB の download manager 経由の実 DL
 
 ## 完了時 Memory Bank 操作
 
-- [ ] `current-task.tsv` の参照行を削除
-- [ ] 解決した `known-issues/` ファイルを `known-issues/archive/` へ `mv`（該当する場合）
-- [ ] `backlog.md` の完了項目を削除（該当する場合）
+- [x] `current-task.tsv` の参照行を削除（task_manager end）
+- [x] 解決した `known-issues/` ファイルを `known-issues/archive/` へ `mv`（KI-20261112-01、KI-20261110-06）
+- [x] `backlog.md` の完了項目を削除（該当なし）

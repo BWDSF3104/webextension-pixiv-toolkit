@@ -7,7 +7,7 @@
  */
 import MimeType from "@/modules/Util/MimeType";
 import AbstractGenerator from "./AbstractGenerator";
-import ApngGeneratorWorker from '@/modules/Workers/APngGenerator.worker';
+import APNG from '@/modules/Util/APNG';
 import getImageSize from '@/modules/Util/getImageSize';
 import getCanvasFromDataURI from "@/modules/Util/getCanvasFromDataURI";
 
@@ -84,21 +84,15 @@ class ApngGenerator extends AbstractGenerator {
 
       getImageSize(imageBase64).then(size => {
         self.getImagesData(size).then(() => {
-          let worker = new ApngGeneratorWorker();
-          worker.postMessage({
-            imagesData: self.imagesData,
-            size: size,
-            delays: self.delays
+          // worker-loader の blob worker は MV3 CSP で不可なのでメインスレッドで直接 APNG.encode（ugoira は数〜数十フレームで十分軽い）
+          APNG.event.addListener('onProgress', (currentProgress, totalProgress) => {
+            self.dispatchProgress(currentProgress / totalProgress);
           });
 
-          worker.onmessage = event => {
-            if (event.data.progress) {
-              self.dispatchProgress(event.data.progress.currentProgress / event.data.progress.totalProgress)
-            } else if (event.data.arrayBuffer) {
-              self.status = 2;
-              self.dispatchComplete([new Blob([event.data.arrayBuffer], {type: 'image/apng'}), 'image/apng']);
-            }
-          };
+          let arrayBuffer = APNG.encode(self.imagesData, size.width, size.height, 0, self.delays);
+
+          self.status = 2;
+          self.dispatchComplete([new Blob([arrayBuffer], { type: 'image/apng' }), 'image/apng']);
         });
       });
     });

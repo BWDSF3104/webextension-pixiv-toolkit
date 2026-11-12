@@ -168,12 +168,6 @@ export default Object.assign({}, {
     showUpdateChangeLog: false,
 
     /**
-     * @since 5.0.0
-     */
-    ugoiraConvertTool: 'default',
-    ugoiraCustomFFmpegCommand: '',
-
-    /**
      * @since 5.1.0
      * @deprecated 6.0.0
      * @var {number} 0: disable, 1: enable, 2: only for multiple files
@@ -239,15 +233,6 @@ export default Object.assign({}, {
     mangaRenameImageRule: 'p{pageNum}',
     pixivComicEpisodeRenameImageRule: 'p{pageNum}',
     fanboxPostRenameImageRule: 'p{pageNum}',
-
-    /**
-     * internal
-     * @since 6.2.0
-     */
-    ugoiraFFmpegGIFCliArgs: '-f concat -i input.txt -plays 0 out.gif',
-    ugoiraFFmpegAPNGCliArgs: '-f concat -i input.txt -plays 0 output.apng',
-    ugoiraFFmpegWEBMCliArgs: '-f concat -i input.txt -safe 0 output.webm',
-    ugoiraFFmpegMP4CliArgs: '-f concat -i input.txt -safe 0 -c copy output.mp4',
 
     dontCreateWorkFolder: 0,
     combinWRRuleAndIRRuleWhenDontCreateWorkFolder: 0,
