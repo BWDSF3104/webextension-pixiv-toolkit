@@ -2,6 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-12
+**Next Action**: 方針2/3/4/5/6とrule2実施済み・sandbox EPUBとGIF workerは実測合格(e732fe7,25c2c7c)。残: ffmpeg MP4はKI-20261112-01の0.12.xブリッジ移行（別タスク）、EPUB実DLとCS内GIF workerとファイル名の実機確認
 
 ## 意図 / 背景
 

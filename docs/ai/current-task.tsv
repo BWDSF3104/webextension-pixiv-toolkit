@@ -1,3 +1,3 @@
 task_file	status	next_action
 docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	方針2/5/6は実施済み(e732fe7)。方針1は「修正不要・rule 2削除済み」で判断確定。方針3(GIF)/4(EPUB)/ffmpeg core同封(MP4)はユーザー判断待ち（2026-11-12-mv3-remediation 参照）
-docs/ai/tasks/2026-11-12-mv3-remediation.md	進行中	
+docs/ai/tasks/2026-11-12-mv3-remediation.md	進行中	方針2/3/4/5/6とrule2実施済み・sandbox EPUBとGIF workerは実測合格(e732fe7,25c2c7c)。残: ffmpeg MP4はKI-20261112-01の0.12.xブリッジ移行（別タスク）、EPUB実DLとCS内GIF workerとファイル名の実機確認
