@@ -1,4 +1,5 @@
 import Application from "./Application";
+import PixivBookmark from "./modules/PixivBookmark";
 import browser from "@/modules/Extension/browser";
 import ErrorTracker from '@/modules/ErrorTracker';
 
@@ -36,6 +37,10 @@ class Bootstrap {
       port.onMessage.addListener(message => {
         if (message.type === 'fetch-info' && window.$app.resource) {
           port.postMessage({ info: window.$app.resource.unpack() });
+        } else if (message.type === 'favorite') {
+          PixivBookmark(message.favKind, message.idKey, message.id)
+            .then(result => port.postMessage({ favorite: result }))
+            .catch(error => port.postMessage({ favorite: { ok: false, message: String(error) } }));
         }
       });
     });

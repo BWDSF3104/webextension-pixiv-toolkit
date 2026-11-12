@@ -839,6 +839,12 @@
   "_download_metadata_when_downloading_works_only_support_works_from_pixiv_main_site": {
     "message": "作品ダウンロード時にメタデータをダウンロードします。Pixiv本体サイトの作品のみ対応（小説を除く）"
   },
+  "_auto_favorite_after_download": {
+    "message": "ダウンロード完了後に自動でお気に入りに追加"
+  },
+  "_auto_favorite_after_download_hint": {
+    "message": "ダウンロード完了後、その作品を自動でお気に入りに追加します。pixiv.net のタブが開いている必要があります"
+  },
   "_all": {
     "message": "すべて"
   },

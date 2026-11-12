@@ -44,6 +44,16 @@
           </v-list-tile-action>
         </v-list-tile>
 
+        <v-list-tile>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ tl('_auto_favorite_after_download') }}</v-list-tile-title>
+            <v-list-tile-sub-title>{{ tl('_auto_favorite_after_download_hint') }}</v-list-tile-sub-title>
+          </v-list-tile-content>
+          <v-list-tile-action>
+            <v-switch v-model="autoFavoriteAfterDownload"></v-switch>
+          </v-list-tile-action>
+        </v-list-tile>
+
         <downloads-shelf-option v-if="$_browser !== 'firefox'"></downloads-shelf-option>
 
         <v-list-tile>
@@ -116,6 +126,7 @@ export default {
       maxProcessDownloadTasks: 3,
       multipleDownloadsGapTime: 150,
       enableDownloadMetadata: false,
+      autoFavoriteAfterDownload: false,
       downloadRelativeFieldErrorMessages: [],
       downloadRelativeLocation: '',
     };
@@ -178,6 +189,12 @@ export default {
       browser.storage.local.set({
         enableDownloadMetadata: !!val
       });
+    },
+
+    autoFavoriteAfterDownload(val) {
+      browser.storage.local.set({
+        autoFavoriteAfterDownload: !!val
+      });
     }
   },
 
@@ -188,6 +205,7 @@ export default {
     this.locationRegex = /^([^./]+\/)*$/i;
     this.downloadRelativeLocation = this.oldDownloadRelativeLocation = this.browserItems.downloadRelativeLocation;
     this.enableDownloadMetadata = !!this.browserItems.enableDownloadMetadata;
+    this.autoFavoriteAfterDownload = !!this.browserItems.autoFavoriteAfterDownload;
     this.downloadSaveAs = !!this.browserItems.downloadSaveAs;
     this.downloadTasksWhenDownloadingImages = this.browserItems.downloadTasksWhenDownloadingImages;
     this.maxProcessDownloadTasks = this.browserItems.maxProcessDownloadTasks;

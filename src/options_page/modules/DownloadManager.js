@@ -1,4 +1,5 @@
 import AbstractDownloadTask from './DownloadTasks/AbstractDownloadTask';
+import AutoFavorite from './AutoFavorite';
 import DownloadTaskExistsError from '@/errors/DownloadTaskExistsError';
 import DownloadTaskNotFoundError from '@/errors/DownloadTaskNotFoundError';
 import Event from '@/modules/Event';
@@ -139,6 +140,7 @@ class DownloadManager extends Event {
     task.addListener('complete', () => {
       this.tasksUpdate(task.id);
       this.startTasks();
+      AutoFavorite.tryFavorite(task);
     });
 
     task.addListener('failure', () => {

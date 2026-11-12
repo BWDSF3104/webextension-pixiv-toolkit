@@ -839,6 +839,12 @@
     "_download_metadata_when_downloading_works_only_support_works_from_pixiv_main_site": {
         "message": "Download metadata when downloading works. Only support works (novel not included) from Pixiv main site"
     },
+    "_auto_favorite_after_download": {
+        "message": "Add to bookmarks automatically"
+    },
+    "_auto_favorite_after_download_hint": {
+        "message": "Add the work to your bookmarks automatically after download completed. A pixiv.net tab must be opened"
+    },
     "_all": {
         "message": "All"
     },
