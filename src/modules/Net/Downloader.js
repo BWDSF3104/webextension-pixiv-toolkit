@@ -127,13 +127,16 @@ class Downloader extends Event {
       return;
     }
 
-    let downloadFile = this.downloadFiles.shift();
+    // processors まで同時に開始し、完了時に空いたスロットを再帰 downloadNext で補充する。
+    // （従来は1件ずつ開始・補充していたため downloadTasksWhenDownloadingImages が実効1だった）
+    const max = this.processors > 0 ? this.processors : 1;
 
-    if (downloadFile) {
-      if (this.downloadFilePorts.length < this.processors) {
-        this.downloadFile(downloadFile);
-      }
-    } else {
+    while (this.downloadFilePorts.length < max && this.downloadFiles.length > 0) {
+      this.downloadFile(this.downloadFiles.shift());
+    }
+
+    // キューと進行中の port が両方空の時だけ finish を発火する（同時進行時は他の完了待ち）
+    if (this.downloadFiles.length === 0 && this.downloadFilePorts.length === 0) {
       this.dispatch('finish');
     }
   }
