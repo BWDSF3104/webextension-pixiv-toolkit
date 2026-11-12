@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: MV3改修方針1-6が未着手（実装開始指示待ち）。UI関連（Select&DL A/B・Omina非表示・label・色）は11-10/11-11タスクで決着済み
+**Next Action**: 方針2/5/6は実施済み(e732fe7)。方針1は「修正不要・rule 2削除済み」で判断確定。方針3(GIF)/4(EPUB)/ffmpeg core同封(MP4)はユーザー判断待ち（2026-11-12-mv3-remediation 参照）
 
 ## 意図 / 背景
 
