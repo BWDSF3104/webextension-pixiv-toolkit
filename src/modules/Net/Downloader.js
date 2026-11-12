@@ -164,7 +164,8 @@ class Downloader extends Event {
         }]);
       } else if (message.event === 'error') {
         this.removeDownloadFromCollection(downloadFilePort);
-        const { error = errorMessage } = message.data;
+        const { error } = message.data;
+        const errorMessage = typeof error === 'string' ? error : (error && error.message) || 'Download failed';
 
         this.failedDownloadFiles.push(downloadFile);
         this.progresses[downloadFile.seq] = 0;

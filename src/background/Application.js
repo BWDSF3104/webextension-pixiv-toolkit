@@ -122,10 +122,10 @@ class Application {
    * @param {string} [previousVersion]
    * @param {string} reason [install, update, chrome_update, shared_module_updated]
    */
-  async onInstalled({ id = undefined, previousVersion = undefined, reason }) {console.log(arguments);
+  async onInstalled({ reason }) {
     if (reason === 'install' || reason === 'update') {
       let settings = await this.getService('setting').getSettings();
-      let previousVersion = settings.version;
+      const storedVersion = settings.version;
       let installVersion = browser.runtime.getManifest().version;
 
       if (!settings.version) {
@@ -136,7 +136,7 @@ class Application {
 
         browser.action.setBadgeText({ text: 'NEW' });
         browser.action.setBadgeBackgroundColor({ color: '#FF0000' });
-      } else if (versionCompare(installVersion, previousVersion) > 0) {
+      } else if (versionCompare(installVersion, storedVersion) > 0) {
         /**
          * Update
          */

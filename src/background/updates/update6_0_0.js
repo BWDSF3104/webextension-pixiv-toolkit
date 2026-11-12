@@ -85,7 +85,4 @@ export default async () => {
   }
 
   app().getService('setting').updateSettings(updateSettings);
-
-  console.log(updateSettings);
-  console.log(`update patched, target: 6.0.0`);
 }

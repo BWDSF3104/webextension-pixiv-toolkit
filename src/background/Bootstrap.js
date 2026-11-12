@@ -16,7 +16,6 @@ class Bootstrap {
   static bindEvents(bindableInstance) {
     Bootstrap.bindableRuntimeEvents.forEach(event => {
       if (typeof bindableInstance[event] === 'function') {
-        console.log(event, arguments);
         browser.runtime[event].addListener(function() {
           bindableInstance[event].apply(bindableInstance, arguments);
 
