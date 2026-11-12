@@ -68,7 +68,7 @@ class AbstractRepo {
 
   async searchItems({ query, page, count = 20}) {
     let collection = this.table.reverse().filter(item => {
-      return item.title.indexOf(query) > -1 || (item.userName && item.userName.indexOf(query) > -1);
+      return (item.title && item.title.indexOf(query) > -1) || (item.userName && item.userName.indexOf(query) > -1);
     });
     let offset = (page - 1) * count;
 

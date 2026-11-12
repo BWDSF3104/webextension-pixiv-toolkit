@@ -17,6 +17,7 @@ class Request extends Event {
     this.responseContentLength = null;
     this.responseLoadedLength = 0;
     this.responseData = null;
+    this.responseChunks = null;
     this.responseType = 'arrayBuffer';
 
     if (global.AbortController) {
@@ -50,7 +51,7 @@ class Request extends Event {
     setTimeout(() => {
       reader.read().then(({ done, value }) => {
         if (done) {
-          this.dispatch('onload', [this.responseType === 'arrayBuffer' ? new Uint8Array(this.responseData) : this.responseData]);
+          this.dispatch('onload', [this.responseType === 'arrayBuffer' ? this.concatResponseChunks() : this.responseData]);
         } else {
           if (this.fetchFallbackAbortSignal) {
             this.dispatch('onabort', [new Error('Request aborted')]);
@@ -61,9 +62,7 @@ class Request extends Event {
             let textDecoder = new TextDecoder();
             this.responseData += textDecoder.decode(value);
           } else if (this.responseType === 'arrayBuffer') {
-            value.forEach(char => {
-              this.responseData.push(char);
-            });
+            this.responseChunks.push(value);
           }
 
           this.responseLoadedLength += value.length;
@@ -78,6 +77,19 @@ class Request extends Event {
         this.dispatch('onerror', [error]);
       });
     });
+  }
+
+  concatResponseChunks() {
+    const totalLength = this.responseChunks.reduce((length, chunk) => length + chunk.length, 0);
+    const merged = new Uint8Array(totalLength);
+    let offset = 0;
+
+    for (const chunk of this.responseChunks) {
+      merged.set(chunk, offset);
+      offset += chunk.length;
+    }
+
+    return merged;
   }
 
   send(data = null) {
@@ -110,7 +122,7 @@ class Request extends Event {
           break;
         case 'arrayBuffer':
         default:
-          this.responseData = [];
+          this.responseChunks = [];
       }
 
       this.readData(this.response.body.getReader());

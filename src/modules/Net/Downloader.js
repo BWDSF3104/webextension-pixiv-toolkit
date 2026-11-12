@@ -71,7 +71,11 @@ class Downloader extends Event {
   }
 
   removeDownloadFromCollection(download) {
-    this.downloadFilePorts = this.downloadFilePorts.splice(this.downloadFilePorts.indexOf(download), 1);
+    const index = this.downloadFilePorts.indexOf(download);
+
+    if (index > -1) {
+      this.downloadFilePorts.splice(index, 1);
+    }
   }
 
   /**

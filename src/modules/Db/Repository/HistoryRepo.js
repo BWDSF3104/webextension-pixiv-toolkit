@@ -41,6 +41,15 @@ class HistoryRepo extends AbstractRepo {
   }
 
   /**
+   * 履歴は uid（unique index）で重複照会する。AbstractRepo.getItem は主キー前提のため uid 照会へ上書きする。
+   * @param {{ uid: string }} equals
+   * @returns {Promise<object|undefined>}
+   */
+  getItem(equals) {
+    return this.table.where('uid').equals(equals.uid).first();
+  }
+
+  /**
    * @inheritdoc
    * @param {ItemType} item
    */

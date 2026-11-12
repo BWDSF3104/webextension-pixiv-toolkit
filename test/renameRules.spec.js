@@ -90,7 +90,7 @@ test('イラストボタン: illustRenameRule + illustRenameImageRule が展開�
   expect(await savedFilenameOfMultiplePages(task)).toBe('123_タイトル/p0.jpg');
 });
 
-test('漫画ボタン: mangaRenameRule が展開される（既定値末尾の `}` はリテラル残存＝上流タイポの現行挙動）', async () => {
+test('漫画ボタン: mangaRenameRule が展開される（既定値末尾のタイポ `}` を修正済み＝余分な `}` なし）', async () => {
   const task = makeBaseTask(MangaDownloadTask, {
     pages: ['a'],
     renameRule: defaults.mangaRenameRule,
@@ -98,7 +98,7 @@ test('漫画ボタン: mangaRenameRule が展開される（既定値末尾の `
     context,
   }, 'PIXIV_MANGA');
 
-  expect(await savedFilenameOfMultiplePages(task)).toBe('123_タイトル}/p0.jpg');
+  expect(await savedFilenameOfMultiplePages(task)).toBe('123_タイトル/p0.jpg');
 });
 
 test('Fanboxボタン: fanboxPostRenameRule の {pageNum} も展開されフォルダになる（pageNumはbuildPageNum由来＝0-based既定）', async () => {
