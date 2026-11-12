@@ -30,7 +30,6 @@
     "permissions": [
         "declarativeNetRequestWithHostAccess",
         "declarativeNetRequestFeedback",
-        "downloads.shelf",
         "downloads",
         "storage",
         "unlimitedStorage"
@@ -40,16 +39,6 @@
         "*://*.pximg.net/*",
         "*://*.techorus-cdn.com/*",
         "*://*.fanbox.cc/*"
-    ],
-    "web_accessible_resources": [
-        {
-            "resources": [
-                "lib/ffmpeg/ffmpeg-core.wasm"
-            ],
-            "matches": [
-                "<all_urls>"
-            ]
-        }
     ],
     "content_scripts": [
         {

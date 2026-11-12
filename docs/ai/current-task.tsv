@@ -1,2 +1,3 @@
 task_file	status	next_action
 docs/ai/tasks/2026-11-10-mv3-chrome-basic-function-audit.md	進行中	MV3改修方針1-6が未着手（実装開始指示待ち）。UI関連（Select&DL A/B・Omina非表示・label・色）は11-10/11-11タスクで決着済み
+docs/ai/tasks/2026-11-12-mv3-remediation.md	進行中	

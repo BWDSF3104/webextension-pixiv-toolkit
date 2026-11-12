@@ -17,36 +17,6 @@ class DownloadService extends AbstractService {
 
   openingDownloadManager = false;
 
-  /**
-   * @type {Map<string, string>}
-   */
-  cachedDownloadIdFilenameMap = new Map();
-
-  constructor() {
-    super();
-    this.listenOnDeterminingFilename();
-  }
-
-  listenOnDeterminingFilename() {
-    if (DownloadService.onDeterminingFilenameListenered === true) return;
-    DownloadService.onDeterminingFilenameListenered = true;
-
-    browser.downloads.onDeterminingFilename.addListener((downloadItem, suggest) => {
-      const filenameSuggestion = {
-        conflictAction: "uniquify",
-      };
-
-      if (this.cachedDownloadIdFilenameMap.has(downloadItem.url)) {
-        filenameSuggestion.filename = this.cachedDownloadIdFilenameMap.get(downloadItem.url);
-        delete this.cachedDownloadIdFilenameMap.delete(downloadItem.url);
-      } else {
-        filenameSuggestion.filename = downloadItem.filename;
-      }
-
-      suggest(filenameSuggestion);
-    });
-  }
-
   static getService() {
     if (!DownloadService.instance) {
       DownloadService.instance = new DownloadService();
@@ -126,20 +96,12 @@ class DownloadService extends AbstractService {
     }
   }
 
-  cacheDownloadIdFilename(url, filename) {
-    this.cachedDownloadIdFilenameMap.set(url, filename);
-  }
-
+  // 2026-11-12 削除: downloads.download({filename}) がそのまま有効なので onDeterminingFilename listener と
+  // filename map は不要だった（MV3 SW 再起動で map が失れてファイル名が化ける症状の根治）。上流 v6.4.2 と同方針。
   async saveFile({ url, filename }) {
-    this.cacheDownloadIdFilename(url, filename);
     const downloadId = await FileSystem.getDefault().saveFile({ url, filename });
     return downloadId;
   }
 }
-
-/**
- * @type {boolean} Prevent listen the event multiple times
- */
-DownloadService.onDeterminingFilenameListenered = false;
 
 export default DownloadService;
