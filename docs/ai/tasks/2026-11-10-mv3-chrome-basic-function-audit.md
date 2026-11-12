@@ -2,7 +2,7 @@
 
 **Status**: 進行中
 **Date**: 2026-11-10
-**Next Action**: Select & DL A/B button化・Pixiv Omina非表示は実装+画面確認合格（2026-11-10）。残件: P*/Legacy label表示化の実装開始指示待ち（decision 2026-11-10-ui-label-distinction-and-pixiv-omina-hidden.md）。MV3改修方針1-6は未着手
+**Next Action**: MV3改修方針1-6が未着手（実装開始指示待ち）。UI関連（Select&DL A/B・Omina非表示・label・色）は11-10/11-11タスクで決着済み
 
 ## 意図 / 背景
 
