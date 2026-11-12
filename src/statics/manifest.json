@@ -12,6 +12,11 @@
     "content_security_policy": {
         "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self' 'wasm-unsafe-eval'"
     },
+    "sandbox": {
+        "pages": [
+            "sandbox/epub.html"
+        ]
+    },
     "default_locale": "en",
     "description": "__MSG_extDescription__",
     "icons": {
@@ -39,6 +44,16 @@
         "*://*.pximg.net/*",
         "*://*.techorus-cdn.com/*",
         "*://*.fanbox.cc/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "lib/gifjs/gif.worker.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
     ],
     "content_scripts": [
         {

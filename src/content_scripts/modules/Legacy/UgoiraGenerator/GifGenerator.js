@@ -7,7 +7,7 @@
  */
 import AbstractGenerator from "./AbstractGenerator";
 import getImageSize from '@/modules/Util/getImageSize'
-import worker from './GifGeneratorWorker'
+import browser from "@/modules/Extension/browser";
 import MimeType from "@/modules/Util/MimeType";
 
 class GifGenerator extends AbstractGenerator {
@@ -80,7 +80,8 @@ class GifGenerator extends AbstractGenerator {
           width: size.width,
           height: size.height,
           repeat: 0,
-          workerScript: worker
+          // MV3 content script CSP で blob worker は不可。同封の gif.worker.js を直接 Worker する（gif.js 0.1.6 は workerScript に new Worker(url)）
+          workerScript: browser.runtime.getURL('lib/gifjs/gif.worker.js')
         })
 
         self.gif.on('progress', p => {

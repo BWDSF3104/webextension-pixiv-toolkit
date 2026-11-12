@@ -50,28 +50,63 @@ class NovelDownloadTask extends AbstractDownloadTask {
     return new NovelDownloadTask(options);
   }
 
+  /**
+   * MV3 extension page CSP で handlebars の new Function が不可のため、
+   * epub 生成は sandbox ページ（sandbox/epub.html）へ隔離して postMessage で受ける。
+   * 表紙は extension page 側で取得し dataURL で渡す（sandbox からの CORS/Referer を回避）。
+   */
   async makeEpubBook() {
-    let epubMaker = new EpubMaker();
-    epubMaker.withTemplate('idpf-wasteland');
-    epubMaker.withUuid(this.url);
-    epubMaker.withAuthor(this.context.userName);
-    epubMaker.withAttributionUrl(this.context.url);
-    epubMaker.withCover(this.context.coverUrl);
-    epubMaker.withTitle(this.title);
+    let coverUrl = this.context.coverUrl;
 
-    if (this.options.includeDescription) {
-      epubMaker.withSection(new EpubMaker.Section('bodymatter', null, {
-        content: this.context.description
-      }, false, false));
+    if (coverUrl) {
+      coverUrl = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        fetch(coverUrl).then(response => response.blob()).then(blob => reader.readAsDataURL(blob)).catch(reject);
+      });
     }
 
-    this.context.sections.forEach(section => {
-      epubMaker.withSection(new EpubMaker.Section('bodymatter', null, {
-        content: section
-      }, false, false));
+    const blob = await new Promise((resolve, reject) => {
+      const iframe = document.createElement('iframe');
+      iframe.src = browser.runtime.getURL('sandbox/epub.html');
+      iframe.setAttribute('sandbox', 'allow-scripts');
+      iframe.style.display = 'none';
+
+      const cleanup = () => {
+        window.removeEventListener('message', onMessage);
+        iframe.remove();
+      };
+
+      const onMessage = (event) => {
+        if (event.source !== iframe.contentWindow) return;
+        const data = event.data || {};
+
+        if (data.type === 'ptk-epub-ready') {
+          iframe.contentWindow.postMessage({
+            type: 'ptk-epub-build',
+            uuid: this.url,
+            author: this.context.userName,
+            attributionUrl: this.context.url,
+            coverUrl,
+            title: this.title,
+            includeDescription: this.options.includeDescription,
+            description: this.context.description,
+            sections: this.context.sections
+          }, '*');
+        } else if (data.type === 'ptk-epub-result') {
+          cleanup();
+          resolve(new Blob([data.buffer], { type: 'application/epub+zip' }));
+        } else if (data.type === 'ptk-epub-error') {
+          cleanup();
+          reject(new Error(data.message));
+        }
+      };
+
+      window.addEventListener('message', onMessage);
+      document.body.appendChild(iframe);
     });
 
-    let blob = await epubMaker.downloadEpub();
     let url = URL.createObjectURL(blob);
 
     this.lastDownloadId = await FileSystem.getDefault().saveFileInBackground({
@@ -82,10 +117,9 @@ class NovelDownloadTask extends AbstractDownloadTask {
       )) + '.epub'
     });
 
+    URL.revokeObjectURL(url);
     this.changeState(this.COMPLETE_STATE);
     this.dispatch('complete');
-
-    URL.revokeObjectURL(saveUrl);
   }
 
   async makeTxtBook() {

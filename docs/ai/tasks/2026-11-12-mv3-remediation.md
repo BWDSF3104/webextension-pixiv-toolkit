@@ -27,13 +27,24 @@
 - `downloads.html`: 存在しない `lib/ffmpeg/ffmpeg-core.js` 参照削除（handlebars/epub 参照は方針4 判断待ちで残置）
 - 未実施（判断依頼）: 方針3（GIF worker 同封化）、方針4（EPUB sandbox）、監査項目8（ffmpeg core 同封）
 
+### ユーザー判断後の実装（2026-11-12、3件とも「使う→修正」選択）
+
+- **方針3 GIF**: `workerScript` が直接 `new Worker(url)` される gif.js 0.1.6 の仕様を利用し、blob 生成の `GifGeneratorWorker.js` を削除、`src/statics/lib/gifjs/gif.worker.js`（gif.js@0.1.6 dist 由来）を `browser.runtime.getURL()` で参照。manifest WAR に登録
+- **方針4 EPUB**: sandbox ページ隔離を実装。`src/statics/sandbox/epub.html` + `epub-bridge.js`（postMessage IPC、`makeEpub()` → arrayBuffer 返却）。`NovelDownloadTask.makeEpubBook` を iframe + IPC 経由へ書き換え。表紙は本体側で fetch→dataURL 化。manifest に `sandbox.pages` 追加、`downloads.html` の handlebars/js-epub-maker 参照削除
+  - **上流バグ修正**: 上流は `downloadEpub()`（ブラウザDL発火・undefined 返し）を呼んでおり EPUB は CSP 以前に壊れていた。正しくは `makeEpub()`。リネーム関連の未定義変数 `saveUrl` 参照バグも書き換えで解消
+- **監査項目8 ffmpeg MP4**: 「core 同封」では直せないことが判明（`@ffmpeg/core@0.11.0` は pthread ビルド=SharedArrayBuffer 必須、MV3 拡張ページは cross-origin isolated 不可。0.11.6 ローダーは blob importScripts/blob worker で CSP ブロック）。→ issue `KI-20261112-01` へ記録、0.12.x 自作ブリッジ移行は別タスク。decision `2026-11-12-epub-sandbox-and-ffmpeg-deferred.md`
+
 ## Verification
 
-- `yarn test`: 7 suites / 37 tests passed（Time 2.494s）
-- `yarn build`（chrome）: exit 0（Done in 10.84s）、`yarn build:firefox`: exit 0（Done in 8.94s）
+- `yarn test`: 7 suites / 37 tests passed（複数回）
+- `yarn build`（chrome）: exit 0、`yarn build:firefox`: exit 0（sandbox 追加後 Done in 9.26s）
 - `net_request_rules_1.json`: `ConvertFrom-Json` 妥当（rules=1, id=1）
 - `rg cachedDownloadIdFilename|listenOnDeterminingFilename src/`: 残参照ゼロ
-- **未確認**: ダウンロードファイル名の Chrome 実機表示（listener 削除後）。上流 v6.4.2 が同方針で listener を削除してリリースしている点を根拠とするが、本 fork での実 DL 目視は未実施
+- Chrome 実機（chrome-devtools MCP・id `nccfhdinjmbjnlgnmmgglmenmaacgagf`・`reload_extension` 後）:
+  - `sandbox/epub.html`: console error ゼロ（js-epub-maker の underscore.string fallback debug のみ）、`EpubMaker`/`JSZip`/`Handlebars` 定義、`new Function` = allowed（sandbox CSP 免除確認）
+  - sandbox self-test: postMessage IPC で EPUB 生成 → **3648 bytes・先頭 50 4B 03 04（ZIP local header）= 有効 epub**。jszip-utils 不足と `makeEpub()` 修正はこの実測で発見・修正
+  - `lib/gifjs/gif.worker.js`: extension page から `new Worker(getURL(...))` が起動し応答を返す（CSP 通過確認）
+- **未確認**: ダウンロードファイル名の Chrome 実機表示（listener 削除後、上流 v6.4.2 同方針を根拠とする）、content script isolated world からの GIF worker 起動（MCP 評価が main world のため実測不可、同拡張ファイル参照なので同一と推定）、EPUB の download manager 経由の実 DL（pixiv ログイン操作が必要）、ugoira webm/mp4 の変換実測
 
 ## 完了時 Memory Bank 操作
 
